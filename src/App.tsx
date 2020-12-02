@@ -10,6 +10,11 @@ import { AppFooter } from './AppFooter';
 import { CompareOverlay } from './CompareOverlay';
 import { APIErrorProvider } from './APIErrorProvider';
 import { APIErrorNotification } from './APIErrorNotification';
+import { MuiThemeProvider, CssBaseline, Box, Typography} from "@material-ui/core";
+import SiteWideTheme from './theme/theme';
+import GlobalStyles from './theme/GlobalStyles';
+import 'fontsource-roboto';
+import './theme/App.scss';
 import './App.scss';
 
 const App: React.FC = () => {
@@ -19,36 +24,36 @@ const App: React.FC = () => {
   );
 
   return (
-    <Router>
-      <APIErrorProvider>
-        <AppStateProvider>
-          <InstantSearch searchClient={searchClient} indexName={config.algoliaIndexName}>
-            <Configure hitsPerPage={8}/>
-            <div className="app">
-            <header className="app__header">
-              <AppHeader />
-              <APIErrorNotification />
-            </header>
-            <main className="app__main">
-              <Switch>
-                {routes.map(route => (
-                  <Route key={route.path} {...route} />
-                ))}
-              </Switch>
-            </main>
-            <footer id="app-footer" role="contentinfo" aria-label="app-footer">
-              <div className="app__footer">
-                <AppFooter />
-              </div>
-            </footer>
-            <aside className="app__compareoverlay">
-              <CompareOverlay />
-            </aside>
-          </div>
-          </InstantSearch>
-        </AppStateProvider>
-      </APIErrorProvider>
-    </Router>
+    <MuiThemeProvider theme={SiteWideTheme}>
+        <Typography>
+        <Router>
+          <APIErrorProvider>
+            <AppStateProvider>
+              <InstantSearch searchClient={searchClient} indexName={config.algoliaIndexName}>
+                <Configure hitsPerPage={8}/>
+                    <CssBaseline />
+                     <GlobalStyles />
+                      <Box display="flex">
+                        <AppHeader />
+                      </Box>
+                        <APIErrorNotification />
+                          <Switch>
+                          {routes.map(route => (
+                            <Route key={route.path} {...route} />
+                          ))}
+                          </Switch>
+                      <Box display="flex">
+                        <AppFooter />
+                      </Box>
+                    <aside className="app__compareoverlay">
+                      <CompareOverlay />
+                    </aside>
+              </InstantSearch>
+            </AppStateProvider>
+          </APIErrorProvider>
+        </Router>
+        </Typography>
+      </MuiThemeProvider>
   );
 };
 
