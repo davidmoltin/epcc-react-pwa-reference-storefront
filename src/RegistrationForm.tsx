@@ -3,8 +3,20 @@ import { useHistory } from 'react-router';
 import { useFormik } from 'formik';
 import { register, login } from './service';
 import { useCustomerData, useTranslation } from './app-state';
-
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
 import './RegistrationForm.scss';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      margin: theme.spacing(1),
+    },
+    margin: {
+      margin: theme.spacing(1),
+    },
+  }),
+);
 
 interface FormValues {
   firstName: string,
@@ -18,11 +30,12 @@ export const RegistrationForm: React.FC = (props) => {
   const { setCustomerData } = useCustomerData();
   const { t } = useTranslation();
   const history = useHistory();
+  const classes = useStyles();
 
   const [registrationErrors, setRegistrationErrors] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const initialValues:FormValues = {
+  const initialValues: FormValues = {
     firstName: '',
     lastName: '',
     email: '',
@@ -30,8 +43,8 @@ export const RegistrationForm: React.FC = (props) => {
     passwordConfirm: '',
   };
 
-  const validate = (values:FormValues) => {
-    const errors:any = {};
+  const validate = (values: FormValues) => {
+    const errors: any = {};
     if (!values.firstName) {
       errors.firstName = t('required');
     }
@@ -54,7 +67,7 @@ export const RegistrationForm: React.FC = (props) => {
     return errors;
   };
 
-  const {handleSubmit, handleChange, values, errors} = useFormik({
+  const { handleSubmit, handleChange, values, errors } = useFormik({
     initialValues,
     validate,
     onSubmit: (values) => {
@@ -70,7 +83,7 @@ export const RegistrationForm: React.FC = (props) => {
           })
         })
         .catch(error => {
-          const errorsContainer = error.errors.map((el:any) => el.detail).join('\n');
+          const errorsContainer = error.errors.map((el: any) => el.detail).join('\n');
           setIsLoading(false);
           setRegistrationErrors(errorsContainer);
           console.error(error);
@@ -112,7 +125,7 @@ export const RegistrationForm: React.FC = (props) => {
             </div>
           </div>
           <div className={`epform__group ${errors.email ? '--error' : ''}`}>
-            <label htmlFor="email"  className="epform__label">
+            <label htmlFor="email" className="epform__label">
               {t('email-slash-username')} *
             </label>
             <input id="email" name="email" className="epform__input" type="email" onChange={handleChange} value={values.email} />
@@ -139,9 +152,15 @@ export const RegistrationForm: React.FC = (props) => {
             </div>
           </div>
           <div className="epform__group --btn-container">
-            <button className="epbtn --secondary" id="registration_form_register_button" type="submit" disabled={isLoading}>
-              {t('submit')}
-            </button>
+            <Button
+              variant="contained"
+              color="primary"
+              disableElevation
+              className={classes.button}
+              type="submit"
+              disabled={isLoading}
+            >{t('submit')}
+            </Button>
           </div>
         </form>
       </div>
