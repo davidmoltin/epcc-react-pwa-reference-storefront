@@ -2,9 +2,22 @@
 import React, { useState } from 'react';
 import { useTranslation, useCartData } from './app-state';
 import { bulkAdd } from './service';
-import { ReactComponent as ClearIcon } from './images/icons/ic_clear.svg';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
+import { AddOutlined, AddShoppingCartOutlined, CancelOutlined } from '@material-ui/icons';
 
 import './QuickOrder.scss'
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      margin: theme.spacing(1),
+    },
+    margin: {
+      margin: theme.spacing(1),
+    },
+  }),
+);
 
 export const QuickOrder: React.FC = (props) => {
   const { t } = useTranslation();
@@ -20,6 +33,7 @@ export const QuickOrder: React.FC = (props) => {
   const [items, setItems] = useState(Array(defaultItemsCount).fill(defaultItem).map((item, index) => ({ ...item, key: `quick-order-sku-${index}` })));
   const [error, setError] = useState('');
   const [showLoader, setShowLoader] = useState(false);
+  const classes = useStyles();
 
   const handleUpdate = (index:number, arg:{[key: string]: any}[]) => {
     const itemsArr:any[] = [...items];
@@ -118,9 +132,15 @@ export const QuickOrder: React.FC = (props) => {
                 onChange={(e) => {handleChange(index, e.target.value)}}
               />
               {item.code &&
-              <button className="quickorder__clearbtn" type="reset" onClick={() => {handleClear(index)}}>
-                <ClearIcon className="quickorder__clearicon" />
-              </button>
+                  <Button
+                    variant="outlined"
+                    className={classes.button}
+                    type="reset"
+                    onClick={() => {handleClear(index)}}
+                    color="primary"
+                    startIcon={< CancelOutlined />}
+                  > {t('cancel')}
+                  </Button>
               }
             </div>
             <div className="quickorder__quantity">
@@ -134,17 +154,32 @@ export const QuickOrder: React.FC = (props) => {
         ))}
       </div>
       <div className="quickorder__btns">
-        <button className="epbtn" onClick={handleAddFields}>
-          {t('add-more-fields')}
-        </button>
-        <button className="epbtn --primary" type="button" onClick={handleSubmit} disabled={items.filter(el => (el.quantity !== 0)).length === 0}>
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          className={classes.button}
+          startIcon={< AddOutlined />}
+          onClick={handleAddFields}
+          >{t('add-more-fields')}
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          className={classes.button}
+          startIcon={< AddShoppingCartOutlined />}
+          onClick={handleSubmit}
+          type="button"
+          disabled={items.filter(el => (el.quantity !== 0)).length === 0}
+          >
           { !showLoader ?
             (items.filter(el => (el.quantity !== 0)).length > 0 ? (
             items.filter(el => (el.quantity !== 0)).length === 1 ? t('add-item-to-cart') : t('add-items-to-cart', { quantity: items.filter(el => (el.quantity !== 0)).length.toString() })
           ) : t('add-to-cart'))
             : (<div className="circularLoader" />)
           }
-        </button>
+        </Button>
       </div>
     </div>
   )

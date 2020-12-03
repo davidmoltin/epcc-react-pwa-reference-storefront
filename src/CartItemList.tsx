@@ -4,8 +4,18 @@ import { removeCartItem, updateCartItem } from './service';
 import { ImageContainer } from "./ImageContainer";
 import { Promotion } from "./Promotion";
 import { APIErrorContext } from "./APIErrorProvider";
-
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import './CartItemList.scss';
+import { Button, IconButton } from '@material-ui/core';
+import { ChevronRightOutlined, ExpandLessOutlined, ExpandMoreOutlined, RemoveCircleOutlineOutlined } from '@material-ui/icons';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      margin: theme.spacing(1),
+    },
+  }),
+);
 
 interface CartItemListParams {
   items: any,
@@ -18,6 +28,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const { t } = useTranslation();
   const { count, totalPrice, updateCartItems } = useCartData();
   const { addError } = useContext(APIErrorContext);
+  const classes = useStyles();
 
   const isLoading = false;
   const imgSize = 73;
@@ -79,17 +90,30 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
                     <div className="cartitemlist__price">
                       {item.meta.display_price.without_tax.value.formatted}
                     </div>
-                    <button className="cartitemlist__removebutton" onClick={() => {handleRemove(item.id, index)}}>
-                      {t('remove')}
-                    </button>
+                    <Button
+                      color="secondary"
+                      className={classes.button}
+                      startIcon={< RemoveCircleOutlineOutlined />}
+                      onClick={() => {handleRemove(item.id, index)}}
+                    >{t('remove')}
+                    </Button>
                   </div>
                   <div className="cartitemlist__quantitywrap">
                     <div className="cartitemlist__quantity">
-                      <button className="cartitemlist__arrow --top" aria-label={t('add-item')} onClick={() => {handleUpdate(item.id, item.quantity + 1)}} />
+                    <IconButton
+                      onClick={() => {handleUpdate(item.id, item.quantity + 1)}}
+                      aria-label={t('add-item')}
+                    >< ExpandLessOutlined />
+                    </IconButton>
                       <p className='cartitemlist__count'>
-                        {item.quantity}
+                          {item.quantity}
                       </p>
-                      <button className="cartitemlist__arrow --bottom" aria-label={t('remove-item')} disabled={item.quantity === 1} onClick={() => {handleUpdate(item.id, item.quantity - 1)}} />
+                    <IconButton
+                      onClick={() => {handleUpdate(item.id, item.quantity - 1)}}
+                      aria-label={t('remove-item')}
+                      disabled={item.quantity === 1}
+                    >< ExpandMoreOutlined />
+                    </IconButton>
                     </div>
                   </div>
                 </div>
@@ -103,9 +127,16 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
               <span className="cartitemlist__subtotal">{totalPrice}</span>
             </div>
             <div className="cartitemlist__checkoutbutton">
-              <button className="epbtn --secondary --large --fullwidth" onClick={onCheckoutPage}>
-                {t('checkout-with-items', { quantityItems })}
-              </button>
+              <Button
+                variant="contained"
+                color="primary"
+                disableElevation
+                className={classes.button}
+                startIcon={< ChevronRightOutlined />}
+                onClick={onCheckoutPage}
+                fullWidth
+              >{t('checkout-with-items', { quantityItems })}
+              </Button>
             </div>
           </div>
         ) : (

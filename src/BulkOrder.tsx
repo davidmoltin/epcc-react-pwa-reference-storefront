@@ -3,10 +3,19 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useTranslation, useCartData } from './app-state';
 import { bulkAdd } from './service';
-
-import { ReactComponent as ClearIcon } from './images/icons/ic_clear.svg';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Button, } from '@material-ui/core';
+import { AddShoppingCartOutlined, CancelOutlined } from '@material-ui/icons';
 
 import './BulkOrder.scss'
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      margin: theme.spacing(1),
+    },
+  }),
+);
 
 interface FormValues {
   productSKU: string,
@@ -18,6 +27,7 @@ export const BulkOrder: React.FC = (props) => {
   const [bulkOrderItems, setBulkOrderItems] = useState([]);
   const [bulkError, setBulkError] = useState('');
   const [showLoader, setShowLoader] = useState(false);
+  const classes = useStyles();
 
   const initialValues:FormValues = {
     productSKU: '',
@@ -69,24 +79,38 @@ export const BulkOrder: React.FC = (props) => {
             {t('add-products-by-sku')}:
           </label>
           <textarea className="bulkorder__textarea" id="productSKU" rows={5} onChange={handleChange} value={values.productSKU} />
-          {values.productSKU &&
-            <button className="bulkorder__clearbtn" type="reset" onClick={handleClear}>
-              <ClearIcon className="bulkorder__clearicon" />
-            </button>
-          }
+          {values.productSKU}
         </div>
         <div className="bulkorder__info">
           <p>{t('bulk-order-format')}</p>
         </div>
         <div className="bulkorder__btns">
-          <button className="epbtn --primary" type="submit" disabled={!values.productSKU}>
+
+        <Button
+            variant="contained"
+            color="primary"
+            disableElevation
+            className={classes.button}
+            startIcon={< AddShoppingCartOutlined />}
+            disabled={!values.productSKU}
+            type="submit"
+          >
             {!showLoader ?
               (bulkOrderItems.length > 0 ? (
               bulkOrderItems.length === 1 ? t('add-item-to-cart') : t('add-items-to-cart', { quantity: bulkOrderItems.length.toString() })
             ) : t('add-to-cart'))
               : (<div className="circularLoader" />)
             }
-          </button>
+          </Button>
+          <Button
+            variant="contained"
+            disableElevation
+            onClick={handleClear}
+            className={classes.button}
+            startIcon={ <CancelOutlined /> }
+            disabled={!values.productSKU}
+          > {t('reset-form')}
+            </Button>
         </div>
       </form>
     </div>

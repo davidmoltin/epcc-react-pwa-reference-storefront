@@ -4,8 +4,18 @@ import { useTranslation, useAddressData } from './app-state';
 import { PlacesSuggest } from './PlacesSuggest';
 import { useFormik } from 'formik';
 import { CountriesSelect } from './CountriesSelect';
-
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
+import { LocalShippingOutlined, PaymentOutlined } from '@material-ui/icons';
 import './AddressFields.scss';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      margin: theme.spacing(1),
+    },
+  }),
+);
 
 interface CheckoutParams {
   route: string,
@@ -32,6 +42,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
   const [editing, setEditing] = useState(false);
   const [checkedItem, setCheckedItem] = useState(-1);
   const { addressData } = useAddressData();
+  const classes = useStyles();
 
   const { t } = useTranslation();
 
@@ -131,9 +142,16 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
           onClear={handleClearSearch}
         />
         {!editing && !(addressData && addressData.length > 0) && (
-          <button onClick={() => setEditing(true)} className="address__addressbutton">
-            {t('enter-address-manually')}
-          </button>
+          <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          fullWidth
+          className={classes.button}
+          startIcon={< LocalShippingOutlined />}
+          onClick={() => setEditing(true)}
+          >{t('enter-address-manually')}
+          </Button>
         )}
         {!editing && addressData && addressData.length > 0 && (
           <React.Fragment>
@@ -179,7 +197,17 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
               ))}
             </div>
             {type === 'shipping' && (
-              <button className="epbtn --secondary --large --fullwidth" type="button" disabled={checkedItem === -1} onClick={() => {handlePage('billing')}}>{t('continue-to-billing')}</button>
+              <Button
+              variant="contained"
+              disableElevation
+              fullWidth
+              color="primary"
+              className={classes.button}
+              startIcon={< PaymentOutlined />}
+              disabled={checkedItem === -1}
+              onClick={() => {handlePage('billing')}}
+            >{t('continue-to-billing')}
+            </Button>
             )}
             </React.Fragment>
         )}
@@ -303,7 +331,17 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
             <input className="epform__input" id="instructions" type="text" onChange={handleChange} value={values.instructions} />
           </div>
           {type === 'shipping' && (
-            <button className="epbtn --secondary --large --fullwidth" type="submit" disabled={!isValid}>{t('continue-to-billing')}</button>
+            <Button
+            variant="contained"
+            color="primary"
+            disableElevation
+            className={classes.button}
+            startIcon={< PaymentOutlined />}
+            fullWidth
+            type="submit"
+            disabled={!isValid}>
+              {t('continue-to-billing')}
+            </Button>
           )}
         </form>
       )}

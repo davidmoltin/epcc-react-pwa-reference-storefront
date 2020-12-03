@@ -6,8 +6,19 @@ import { useTranslation } from './app-state';
 import { AddressForm } from './AddressForm';
 import { DeleteAddressDialog } from './DeleteAddressDialog';
 import { APIErrorContext } from "./APIErrorProvider";
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
+import { DeleteOutline, EditOutlined, LocalShippingOutlined } from '@material-ui/icons';
 
 import './Address.scss';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      margin: theme.spacing(1),
+    },
+  }),
+);
 
 export const Address: React.FC = () => {
   const { t } = useTranslation();
@@ -18,6 +29,7 @@ export const Address: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { addressData, updateAddresses } = useAddressData();
   const { addError } = useContext(APIErrorContext);
+  const classes = useStyles();
 
   const handleDelete = (addressId: string) => {
     setIsDeleteModalOpen(true);
@@ -102,22 +114,54 @@ export const Address: React.FC = () => {
                   {address.postcode}
                 </li>
               </ul>
-              <button type="button" className="address__button --edit" onClick={() => handleEdit(address)}>
-                {t('edit')}
-              </button>
-              <button type="button" className="address__button --delete" onClick={() => handleDelete(address.id)}>
-                {t('delete')}
-              </button>
+              <Button
+                color="secondary"
+                variant="outlined"
+                className={classes.button}
+                startIcon={< EditOutlined />}
+                aria-label="toggle profile menu"
+                onClick={() => handleEdit(address)}
+              >{t('edit')}
+              </Button>
+
+              <Button
+                color="primary"
+                variant="outlined"
+                className={classes.button}
+                startIcon={< DeleteOutline />}
+                aria-label="toggle profile menu"
+                onClick={() => handleDelete(address.id)}
+              >{t('delete')}
+              </Button>
             </div>
           ))}
-          <button className="address__addnewaddress" onClick={handleAddNewAddress}>{t('add-new-address')}</button>
+           <div>
+                <Button
+                variant="outlined"
+                color="primary"
+                className={classes.button}
+                startIcon={< LocalShippingOutlined />}
+                aria-label="toggle profile menu"
+                onClick={handleAddNewAddress}
+              >{t('add-new-address')}
+              </Button>
+          </div>
         </div>
       ) : (
         <div>
           <div>
             {t('no-addresses')}
           </div>
-          <button className="address__addnewaddress --noaddresses" onClick={handleAddNewAddress} >{t('add-new-address')}</button>
+          <Button
+                variant="contained"
+                disableElevation
+                color="primary"
+                className={classes.button}
+                startIcon={< LocalShippingOutlined />}
+                aria-label="toggle profile menu"
+                onClick={handleAddNewAddress}
+              >{t('add-new-address')}
+              </Button>
         </div>
       )}
       {isModalOpen && (

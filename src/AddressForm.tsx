@@ -5,8 +5,19 @@ import { useAddressData, useTranslation } from './app-state';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import Modal from 'react-responsive-modal';
 import { CountriesSelect } from './CountriesSelect';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Button, IconButton } from '@material-ui/core';
+import { CancelOutlined, SaveOutlined } from '@material-ui/icons';
 
 import './AddressForm.scss';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      margin: theme.spacing(1),
+    },
+  }),
+);
 
 interface AddressFormParams {
   handleModalClose: (...args: any[]) => any,
@@ -37,6 +48,7 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [addressErrors, setAddressErrors] = useState<any[]>([]);
   const { updateAddresses } = useAddressData();
+  const classes = useStyles();
 
   let initialValues:FormValues = {
     id: addressData?.id ?? '',
@@ -129,9 +141,13 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
           <h2 className="addressform__title">
             {values.id ? t('edit-address') : t('new-address')}
           </h2>
-          <button type="button" aria-label="close" onClick={handleModalClose}>
-            <CloseIcon/>
-          </button>
+          <IconButton
+                  aria-label="close"
+                  className={classes.button}
+                  onClick={handleModalClose}
+                  color="primary"
+                > < CancelOutlined />
+          </IconButton>
         </div>
         <div className="addressform__body">
           <div className="addressform__feedback">
@@ -277,12 +293,25 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
               </div>
             </div>
             <div className="epform__group --btncontainer">
-              <button className="epbtn --bordered" type="button" onClick={handleClose}>
-                {t('cancel')}
-              </button>
-              <button className="epbtn --secondary" type="submit">
-                {t('save')}
-              </button>
+
+            <Button
+            variant="outlined"
+            className={classes.button}
+            startIcon={< CancelOutlined />}
+            onClick={handleClose}
+            >{t('cancel')}
+            </Button>
+
+            <Button
+            variant="contained"
+            color="primary"
+            disableElevation
+            className={classes.button}
+            startIcon={< SaveOutlined />}
+            type="submit"
+            >{t('save')}
+            </Button>
+
             </div>
           </form>
         </div>
