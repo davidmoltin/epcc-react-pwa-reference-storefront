@@ -1,35 +1,85 @@
 
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import useOnclickOutside from 'react-cool-onclickoutside';
 import { useCustomerData, useTranslation } from './app-state';
 import { createAccountUrl } from './routes';
 import { LoginDialog } from './LoginDialog';
-import { ReactComponent as AccountIcon } from './images/icons/ic_account.svg';
+import Button from '@material-ui/core/Button';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+import { makeStyles, createStyles, Theme, withStyles } from '@material-ui/core/styles';
 
 import './AccountDropdown.scss';
+import { AccountCircleOutlined } from '@material-ui/icons';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+      zIndex: 2,
+    },
+    paper: {
+      marginRight: theme.spacing(2),
+    },
+  }),
+);
+
+const ColorButton = withStyles((theme: Theme) => ({
+  root: {
+    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.primary.main,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main[700],
+    },
+  },
+}))(Button);
 
 export const AccountDropdown: React.FC = (props) => {
   const { isLoggedIn, customerEmail, customerName, clearCustomerData } = useCustomerData();
   const { t } = useTranslation();
   const history = useHistory();
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef<HTMLButtonElement>(null);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event: React.MouseEvent<EventTarget>) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  function handleListKeyDown(event: React.KeyboardEvent) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = React.useRef(open);
+  React.useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current!.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
+
+  //Required Includes
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const accountUrl = createAccountUrl();
-
-  const handleHideDropdown = () => {
-    setIsOpen(false);
-  };
-
-  const handleSelectorClicked = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const ref = useOnclickOutside(() => {
-    setIsOpen(false);
-  });
 
   const createCartIdentifier = () => {
     return 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, () =>
@@ -45,41 +95,55 @@ export const AccountDropdown: React.FC = (props) => {
 
   if (isLoggedIn) {
     return (
-      <div className="accountdropdown">
-        <div className={`accountdropdown__dropdown ${isOpen ? 'accountdropdown__open' : ''}`} ref={ref}>
-          <button className="accountdropdown__btn" type="button" aria-label="toggle profile menu" onClick={handleSelectorClicked}>
-            <AccountIcon className="accountdropdown__btnicon" />
-          </button>
-          {isOpen && (
-            <div className="accountdropdown__menu">
-              <ul className="accountdropdown__list">
-                <li className="accountdropdown__listitem accountdropdown__itemtitle">
-                  <p className="accountdropdown__iteminfo">{customerName}</p>
-                  <p className="accountdropdown__iteminfo accountdropdown__emailinfo">{customerEmail}</p>
-                </li>
-                <li className="accountdropdown__listitem">
-                  <Link to={accountUrl} className="accountdropdown__link" onClick={handleHideDropdown}>
-                    {t('my-account')}
-                  </Link>
-                </li>
-                <li className="accountdropdown__listitem accountdropdown__itembtns">
-                  <button className="epbtn --secondary --fullwidth" type="button" onClick={logout}>
-                    {t('logout')}
-                  </button>
-                </li>
-              </ul>
-            </div>
-          )}
+      <div className={classes.root}>
+        <div>
+          <ColorButton
+            ref={anchorRef}
+            aria-controls={open ? 'menu-account' : undefined}
+            aria-haspopup="true"
+            onClick={handleToggle}
+            disableElevation
+            startIcon={< AccountCircleOutlined />}
+          >
+            Account
+          </ColorButton>
+          <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleClose}>
+                    <MenuList autoFocusItem={open} id="menu-account" onKeyDown={handleListKeyDown}>
+                      <MenuItem onClick={handleClose}>{customerName} | {customerEmail}</MenuItem>
+                      <MenuItem onClick={handleClose}>
+                        <Link to={accountUrl}>
+                          {t('my-account')}
+                        </Link>
+                      </MenuItem>
+                      <MenuItem onClick={logout}>Logout</MenuItem>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
         </div>
       </div>
+
     );
   }
 
   return (
-    <div className="accountdropdown">
-      <button className="accountdropdown__loginbtn" type="button" onClick={() => {setIsModalOpen(true)}}>
-        {t('login')}
-      </button>
+    <div>
+      <ColorButton
+        startIcon={<AccountCircleOutlined />}
+        onClick={() => {setIsModalOpen(true)}}
+        disableElevation
+      >
+        {t('account')}
+      </ColorButton>
       <LoginDialog openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} />
     </div>
   );

@@ -23,6 +23,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { AppBar, ButtonGroup, Grid } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
+import { MainNav } from './components/MainNav/MainNav';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

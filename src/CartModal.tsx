@@ -8,12 +8,23 @@ import { checkout, payment, removeCartItems } from './service';
 import { AddressFields } from "./AddressFields";
 import Checkout from "./Checkout";
 import { CartItemList } from './CartItemList';
-import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
-import { ReactComponent as BackArrovIcon } from './images/icons/arrow_back-black-24dp.svg';
 import { APIErrorContext } from "./APIErrorProvider";
-
 import './CartModal.scss';
 import {OrderDetailsTable} from './OrderDetailsTable';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Button, IconButton } from '@material-ui/core';
+import { ArrowBackIosOutlined, CancelOutlined } from '@material-ui/icons';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      margin: theme.spacing(1),
+    },
+    margin: {
+      margin: theme.spacing(1),
+    },
+  }),
+);
 
 interface CartModalParams {
   handleCloseModal: (...args: any[]) => any,
@@ -53,6 +64,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   const { updatePurchaseHistory } = useOrdersData();
   const { t } = useTranslation();
   const { addError } = useContext(APIErrorContext);
+  const classes = useStyles();
 
   const [route, setRoute] = useState<string>('itemList');
   const [isSameAddress, setIsSameAddress] = useState(true);
@@ -141,13 +153,22 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
       <div className="cartmodal__content" ref={ref}>
         <div className="cartmodal__header">
           {route === 'itemList' || route === 'completed' ? (
-            <button className="cartmodal__closebutton" type="button" aria-label="close" onClick={onCloseModal}>
-              <CloseIcon/>
-            </button>
-          ) : (
-            <button className="cartmodal__closebutton" type="button" aria-label="close" onClick={handleBackPage}>
-              <BackArrovIcon/>
-            </button>
+            <IconButton
+            aria-label="close"
+            onClick={onCloseModal}
+            className={classes.margin}
+           >
+            <CancelOutlined />
+          </IconButton>
+
+        ) : (
+          <IconButton
+          aria-label="close"
+          onClick={handleBackPage}
+          className={classes.margin}
+          >
+          <ArrowBackIosOutlined />
+        </IconButton>
           )}
         </div>
         {route === 'itemList' && (
@@ -207,7 +228,13 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
                 <span>
                 {t('shipping-address')}
                 </span>
-                <button className="epbtn change-button" onClick={handleBackPage}>{t('change')}</button>
+                  <Button
+                    variant="outlined"
+                    className={classes.button}
+                    onClick={handleBackPage}
+                    color="primary"
+                  > {t('change')}
+                  </Button>
               </div>
               <div className="shipping-info">
                 {shippingAddress.line_1}, {shippingAddress.city}, {shippingAddress.county}, {shippingAddress.postcode}
@@ -223,7 +250,15 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             <div className="completed__body">
               <p>{t('thank-you-for-your-order')}</p>
               <OrderDetailsTable orderData={orderData.data} orderItems={orderData.included.items} />
-              <button className="epbtn --secondary --large" onClick={onCloseModal}>{t('continue-shopping')}</button>
+                <Button
+                variant="contained"
+                color="primary"
+                disableElevation
+                className={classes.button}
+                onClick={onCloseModal}
+                fullWidth
+              >{t('continue-shopping')}
+              </Button>
             </div>
           </div>
         )}
