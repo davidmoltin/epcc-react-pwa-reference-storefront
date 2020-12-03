@@ -2,7 +2,7 @@ import React from 'react';
 import { createProductUrl } from './routes';
 import { Link } from 'react-router-dom';
 import { Availability } from './Availability';
-import { Typography, Card, CardActionArea, CardMedia, CardContent, Box } from '@material-ui/core';
+import { Typography, Card, CardActionArea, CardMedia, CardContent } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import './ProductHit.scss';
 

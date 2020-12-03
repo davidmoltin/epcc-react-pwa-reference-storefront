@@ -8,7 +8,6 @@ import { Box, Grid, Typography, Container } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 import './Search.scss';
-import { typography } from '@material-ui/system';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -75,7 +74,7 @@ export const Search: React.FC<SearchParams> = () => {
     <div className={classes.root}>
     <Container maxWidth="xl" className={classes.bottom}>
       <Grid container>
-        <Grid lg={3} item>
+        <Grid lg={3} md={2} item>
         <div className="search">
           <input type="checkbox" id="checkbox" className="search__facetstoggleinput" />
             <label htmlFor="checkbox" className="search__facetstoggle epbtn --bordered">
@@ -84,7 +83,7 @@ export const Search: React.FC<SearchParams> = () => {
           <Facets key="search-facets" />
         </div>
         </Grid>
-        <Grid lg={9} item>
+        <Grid lg={9} md={4} xs={12} item>
           <Typography variant="h5">
             {t('search')}
           </Typography>
@@ -93,6 +92,11 @@ export const Search: React.FC<SearchParams> = () => {
         </Grid>
       </Grid>
     </Grid>
+    <div className="search__pagination">
+        <Box display="flex" justifyContent="center">
+          <Pagination showFirst={false} />
+        </Box>
+      </div>
     </Container>
   </div>
   );
