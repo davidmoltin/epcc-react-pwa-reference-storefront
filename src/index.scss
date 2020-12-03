@@ -7,19 +7,6 @@ html {
   height: 100%;
 }
 
-body {
-  height: 100%;
-  margin: 0;
-  font-family: Montserrat, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  font-size: $sizeInitial;
-  line-height: 1.428571429;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: hsl(0, 0, 20%);
-}
-
 img, svg {
   vertical-align: middle;
 }
