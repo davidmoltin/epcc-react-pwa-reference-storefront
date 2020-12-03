@@ -4,10 +4,11 @@ import { ProductHit } from './ProductHit';
 import { CustomRefinementList } from './CustomRefinementList';
 import { useTranslation } from './app-state';
 import { config } from './config';
+import { Box } from '@material-ui/core';
 
 import './Search.scss';
 
-interface SearchParams  {
+interface SearchParams {
 }
 
 export const Search: React.FC<SearchParams> = () => {
@@ -46,7 +47,7 @@ export const Search: React.FC<SearchParams> = () => {
       <h1 className="search__title">
         {t('search')}
       </h1>
-      <input type="checkbox" id="checkbox" className="search__facetstoggleinput"/>
+      <input type="checkbox" id="checkbox" className="search__facetstoggleinput" />
       <label htmlFor="checkbox" className="search__facetstoggle epbtn --bordered">
         {t('filter')}
       </label>
@@ -54,9 +55,9 @@ export const Search: React.FC<SearchParams> = () => {
       <div className="search__productlist">
         <Hits hitComponent={Hit} />
       </div>
-      <div className="search__pagination">
+      <Box display="flex" justifyContent="center">
         <Pagination showFirst={false} />
-      </div>
-  </div>
+      </Box>
+    </div>
   );
 };
