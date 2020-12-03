@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements'
 import { useCartData, useTranslation } from "./app-state";
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import './Checkout.scss';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      margin: theme.spacing(1),
+    },
+  }),
+);
 
 interface CheckoutParams {
   onPayOrder: (...args: any) => any,
@@ -14,6 +23,7 @@ export const Checkout: React.FC<CheckoutParams> = (props) => {
   const { shippingAddress, stripe, onPayOrder, isDisabled } = props;
   const { totalPrice } = useCartData();
   const { t } = useTranslation();
+  const classes = useStyles();
 
   const [isComplete, setIsComplete] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -75,7 +85,16 @@ export const Checkout: React.FC<CheckoutParams> = (props) => {
           <div className="checkout__error">{errorMsg}</div>
         )}
       </div>
-      <button className="epbtn --secondary --large --fullwidth" type="button" onClick={onPayment} disabled={!isComplete || isDisabled}>{t('pay') + ' ' + totalPrice}</button>
+            <Button
+              variant="contained"
+              color="primary"
+              disableElevation
+              className={classes.button}
+              onClick={onPayment}
+              disabled={!isComplete || isDisabled}
+              fullWidth
+            >{t('pay') + ' ' + totalPrice}
+            </Button>
     </div>
   )
 };
