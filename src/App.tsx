@@ -6,7 +6,7 @@ import { routes } from './routes';
 import { config } from './config';
 import { AppStateProvider } from './app-state';
 import { AppHeader } from './AppHeader';
-import { AppFooter } from './AppFooter';
+import Footer from './Components/Footer/Footer.js';
 import { CompareOverlay } from './CompareOverlay';
 import { APIErrorProvider } from './APIErrorProvider';
 import { APIErrorNotification } from './APIErrorNotification';
@@ -43,7 +43,7 @@ const App: React.FC = () => {
                           ))}
                           </Switch>
                       <Box display="flex">
-                        <AppFooter />
+                        <Footer />
                       </Box>
                     <aside className="app__compareoverlay">
                       <CompareOverlay />
