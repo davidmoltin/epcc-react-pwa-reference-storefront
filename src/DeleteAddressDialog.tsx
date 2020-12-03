@@ -1,6 +1,5 @@
 import React from 'react';
 import Modal from 'react-responsive-modal';
-import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { useTranslation } from './app-state';
 import './DeleteAddressDialog.scss';
 import {
