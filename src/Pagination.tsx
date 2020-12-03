@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Box } from '@material-ui/core';
 
 import './Pagination.scss';
 
@@ -47,7 +48,9 @@ export const Pagination: React.FC<PaginationProps> = (props) => {
 
   return (
     <div className="pagination">
+      <Box display="flex" justifyContent="center">
       {items}
+      </Box>
     </div>
   );
 };

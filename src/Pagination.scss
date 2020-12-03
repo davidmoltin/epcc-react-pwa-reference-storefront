@@ -1,14 +1,21 @@
 @import './theme/common';
 
 .pagination {
+  width: 100%;
+  align-items: center;
+
   &__link {
-    font-size: $sizeMediumLarger;
+    font-size: $sizeSmall;
     color: hsl(0, 0, 30%);
     padding: 12px;
     text-decoration: none;
 
     &--current {
-      color: hsl(0, 0, 45%);
+      color:  #333333;
+      border: 1px solid #ffffff;
+      padding: 6px;
+      border-radius: 6px;
+      background: #efefef;
     }
   }
 
