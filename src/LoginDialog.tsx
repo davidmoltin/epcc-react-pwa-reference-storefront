@@ -5,9 +5,27 @@ import { useFormik } from 'formik';
 import { login } from './service';
 import { useCustomerData, useTranslation } from './app-state';
 import { createRegistrationUrl } from './routes';
-import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
-
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import './LoginDialog.scss';
+import { Button, IconButton } from '@material-ui/core';
+import { CancelOutlined, PersonAddOutlined, VpnKeyOutlined } from '@material-ui/icons';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      margin: theme.spacing(1),
+    },
+    margin: {
+      margin: theme.spacing(1),
+    },
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+        width: '25ch',
+      },
+    },
+  }),
+);
 
 interface AppModalLoginMainProps {
   handleModalClose: (...args: any[]) => any,
@@ -24,6 +42,7 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
   const { setCustomerData } = useCustomerData();
   const { t } = useTranslation();
   const registrationUrl = createRegistrationUrl();
+  const classes = useStyles();
 
   const [failedLogin, setFailedLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -84,9 +103,13 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
           <h2 className="logindialog__title">
             {t('login')}
           </h2>
-          <button type="button" aria-label="close" onClick={handleModalClose}>
-            <CloseIcon />
-          </button>
+          <IconButton
+            aria-label="close"
+            className={classes.button}
+            onClick={handleModalClose}
+            color="primary"
+            > <CancelOutlined />
+         </IconButton>
         </div>
 
         <div className="logindialog__body">
@@ -113,12 +136,26 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
               </div>
             </div>
             <div className="epform__group --btn-container">
-              <button className="epbtn --secondary" id="login_modal_login_button" type="submit" disabled={isLoading}>
-                {t('login')}
-              </button>
-              <Link to={registrationUrl} className="epbtn --secondary" id="login_modal_register_button" onClick={registerNewUser}>
+            <Button
+              variant="outlined"
+              className={classes.button}
+              disabled={isLoading}
+              color="primary"
+              type="submit"
+              startIcon={< VpnKeyOutlined />}
+            > {t('login')}
+            </Button>
+            <Button
+              variant="outlined"
+              className={classes.button}
+              disabled={isLoading}
+              color="primary"
+              onClick={registerNewUser}
+              startIcon={< PersonAddOutlined />}
+            > <Link to={registrationUrl}>
                 {t('register')}
               </Link>
+            </Button>
             </div>
           </form>
         </div>
