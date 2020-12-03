@@ -89,19 +89,21 @@
   }
 
   #{$block}__pagination {
-    grid-area: pagination;
-    text-align: center;
-    margin-bottom: 80px;
-    margin-top: 20px;
+    align-items: center;
+    width: 100%;
 
     .ais-Pagination-item {
-      display: inline-block;
-      font-size: $sizeMediumLarger;
-      color: hsl(0, 0, 30%);
-      padding: 12px;
+      font-size: $sizeSmall;
+    color: hsl(0, 0, 30%);
+    padding: 12px;
+    text-decoration: none;
 
       &--selected {
-        color: hsl(0, 0, 45%);
+        color:  #333333;
+      border: 1px solid #ffffff;
+      padding: 6px; 
+      border-radius: 6px;
+      background: #efefef;
       }
     }
   }

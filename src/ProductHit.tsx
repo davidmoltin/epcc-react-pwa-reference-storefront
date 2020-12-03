@@ -2,8 +2,33 @@ import React from 'react';
 import { createProductUrl } from './routes';
 import { Link } from 'react-router-dom';
 import { Availability } from './Availability';
-
+import { Typography, Card, CardActionArea, CardMedia, CardContent, Box } from '@material-ui/core';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import './ProductHit.scss';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      padding: theme.spacing(2),
+      borderRadius: 0,
+      maxWidth: '300px',
+      margin: '8px',
+    },
+    paper: {
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+    },
+    media: {
+      borderRadius: 0,
+      height: 200, /*set product tumbnail height*/
+      width: '100%',
+    },
+    compare: {
+      padding: theme.spacing(2),
+      width: '100%',
+    },
+  }),
+);
 
 
 interface Hit {
@@ -25,27 +50,33 @@ interface ProductThumbnailProps {
 export const ProductHit: React.FC<ProductThumbnailProps> = (props) => {
   const { slug, name, price, amount, imgUrl } = props.hit;
   const productUrl = createProductUrl(slug);
+  const classes = useStyles();
 
   return (
     <div className="producthit">
-      <div className="producthit__imgcontainer">
-        <Link className="producthit__imglink" to={productUrl} aria-label={name}>
-          <img
-            className="producthit__image"
-            src={imgUrl}
-            alt={name}
-          />
+      <Card className={classes.root}>
+        <Link className={classes.media} to={productUrl} aria-label={name}>
+          <CardActionArea>
+            <CardMedia
+              component="img"
+              alt={name}
+              image={imgUrl}
+              title={name}
+            />
+            <CardContent>
+              <Typography variant="button">
+                <Link className="producthit__namelink" to={productUrl}>
+                  {name}
+                </Link>
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {price}
+                <Availability available={amount > 0} />
+              </Typography>
+            </CardContent>
+          </CardActionArea>
         </Link>
-      </div>
-      <div className="producthit__name">
-        <Link className="producthit__namelink" to={productUrl}>
-          {name}
-        </Link>
-      </div>
-      <div className="producthit__price">
-        {price}
-      </div>
-      <Availability available={amount > 0} />
+      </Card>
     </div>
   );
 };

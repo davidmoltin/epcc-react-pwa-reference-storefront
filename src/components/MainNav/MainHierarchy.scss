@@ -41,12 +41,12 @@
       flex-direction: row;
       flex-wrap: wrap;
       width: 100%;
-      pointer-events: none; //disable user's ability to click on root category
+      //pointer-events: none; //disable user's ability to click on root category
     }
 
     &.--level-1, &.--level-2, &.--level-3 {
       .navmenu__link {
-        pointer-events: auto;
+      //  pointer-events: auto;
         justify-content: left;
         padding-left: 16px;
 
@@ -98,7 +98,7 @@
 
         &.--level-0 {
           display: hidden;
-          pointer-events: none;
+          //pointer-events: none;
         }
 
         &.--level-1 {
