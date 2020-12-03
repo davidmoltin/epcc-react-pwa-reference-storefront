@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import useOnclickOutside from 'react-cool-onclickoutside';
 import { useTranslation } from './app-state';
 import { createBulkOrderUrl, createQuickOrderUrl } from './routes';
-import { ReactComponent as MoreIcon } from './images/icons/ic_more_vert.svg';
 import { Button, MenuItem, MenuList } from '@material-ui/core';
 import { MoreVertOutlined } from '@material-ui/icons';
 import { makeStyles, createStyles, Theme, withStyles } from '@material-ui/core/styles';
