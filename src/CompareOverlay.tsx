@@ -4,10 +4,19 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useCompareProducts, useTranslation } from './app-state';
 import { createCompareProductsUrl } from './routes';
 import { ProductMainImage } from './ProductMainImage';
-import { ReactComponent as RemoveIcon } from './images/icons/ic_close.svg';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 import './CompareOverlay.scss';
+import { Button, IconButton } from '@material-ui/core';
+import { RemoveCircleOutlineOutlined } from '@material-ui/icons';
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      margin: theme.spacing(1),
+    },
+  }),
+);
 
 export const CompareOverlay: React.FC = (props) => {
   const { compareProducts, showCompareMenu, removeFromCompare, removeAll } = useCompareProducts();
@@ -17,6 +26,7 @@ export const CompareOverlay: React.FC = (props) => {
   const compareUrlMatch = useRouteMatch(compareUrl);
   const isShowingOverlay = compareProducts.length > 0 && !compareUrlMatch;
   const { t } = useTranslation();
+  const classes = useStyles();
 
   const handleCompareClicked = () => {
     history.push(compareUrl);
@@ -43,20 +53,38 @@ export const CompareOverlay: React.FC = (props) => {
                 <div className="compareoverlay__productname">{product.name}</div>
               </div>
               <div className="compareoverlay__removeproduct">
-                <button className="epbtn --small" aria-label={t('remove-from-comparison')} onClick={() => handleRemoveProduct(product)}>
-                  <RemoveIcon />
-                </button>
+                <IconButton
+                  aria-label={t('remove-from-comparison')}
+                  onClick={() => handleRemoveProduct(product)}
+                >
+                  <RemoveCircleOutlineOutlined/>
+                </IconButton>
               </div>
             </div>
           ))}
         </div>
         <div className="compareoverlay__btns">
           {compareProducts.length > 1 && (
-            <button className="epbtn --bordered compareoverlay__removebtn" onClick={handleRemoveAllClicked}>{t('remove-all')}</button>
+              <Button
+                    variant="contained"
+                    color="primary"
+                    disableElevation
+                    className={classes.button}
+                    onClick={handleRemoveAllClicked}
+                  >{t('remove-all')}
+              </Button>
           )}
         </div>
       </div>
-      <button className="epbtn --secondary compareoverlay__comparebtn" disabled={!compareEnabled} onClick={handleCompareClicked}>{`${t('compare')} (${compareProducts.length})`}</button>
+        <Button
+              variant="contained"
+              color="primary"
+              disableElevation
+              className={classes.button}
+              disabled={!compareEnabled}
+              onClick={handleCompareClicked}
+            >{`${t('compare')} (${compareProducts.length})`}
+        </Button>
     </div>
   );
 };
