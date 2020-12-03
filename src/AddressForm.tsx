@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { updateAddress, addNewAddress } from './service';
 import { useFormik } from 'formik';
 import { useAddressData, useTranslation } from './app-state';
-import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import Modal from 'react-responsive-modal';
 import { CountriesSelect } from './CountriesSelect';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
