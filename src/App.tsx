@@ -33,18 +33,14 @@ const App: React.FC = () => {
                 <Configure hitsPerPage={8}/>
                     <CssBaseline />
                      <GlobalStyles />
-                      <Box display="flex">
                         <AppHeader />
-                      </Box>
                         <APIErrorNotification />
                           <Switch>
                           {routes.map(route => (
                             <Route key={route.path} {...route} />
                           ))}
                           </Switch>
-                      <Box display="flex">
                         <Footer />
-                      </Box>
                     <aside className="app__compareoverlay">
                       <CompareOverlay />
                     </aside>
