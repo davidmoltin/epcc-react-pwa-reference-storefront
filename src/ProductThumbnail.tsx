@@ -5,7 +5,6 @@ import { useResolve } from './hooks';
 import { createProductUrl } from './routes';
 import { Link } from 'react-router-dom';
 import { CompareCheck } from './CompareCheck';
-import { ProductMainImage } from './ProductMainImage';
 import { isProductAvailable } from './helper';
 import { Availability } from './Availability';
 import { APIErrorContext } from './APIErrorProvider';
