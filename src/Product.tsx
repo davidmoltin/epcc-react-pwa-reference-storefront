@@ -9,9 +9,19 @@ import { isProductAvailable } from './helper';
 import { Availability } from './Availability';
 import { VariationsSelector } from './VariationsSelector';
 import { APIErrorContext } from './APIErrorProvider';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 import './Product.scss';
+import { Button } from '@material-ui/core';
+import { AddShoppingCartOutlined } from '@material-ui/icons';
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      margin: theme.spacing(1),
+    },
+  }),
+);
 
 interface ProductParams {
   productSlug: string;
@@ -24,6 +34,7 @@ export const Product: React.FC = () => {
   const { selectedCurrency } = useCurrency();
   const { updateCartItems } = useCartData();
   const { addError } = useContext(APIErrorContext);
+  const classes = useStyles();
 
   const [product] = useResolve(
     async () => {
@@ -112,10 +123,15 @@ export const Product: React.FC = () => {
             }
             <div className="product__moltinbtncontainer">
               {productId &&
-                <button
-                  className="epbtn --secondary"
-                  onClick={handleAddToCart}
-                >{t('add-to-cart')}</button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    disableElevation
+                    className={classes.button}
+                    startIcon={< AddShoppingCartOutlined />}
+                    onClick={handleAddToCart}
+                    >{t('add-to-cart')}
+                  </Button>
               }
             </div>
             <div className="product__description">
