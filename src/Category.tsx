@@ -6,8 +6,33 @@ import { ProductThumbnail } from './ProductThumbnail';
 import { createCategoryUrl } from './routes';
 import { Pagination } from './Pagination';
 import { useResolve } from './hooks';
+import { Breadcrumbs, Link, Container, Typography, Grid } from '@material-ui/core';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-import './Category.scss';
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    box: {
+      color: theme.palette.text.primary,
+    },
+    paper: {
+      padding: theme.spacing(2),
+      color: theme.palette.text.secondary,
+    },
+    productrow: {
+      padding: theme.spacing(2),
+      color: theme.palette.text.secondary,
+      diplay: "flex",
+      flexDirection: "row",
+    },
+    bottom: {
+      paddingTop: '1em',
+      paddingBottom: '1em',
+    }
+  }),
+);
 
 function useCategoryProducts(categoryId: string | undefined, pageNum: number) {
   const { selectedLanguage } = useTranslation();
@@ -45,33 +70,34 @@ export const Category: React.FC = () => {
   const category = categoryPath?.[categoryPath?.length - 1];
   const parsedPageNum = parseInt(params.pageNum!);
   const pageNum = isNaN(parsedPageNum) ? 1 : parsedPageNum;
-
+  const classes = useStyles();
   const { products, totalPages } = useCategoryProducts(category?.id, pageNum);
 
   return (
-    <div className="category">
+  <div className={classes.root}>
+    <Container maxWidth="xl" className={classes.bottom}>
       {category && products ? (
         <>
-          <div className="category__breadcrumbs">
+          <Breadcrumbs aria-label="breadcrumb">
             {categoryPath?.map((category, index) => (
               <React.Fragment key={category.id}>
-                {index > 0 && (
-                  <span className="category__breadcrumbseparator">{'>'}</span>
-                )}
-                <a className="category__breadcrumblink" href={createCategoryUrl(category.slug)}>{category.name}</a>
+                <Link color="inherit" href={createCategoryUrl(category.slug)}>{category.name}</Link>
               </React.Fragment>
             ))}
-          </div>
+          </Breadcrumbs>
 
-          <h1 className="category__categoryname">{category?.name ?? ' '}</h1>
+        <Typography variant="h5" component="h6">
+          {category?.name ?? ' '}
+        </Typography>
 
-          <ul className="category__productlist">
+          <Grid container spacing={3} className={classes.productrow}>
             {products && products.data.map(product => (
-              <li key={product.id} className="category__product">
+              /*Set Grid size and number of products per line*/
+              <Grid item xs={6} sm={4} lg={2} xl={2} className={classes.paper} alignItems="stretch">
                 <ProductThumbnail product={product} />
-              </li>
+              </Grid>
             ))}
-          </ul>
+          </Grid>
 
           <div className="category__pagination">
             {totalPages && (
@@ -84,8 +110,12 @@ export const Category: React.FC = () => {
           </div>
         </>
       ) : (
-        <div className="loader" />
+      <div /> /**
+      * Loader Location
+      * @returns
+      */
       )}
-    </div>
+    </Container>
+  </div>
   );
 };
