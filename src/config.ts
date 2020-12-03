@@ -11,7 +11,7 @@ export const config = {
   algoliaIndexName: process.env.REACT_APP_ALGOLIA_INDEX_NAME || 'product',
   compareKeys: process.env.REACT_APP_COMPARE_KEYS?.split(',') || [],
   endpointURL: process.env.REACT_APP_ENDPOINT_URL || 'api.moltin.com',
-  b2b: process.env.REACT_APP_B2B_ENABLE || true,
+  b2b: process.env.REACT_APP_B2B_ENABLE || false,
   slide: process.env.REACT_APP_SLIDE_ENABLE || false,
   supportedLocales: process.env.REACT_APP_SUPPORTED_LOCALES?.split(',').map(el => JSON.parse(el)) || [
     {
