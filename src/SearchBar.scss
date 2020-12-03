@@ -2,21 +2,25 @@
 
 .searchbar {
   $block: &;
-
   max-width: 500px;
 
   #{$block}__hints {
-    top: 50px;
+    top: 40px;
     position: absolute;
     z-index: 2;
     background-color: $mainBackgroundColor;
     left: 0;
     width: 100%;
-    border: 1px solid $secondComplimentTextColor;
+    color: #333;
+    border: 0 solid $secondComplimentTextColor;
+    border-radius: 4px;
+    box-shadow: 0 0 4px #888;
+    font-weight: 100;
+    font-size: 0.9rem;
 
     .ais-Hits {
-      max-height: 200px;
-      overflow: scroll;
+      max-height: 400px;
+       overflow: scroll;
     }
 
     .ais-PoweredBy {
@@ -64,12 +68,15 @@
     display: flex;
 
     input {
-      height: 40px;
+      height: 36px;
       padding: 2px 35px;
+      margin: 4px;
       width: 100%;
-      color: $mainTextColor;
+      color: rgba(255, 255, 255, 1);
       outline: none;
-      border: 1px solid $secondComplimentTextColor;
+      border: 0px solid $secondComplimentTextColor;
+      border-radius: 6px;
+      background-color: rgba(255, 255, 255, 0.5);
 
       &:focus {
         border-color: $firstComplimentColor;
@@ -82,7 +89,7 @@
       }
     }
 
-    .ais-SearchBox{
+    .ais-SearchBox {
       width: 100%;
     }
 
@@ -90,14 +97,15 @@
       position: relative;
     }
 
-    .ais-SearchBox-submit,
-    .ais-SearchBox-reset {
+    .ais-SearchBox-reset,
+    .ais-SearchBox-submit {
       position: absolute;
       width: 30px;
       height: 40px;
       text-align: center;
       top: 0;
     }
+
     .ais-SearchBox-submit {
       left: 5px;
 
@@ -126,22 +134,26 @@
       border-radius: 36px;
       margin-left: 8px;
       cursor: pointer;
-      background-image: url(./images/icons/icon-search-mic.svg);
+      background-image: url("./images/icons/icon-search-mic.svg");
       background-repeat: no-repeat;
       background-position: center;
 
       &:hover {
-        background-image: url(./images/icons/icon-search-mic-hover.svg);
+        background-image: url("./images/icons/icon-search-mic-hover.svg");
       }
 
       &:active {
-        background-image: url(./images/icons/icon-search-mic-active.svg);
+        background-image: url("./images/icons/icon-search-mic-active.svg");
       }
     }
-
     @keyframes breatheAnimation {
-      100% { opacity: 1 }
-      50% { opacity: 0.65 }
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.65;
+      }
     }
 
     .VoiceSearchButtonBreathing {
@@ -154,20 +166,17 @@
       border-radius: 36px;
       margin-left: 8px;
       cursor: pointer;
-      background-image: url(./images/icons/icon-search-mic-active.svg);
+      background-image: url("./images/icons/icon-search-mic-active.svg");
       animation-name: breatheAnimation;
       animation-duration: 0.9s;
       animation-iteration-count: infinite;
     }
-
   }
 
   .ais-VoiceSearch-status {
     display: none;
   }
-
 }
-
 @media (max-width: $mobileWidth - 1px) {
   .searchbar {
     $block: &;
@@ -183,8 +192,8 @@
       padding: 10px 5px;
     }
 
-    #{$block}__open,
-    #{$block}__close {
+    #{$block}__close,
+    #{$block}__open {
       display: inline-block;
     }
 
@@ -198,7 +207,7 @@
       top: 60px;
       left: 0;
       margin: 0;
-      padding: 10px 10px;
+      padding: 10px;
       background-color: $mainColor;
       width: 100%;
 

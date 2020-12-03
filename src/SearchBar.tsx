@@ -4,9 +4,8 @@ import useOnclickOutside from 'react-cool-onclickoutside';
 import { SearchBox, Hits, PoweredBy, VoiceSearch } from 'react-instantsearch-dom';
 import { useTranslation } from './app-state';
 import { createSearchUrl } from './routes';
-
-import { ReactComponent as MagnifyingGlassIcon } from './images/icons/magnifying_glass.svg';
-import { ReactComponent as ClearIcon } from './images/icons/ic_clear.svg';
+import { ClearOutlined, SearchOutlined } from '@material-ui/icons';
+import { IconButton } from '@material-ui/core';
 
 import './SearchBar.scss';
 
@@ -14,7 +13,7 @@ interface SearchBoxProps {
 }
 
 const SearchButtonMic = (props: any) => (
-  props.islistening==="true" ?
+  props.islistening === "true" ?
     <span className="VoiceSearchButtonBreathing"
       {...props} /> :
     <span className="VoiceSearchButton"
@@ -23,9 +22,9 @@ const SearchButtonMic = (props: any) => (
 
 export const SearchBar: React.FC<SearchBoxProps> = () => {
   const { t } = useTranslation();
-  const [ inputVisible, setInputVisible] = useState(false);
-  const [ hitsVisible, setHitsVisible ] = useState(false);
-  const [ searchValue, setsSearchValue ] = useState(false);
+  const [inputVisible, setInputVisible] = useState(false);
+  const [hitsVisible, setHitsVisible] = useState(false);
+  const [searchValue, setsSearchValue] = useState(false);
   const history = useHistory();
 
   const searchBarRef = useOnclickOutside(() => {
@@ -40,7 +39,7 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
     event.preventDefault();
     setHitsVisible(false);
     const searchUrl = createSearchUrl();
-    if(searchUrl !== history.location.pathname) {
+    if (searchUrl !== history.location.pathname) {
       history.push(searchUrl);
     }
   };
@@ -65,18 +64,18 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
   const VoiceSearchButtonText = ({
     isListening,
     isBrowserSupported
-  }: {isListening:any, isBrowserSupported:any}) => (
-    isBrowserSupported ? (
-      isListening ?
-        <SearchButtonMic
-          islistening={isListening.toString()}
-        /> :
-        <SearchButtonMic
-          islistening={isListening.toString()}
-          onClick={() => handleFocus()}
-        />
-    ) : null
-  );
+  }: { isListening: any, isBrowserSupported: any }) => (
+      isBrowserSupported ? (
+        isListening ?
+          <SearchButtonMic
+            islistening={isListening.toString()}
+          /> :
+          <SearchButtonMic
+            islistening={isListening.toString()}
+            onClick={() => handleFocus()}
+          />
+      ) : null
+    );
 
   const Hit = ({ hit }: any) => {
     return (
@@ -97,13 +96,13 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
 
   return (
     <div ref={searchBarRef} className="searchbar">
-      <button
-        className="searchbar__open"
+      <IconButton
         onClick={handleInputToggle}
         aria-label={t('search')}
+        className="searchbar__open"
       >
-        <MagnifyingGlassIcon />
-      </button>
+        <SearchOutlined />
+      </IconButton>
       <div className={`searchbar__input ${inputVisible ? '--show' : ''}`}>
         <SearchBox
           onFocus={handleFocus}
@@ -111,8 +110,8 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
           onReset={handleChange}
           searchAsYouType
           onSubmit={handleSubmit}
-          submit={<MagnifyingGlassIcon />}
-          reset={<ClearIcon />}
+          submit={<SearchOutlined />}
+          reset={<ClearOutlined />}
           translations={translations}
         />
         <VoiceSearch
@@ -124,7 +123,7 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
           onClick={onCancel}>
           {t('cancel')}
         </button>
-        { hitsVisible &&
+        {hitsVisible &&
           <div className="searchbar__hints">
             <Hits
               hitComponent={Hit}
