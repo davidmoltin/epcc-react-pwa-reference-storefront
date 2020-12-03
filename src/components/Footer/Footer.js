@@ -1,5 +1,6 @@
 import React from "react";
-import { useTranslation } from './app-state';
+import { useTranslation } from '../../app-state';
+import { Link } from 'react-router-dom';
 import PropTypes from "prop-types";
 import {
   Grid,
@@ -112,7 +113,7 @@ const socialIcons = [
       </svg>
     ),
     label: "Facebook",
-    href: {t('facebook')}
+    href: "https://www.facebook.com"
   },
   {
     icon: (
@@ -149,7 +150,14 @@ const socialIcons = [
 ];
 
 function Footer(props) {
-  const { classes, theme, width } = props;
+  const { classes, width } = props;
+  const { t } = useTranslation();
+  const linkTo = {
+  aboutus: '/aboutus',
+  contactus: '/contactus',
+  shippingreturns: '/shippingreturns',
+  termsandconditions: '/termsandconditions',
+};
   return (
     <footer className="lg-p-top">
       <div className={classes.footerInner}>
@@ -213,7 +221,7 @@ function Footer(props) {
             <Typography variant="h6" paragraph className="text-white">
               About the Company
             </Typography>
-            <Typography style={{ color: "#8f9296" }} paragraph>
+            <Typography paragraph>
               Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce
               euismod convallis velit, eu auctor lacus vehicula sit amet.
             </Typography>

@@ -6,7 +6,7 @@ import { routes } from './routes';
 import { config } from './config';
 import { AppStateProvider } from './app-state';
 import { AppHeader } from './AppHeader';
-import Footer from './Components/Footer/Footer.js';
+import Footer  from './components/Footer/Footer.js'
 import { CompareOverlay } from './CompareOverlay';
 import { APIErrorProvider } from './APIErrorProvider';
 import { APIErrorNotification } from './APIErrorNotification';
