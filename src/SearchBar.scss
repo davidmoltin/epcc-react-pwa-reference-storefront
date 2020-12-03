@@ -177,8 +177,8 @@
     display: none;
   }
 }
-@media (max-width: $mobileWidth - 1px) {
-  .searchbar {
+@media (max-width: 959px) {
+    .searchbar {
     $block: &;
 
     #{$block}__close {
