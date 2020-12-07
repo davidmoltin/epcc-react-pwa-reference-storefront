@@ -5,7 +5,7 @@ import { useTranslation } from '../../app-state';
 import { useCategories } from '../../app-state';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import './MainNav.scss';
-import { MainHierarchy } from './MainHierarchy';
+import { MainHierarchy } from './SideHierarchy';
 import { Button, ButtonGroup } from '@material-ui/core';
 import { ExpandMoreOutlined } from '@material-ui/icons';
 

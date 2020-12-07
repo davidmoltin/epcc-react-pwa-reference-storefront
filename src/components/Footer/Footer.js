@@ -20,7 +20,7 @@ const styles = theme => ({
   footerInner: {
     backgroundColor: theme.palette.secondary.light,
     color: theme.palette.common.white,
-    paddingTop: theme.spacing(8),
+    paddingTop: theme.spacing(2),
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
     paddingBottom: theme.spacing(6),
@@ -31,7 +31,7 @@ const styles = theme => ({
       paddingBottom: theme.spacing(10)
     },
     [theme.breakpoints.up("md")]: {
-      paddingTop: theme.spacing(10),
+      paddingTop: theme.spacing(2),
       paddingLeft: theme.spacing(10),
       paddingRight: theme.spacing(10),
       paddingBottom: theme.spacing(10)

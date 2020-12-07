@@ -16,12 +16,13 @@
   
   .slider-wrapper {
     position: relative;
-    height: 40vh;
+    height: 600px;
+    width: 100%;
     overflow: hidden;
   }
   
   .slide {
-    height: 40vh;
+    height: 600px;
     background-size: cover !important;
   }
   

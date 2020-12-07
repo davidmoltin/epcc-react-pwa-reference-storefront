@@ -10,7 +10,7 @@ import { AccountDropdown } from './AccountDropdown';
 import { Navigation } from "./Navigation";
 import { CartModal } from "./CartModal";
 import { BulkOrderDropdown } from './BulkOrderDropdown';
-
+import { StaticBanner } from 'material-ui-banner';
 import headerLogo from './images/site-images/Company-Logo.svg';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -66,6 +66,8 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingRight: '40px;',
       border: '1px solid #efefef',
       width: '100%',
+      
+      top: 0,
     },
     mobileHeader: {
       backgroundColor: theme.palette.common.white,
@@ -80,6 +82,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.common.white,
       maxHeight: '50px',
       top: 0,
+      position: 'fixed',
     },
     appbar: {
       boxShadow: "0px 0px 0px 0px",
@@ -109,6 +112,11 @@ export const AppHeader: React.FC = () => {
   const handleCloseCartModal = () => {
     setIsCartModalOpen(false);
   };
+
+  StaticBanner.show({
+    AppBar: true,
+    label: 'This is an example of a static banner with one line of text.',
+  });
 
   const handleCartModal = () => {
     updateCartItems();
@@ -153,7 +161,7 @@ export const AppHeader: React.FC = () => {
                 </Badge>
             </IconButton>
         </Toolbar>
-
+        <StaticBanner />
        </div>
       </div>
     {/** Show Mobile Menu */}

@@ -10,7 +10,7 @@ import Footer  from './components/Footer/Footer.js'
 import { CompareOverlay } from './CompareOverlay';
 import { APIErrorProvider } from './APIErrorProvider';
 import { APIErrorNotification } from './APIErrorNotification';
-import { MuiThemeProvider, CssBaseline, Box, Typography} from "@material-ui/core";
+import { MuiThemeProvider, CssBaseline, Typography} from "@material-ui/core";
 import SiteWideTheme from './theme/theme';
 import GlobalStyles from './theme/GlobalStyles';
 import 'fontsource-roboto';
@@ -33,7 +33,7 @@ const App: React.FC = () => {
                 <Configure hitsPerPage={8}/>
                     <CssBaseline />
                      <GlobalStyles />
-                        <AppHeader />
+                      <AppHeader />
                         <APIErrorNotification />
                           <Switch>
                           {routes.map(route => (
