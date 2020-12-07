@@ -10,7 +10,6 @@ import { AccountDropdown } from './AccountDropdown';
 import { Navigation } from "./Navigation";
 import { CartModal } from "./CartModal";
 import { BulkOrderDropdown } from './BulkOrderDropdown';
-import { StaticBanner } from 'material-ui-banner';
 import headerLogo from './images/site-images/Company-Logo.svg';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -113,11 +112,6 @@ export const AppHeader: React.FC = () => {
     setIsCartModalOpen(false);
   };
 
-  StaticBanner.show({
-    AppBar: true,
-    label: 'This is an example of a static banner with one line of text.',
-  });
-
   const handleCartModal = () => {
     updateCartItems();
     setIsCartModalOpen(true);
@@ -161,7 +155,6 @@ export const AppHeader: React.FC = () => {
                 </Badge>
             </IconButton>
         </Toolbar>
-        <StaticBanner />
        </div>
       </div>
     {/** Show Mobile Menu */}
