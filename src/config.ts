@@ -22,6 +22,18 @@ export const config = {
     {
       "key": "fr",
       "name": "french"
+    },
+    {
+      "key": "ar",
+      "name": "arabic"
+    },
+    {
+      "key": "es",
+      "name": "spanish"
+    },
+    {
+      "key": "ja",
+      "name": "japanese"
     }
   ],
   defaultLanguage: process.env.REACT_APP_DEFAULT_LANGUAGE || "en",
