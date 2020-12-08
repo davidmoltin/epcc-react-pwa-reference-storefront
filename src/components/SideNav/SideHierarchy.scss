@@ -115,7 +115,6 @@
         .navmenu {
           &__nextbutton {
             &.--haschildren {
-              height: 48px;
               position: relative;
               flex: 1;
 
@@ -139,7 +138,6 @@
 
           &__link {
             cursor: pointer;
-            height: 48px;
             align-items: center;
             margin: 0;
             padding-left: 40px;

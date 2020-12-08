@@ -35,7 +35,7 @@ export const HomeSlide: React.FC = () => {
   return (
 <div className={classes.root}>
     <Box display="flex" flexDirection="row">
-      <Grid container spacing={2}>
+      <Grid container>
         <Grid item xs={12}>
           <Box className={classes.box}><AnimatedSlider/></Box>
         </Grid>

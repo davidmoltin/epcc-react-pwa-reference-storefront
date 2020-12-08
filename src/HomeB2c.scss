@@ -10,7 +10,7 @@
   #{$block}__banner {
     overflow: hidden;
     height: 480px;
-    margin-bottom: 45px;
+    margin-bottom: 0px;
     position: relative;
   }
 
@@ -30,7 +30,7 @@
   #{$block}__bannerwrap {
     width: 100%;
     padding: 15px 0 30px;
-    background-color: hsla(0, 0, 0, 0.6);
+    background-color: hsla(200, 19, 18, 0.6);
     color: $mainBackgroundColor;
     position: absolute;
     bottom: 0px;
@@ -76,6 +76,7 @@
   #{$block}__maingoods {
     overflow: hidden;
     margin-bottom: 45px;
+    margin-top: 45px;
     position: relative;
   }
 

@@ -6,6 +6,16 @@ import { useCategories } from '../../app-state';
 
 import './MainHierarchy.scss';
 import { Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+}));
 
 interface MainHierarchyProps {
   categoryHistory: string[];
@@ -15,7 +25,8 @@ interface MainHierarchyProps {
 
 export const MainHierarchy: React.FC<MainHierarchyProps> = (props) => {
   const { handleCloseNavigation } = props;
-  const { categoriesTree } = useCategories();
+  const { categoriesTree } = useCategories();  
+  const classes = useStyles();
 
   const handleCloseMenu = () => {
     handleCloseNavigation();
@@ -23,10 +34,12 @@ export const MainHierarchy: React.FC<MainHierarchyProps> = (props) => {
 
   function renderCategories(categories: moltin.Category[], level: number = 0, isVisible: boolean = false): React.ReactElement {
     return (
+      <div className={classes.root}>
       <ul className={`navmenu__sub --level-${level} ${isVisible ? '--show' : ''}`}>
-        {categories?.map(category => (
+       {categories?.map(category => (
+           
           <li key={category.id} className="navmenu__li">
-              <Link
+             <Link
                 onClick={handleCloseMenu}
                 to={createCategoryUrl(category.slug)}
               >
@@ -35,6 +48,7 @@ export const MainHierarchy: React.FC<MainHierarchyProps> = (props) => {
           </li>
         ))}
       </ul>
+      </div>
     );
   }
 

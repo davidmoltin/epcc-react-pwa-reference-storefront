@@ -27,9 +27,8 @@
       &__link {
         display: flex;
         align-items: center;
-        margin-left: 60px;
         padding-left: 0;
-        width: 76%;
+        z-index: 1100;
       }
     }
 
@@ -49,8 +48,6 @@
       //  pointer-events: auto;
         justify-content: left;
         padding-left: 16px;
-
-
       }
     }
   }
@@ -115,7 +112,6 @@
         .navmenu {
           &__nextbutton {
             &.--haschildren {
-              height: 48px;
               position: relative;
               flex: 1;
 
@@ -123,7 +119,6 @@
               &:after {
                 display: inline-block;
                 position: absolute;
-                right: 28px;
                 content: ' ';
                 width: 8px;
                 height: 8px;
@@ -139,17 +134,7 @@
 
           &__link {
             cursor: pointer;
-            height: 48px;
             align-items: center;
-            margin: 0;
-            padding-left: 40px;
-            font-size: $sizeInitial;
-            font-weight: 500;
-            color: $thirdComplimentColor;
-            text-transform: none;
-            display: inline-block;
-            text-align: left;
-            width: auto;
           }
         }
       }

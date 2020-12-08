@@ -159,33 +159,52 @@ function Footer(props) {
   termsandconditions: '/termsandconditions',
 };
   return (
-    <footer className="lg-p-top">
+    <footer>
       <div className={classes.footerInner}>
         <Grid container spacing={isWidthUp("md", width) ? 10 : 5}>
           <Grid item xs={6} md={3} lg={2}>
-          <div>
+          <div className={classes.footerLinks}>
             <Link to={linkTo.aboutus}>
               {t('about-us')}
             </Link>
           </div>
-          <div>
+          <div className={classes.footerLinks}>
             <Link to={linkTo.contactus}>
               {t('contact')}
             </Link>
           </div>
-          <div>
+          <div className={classes.footerLinks}>
             <Link to={linkTo.shippingreturns}>
               {t('shipping-and-returns')}
             </Link>
           </div>
-          <div>
+          <div className={classes.footerLinks}>
             <Link to={linkTo.termsandconditions}>
               {t('terms-and-conditions')}
             </Link>
           </div>
           </Grid>
           <Grid item xs={6} md={3} lg={2}>
-          Filler Menu 2
+          <div className={classes.footerLinks}>
+            <Link to={linkTo.aboutus}>
+              {t('about-us')}
+            </Link>
+          </div>
+          <div className={classes.footerLinks}>
+            <Link to={linkTo.contactus}>
+              {t('contact')}
+            </Link>
+          </div>
+          <div className={classes.footerLinks}>
+            <Link to={linkTo.shippingreturns}>
+              {t('shipping-and-returns')}
+            </Link>
+          </div>
+          <div className={classes.footerLinks}>
+            <Link to={linkTo.termsandconditions}>
+              {t('terms-and-conditions')}
+            </Link>
+          </div>
           </Grid>
           <Hidden mdDown>
             <Grid item xs={12} md={6} lg={4}>
