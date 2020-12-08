@@ -5,10 +5,9 @@ import { ProductMainImage } from './ProductMainImage';
 import { Availability } from './Availability';
 import { isProductAvailable } from './helper';
 import { config } from './config';
-import { ReactComponent as RemoveIcon } from './images/icons/ic_close.svg';
-
 import './CompareProducts.scss';
-
+import { RemoveCircleOutlineOutlined } from '@material-ui/icons';
+import { IconButton } from '@material-ui/core';
 
 export const CompareProducts: React.FC = () => {
   const { compareProducts, removeFromCompare } =  useCompareProducts();
@@ -41,10 +40,13 @@ export const CompareProducts: React.FC = () => {
                   {compareProducts.map(product => (
                     <td key={product.id}>
                       <div className="compareproducts__imgwrap">
+                      <IconButton
+                          aria-label={t('remove-from-comparison')}
+                          onClick={() => handleRemoveItem(product)}
+                        >
+                          <RemoveCircleOutlineOutlined/>
+                        </IconButton>
                         <ProductMainImage product={product} />
-                        <button onClick={() => handleRemoveItem(product)} className="epbtn compareproducts__removebtn" aria-label={t('remove-from-comparison')}>
-                          <RemoveIcon className="compareproducts__removeicon" />
-                        </button>
                       </div>
                       <div className="compareproducts__datawrap compareproducts__maininfo">
                         <div className="compareproducts__name">{product.name}</div>

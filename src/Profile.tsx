@@ -3,13 +3,24 @@ import { useFormik } from 'formik';
 import { updateCustomer } from './service';
 import { useCustomerData, useTranslation } from './app-state';
 import { APIErrorContext } from './APIErrorProvider';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { EditOutlined } from '@material-ui/icons';
 
 import './Profile.scss';
+import { Button } from '@material-ui/core';
 
 interface FormValues {
   email: string,
   username: string,
 }
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      margin: theme.spacing(1),
+    },
+  }),
+);
 
 export const Profile: React.FC = (props) => {
   const { id, token, customerEmail, customerName, setEmail, setName } = useCustomerData();
@@ -18,6 +29,7 @@ export const Profile: React.FC = (props) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { addError } = useContext(APIErrorContext);
+  const classes = useStyles();
 
   const initialValues:FormValues = {
     email: customerEmail,
@@ -88,7 +100,15 @@ export const Profile: React.FC = (props) => {
                 <span className="profile__infolabel">{t('username')}:</span>
                 {customerName}
               </p>
-              <button className="epbtn" onClick={handleShowForm}>{t('edit')}</button>
+              <Button
+                color="secondary"
+                variant="outlined"
+                className={classes.button}
+                startIcon={< EditOutlined />}
+                aria-label="toggle profile menu"
+                onClick={handleShowForm}
+              >{t('edit')}
+              </Button>
             </div>
           ) : (
             <div className={`profile__form ${isLoading ? '--loading' : ''}`}>
@@ -111,8 +131,23 @@ export const Profile: React.FC = (props) => {
                   </div>
                 </div>
                 <div className="epform__group">
-                  <button className="epbtn --secondary" type="submit">{t('save')}</button>
-                  <button className="epbtn --bordered" type="submit" onClick={handleHideForm}>{t('cancel')}</button>
+                  <Button 
+                    variant="contained" 
+                    color="primary" 
+                    type="submit" 
+                    disableElevation
+                    className={classes.button}>
+                    {t('save')}
+                  </Button>
+                  <Button 
+                    variant="outlined" 
+                    color="primary" 
+                    type="submit" 
+                    onClick={handleHideForm} 
+                    disableElevation
+                    className={classes.button}>
+                    {t('cancel')}
+                  </Button>
                 </div>
               </form>
             </div>
