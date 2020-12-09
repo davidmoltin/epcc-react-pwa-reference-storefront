@@ -1,0 +1,93 @@
+@import '../../theme/common';
+
+.catmenu {
+
+
+
+  .navigation {
+    &__dropdowncontent {
+      display: block;
+      position: absolute;
+      padding: 0px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      visibility: hidden;
+      transform: translateX(100%);
+      background-color: $mainBackgroundColor;
+      transition: 0.5s;
+
+      &.--show {
+        visibility: visible;
+        transform: translateX(0);
+      }
+    }
+  }
+
+  &__li {
+    width: 230px;
+  }
+
+  &__sub {
+    .catmenu {
+      &__link {
+        display: flex;
+        align-items: center;
+        padding-left: 0;
+        z-index: 1;
+        margin:0;
+        text-align:center;
+      }
+    }
+
+    ul {
+      position:absolute;
+      left:0;
+      display:none;
+      list-style-type: none;
+    }
+
+    li {
+      display:block;
+      position:relative;
+      float:left;
+      background: #FFFFFF;
+      z-index: 1;
+    }
+
+    li a {
+      display:block;
+      text-decoration:none;
+      }
+
+    li li a {font-size:80%;} /* smaller font size for sub menu items */
+        
+    li:hover ul ul {display:none;} /* hides sub-sublists */
+    
+    li:hover ul {display:block;} /* shows sublist on hover */
+    
+    li li:hover ul {
+      display:block; /* shows sub-sublist on hover */
+      margin-left:0px; /* this should be the same width as the parent list item */
+      }
+
+    &.--level-0 {
+      display: flex;
+      justify-content: center;
+      padding-left: 0;
+      text-transform: uppercase;
+      flex-direction: row;
+      flex-wrap: wrap;
+      vertical-align: middle;
+      //pointer-events: none; //disable user's ability to click on root category
+    }
+
+    &.--level-1, &.--level-2, &.--level-3 {
+      .catmenu__link {
+      //  pointer-events: auto;
+        justify-content: left;
+        flex: 1;
+      }
+    }
+  }
+}

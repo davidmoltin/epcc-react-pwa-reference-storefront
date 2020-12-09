@@ -68,7 +68,7 @@ export const MainNav: React.FC = () => {
        <ButtonGroup>
          {topCategories?.map(category => (
            <div key={category.name}>
-             {category.url ? (
+             {category.url ? ( 
                 <Button href={category.url} className={classes.navbutton} color="secondary">{category.displayName}</Button>
              ) : (
                 <Button endIcon={ <ExpandMoreOutlined fontSize="inherit" style={{fontSize: "1rem"}}/> } ref={reference} onClick={() => handleSelectorClicked(category.displayName)} className={classes.navbutton} color="secondary">{category.displayName}</Button>

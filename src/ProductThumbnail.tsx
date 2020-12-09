@@ -5,8 +5,8 @@ import { useResolve } from './hooks';
 import { createProductUrl } from './routes';
 import { Link } from 'react-router-dom';
 import { CompareCheck } from './CompareCheck';
-import { isProductAvailable } from './helper';
-import { Availability } from './Availability';
+//import { isProductAvailable } from './helper';
+//import { Availability } from './Availability';
 import { APIErrorContext } from './APIErrorProvider';
 import { Typography, Card, CardActionArea, CardMedia, CardContent, Box } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
@@ -74,10 +74,8 @@ export const ProductThumbnail: React.FC<ProductThumbnailProps> = (props) => {
               <Typography variant="button">
                 {props.product.name}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                <p>{props.product.sku}</p>
-                <p>{props.product.meta.display_price.without_tax.formatted}</p>
-                <Availability available={isProductAvailable(props.product)} />
+              <Typography variant="button" component="p">
+                {props.product.meta.display_price.without_tax.formatted}
               </Typography>
             </CardContent>
           </CardActionArea>
