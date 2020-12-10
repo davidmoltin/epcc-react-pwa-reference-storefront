@@ -35,7 +35,7 @@
   "short_name": "EP Commerce Cloud",
   "orientation": "portrait",
   "display": "standalone",
-  "start_url": "http://epccmaterial.netlify.app",
+  "start_url": "https://epccmaterial.netlify.app/",
   "description": "EP Commerce Cloud Reference Storefront",
   "background_color": "#FFFFFF",
   "theme_color": "#000000"

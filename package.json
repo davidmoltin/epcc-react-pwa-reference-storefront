@@ -19,6 +19,7 @@
     "algoliasearch": "^4.3.0",
     "aos": "^2.3.4",
     "app-localizer": "^1.2.2",
+    "clsx": "^1.1.1",
     "constate": "^2.0.0",
     "css-reset-and-normalize": "^2.1.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
