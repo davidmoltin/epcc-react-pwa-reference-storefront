@@ -18,7 +18,8 @@ import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 import { AppBar, ButtonGroup, Grid } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
-import { CatNav } from './components/CatNav/CatNav';
+//import { CatNav } from './components/CatNav/CatNav';
+import { MainNav } from './components/MainNav/MainNav';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -120,18 +121,18 @@ export const AppHeader: React.FC = () => {
   return (
   <div className={classes.grow}>
       <div className={classes.sectionDesktop}>
-        <Grid justify={"space-between"} container className={classes.tophead}>
+        <Grid justify="space-between" container className={classes.tophead}>
                 <Grid lg={4} item>
                 <Typography className={classes.title} noWrap>
                   CHECK OUT OUR BLACK FRIDAY DEALS NOW!
                 </Typography>
                 </Grid>
                 <Grid lg={3} item>
-                  <Grid container justify={"center"}>
+                  <Grid item justify="center">
                   <SearchBar />
                   </Grid>
                 </Grid>
-                <Grid lg={2} justify={"flex-end"} />
+                <Grid lg={2} item justify="flex-end" />
                   <ButtonGroup>
                     <AccountDropdown />
                     <BulkOrderDropdown />
@@ -147,7 +148,7 @@ export const AppHeader: React.FC = () => {
                   <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
           </Link>
           <Grid container justify="center">
-              <CatNav />
+              <MainNav />
           </Grid>
           <IconButton title="Show Cart" color="inherit" onClick={handleCartModal}>
                 <Badge badgeContent={count} color="primary">
@@ -164,12 +165,12 @@ export const AppHeader: React.FC = () => {
              <Grid xs={3}>
               <Navigation />
             </Grid>
-            <Grid container xs={6} item alignItems="center" justify="center">
+            <Grid xs={6} item alignItems="center" justify="center">
                   <Link to="/" aria-label={t('logo')}>
                       <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
                   </Link>
             </Grid>
-            <Grid xs={3} container justify="flex-end">
+            <Grid xs={3} item justify="flex-end">
               <div className="searchbar">
                 <SearchBar />
               </div>

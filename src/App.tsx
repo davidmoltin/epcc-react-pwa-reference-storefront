@@ -25,31 +25,31 @@ const App: React.FC = () => {
 
   return (
     <MuiThemeProvider theme={SiteWideTheme}>
-        <Typography>
+      <Typography>
         <Router>
           <APIErrorProvider>
             <AppStateProvider>
               <InstantSearch searchClient={searchClient} indexName={config.algoliaIndexName}>
                 <Configure hitsPerPage={8}/>
-                    <CssBaseline />
-                     <GlobalStyles />
+                  <CssBaseline />
+                    <GlobalStyles />
                       <AppHeader />
                         <APIErrorNotification />
                           <Switch>
-                          {routes.map(route => (
-                            <Route key={route.path} {...route} />
-                          ))}
+                            {routes.map(route => (
+                              <Route key={route.path} {...route} />
+                            ))}
                           </Switch>
                         <Footer />
-                    <aside className="app__compareoverlay">
-                      <CompareOverlay />
-                    </aside>
+                      <aside className="app__compareoverlay">
+                        <CompareOverlay />
+                      </aside>
               </InstantSearch>
             </AppStateProvider>
           </APIErrorProvider>
         </Router>
-        </Typography>
-      </MuiThemeProvider>
+      </Typography>
+    </MuiThemeProvider>
   );
 };
 
