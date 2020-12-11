@@ -1,12 +1,13 @@
 import React, { useState }  from 'react';
-import useOnclickOutside from 'react-cool-onclickoutside';
 import * as moltin from '@moltin/sdk';
 import { useTranslation } from '../../app-state';
+import useOnclickOutside from 'react-cool-onclickoutside';
 import { useCategories } from '../../app-state';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import './CategoryNav.scss';
 import { CategoryHierarchy } from './CategoryHierarchy';
 import { Button, ButtonGroup } from '@material-ui/core';
+import { ExpandMoreOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,6 +52,10 @@ export const CategoryNav: React.FC = () => {
     setCategoryHistory([]);
   };
 
+  const reference = useOnclickOutside(() => {
+    setIsOpen(false);
+  });
+
   function renderTopCategories(categories: moltin.Category[]): React.ReactElement {
     const topCategories = [
       { name: 'home', displayName: t('home'), url: '/' },
@@ -58,19 +63,23 @@ export const CategoryNav: React.FC = () => {
     ];
 
     return (
-    <div>
-      <ButtonGroup>
-        {topCategories?.map(category => (
-          <div key={category.name}>
-            {category.url ? ( 
+      <div>
+        <ButtonGroup>
+         {topCategories?.map(category => (
+           <div key={category.name}>
+             {category.url ? ( 
                 <Button href={category.url} className={classes.navbutton} color="secondary">{category.displayName}</Button>
-            ) : (
-              <CategoryHierarchy categoryHistory={categoryHistory} handleCloseNavigation={handleCloseNavigation} handleCategoryClick={handleCategoryClick} />
-            )}
-          </div>
-        ))}
-      </ButtonGroup>
-    </div>
+             ) : (
+                <Button endIcon={ <ExpandMoreOutlined fontSize="inherit" style={{fontSize: "1rem"}}/> } ref={reference} onClick={() => handleSelectorClicked(category.displayName)} className={classes.navbutton} color="secondary"><CategoryHierarchy categoryHistory={categoryHistory} handleCloseNavigation={handleCloseNavigation} handleCategoryClick={handleCategoryClick} /></Button>
+             )}
+           </div>
+         ))}
+       </ButtonGroup>
+       { /**category menu starts here**/ }
+       <div ref={reference} className={`navigation__dropdowncontent ${isOpen ? '--show' : ''}`}>
+         <CategoryHierarchy categoryHistory={categoryHistory} handleCloseNavigation={handleCloseNavigation} handleCategoryClick={handleCategoryClick} />
+       </div>
+     </div>
    );
  }
 
