@@ -18,7 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 import { AppBar, ButtonGroup, Grid } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
-import { CatNav } from './components/CatNav/CatNav';
+import { CategoryNav } from './components/CategoryNav/CategoryNav';
 //import { MainNav } from './components/MainNav/MainNav';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -148,7 +148,7 @@ export const AppHeader: React.FC = () => {
                   <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
           </Link>
           <Grid container justify="center">
-              <CatNav />
+              <CategoryNav />
           </Grid>
           <IconButton title="Show Cart" color="inherit" onClick={handleCartModal}>
                 <Badge badgeContent={count} color="primary">
