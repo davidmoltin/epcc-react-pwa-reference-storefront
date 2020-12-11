@@ -59,7 +59,6 @@ export const MainNav: React.FC = () => {
     const topCategories = [
       { name: 'home', displayName: t('home'), url: '/' },
       { name: 'products', displayName: t('products'), children: categories },
-      { name: 'support', displayName: t('support'), url:'/contactus' },
     ];
 
     return (
@@ -69,9 +68,9 @@ export const MainNav: React.FC = () => {
          {topCategories?.map(category => (
            <div key={category.name}>
              {category.url ? ( 
-                <Button href={category.url} className={classes.navbutton} color="secondary">{category.displayName}</Button>
+                <Button href={category.url} className={classes.navbutton} color="inherit">{category.displayName}</Button>
              ) : (
-                <Button endIcon={ <ExpandMoreOutlined fontSize="inherit" style={{fontSize: "1rem"}}/> } ref={reference} onClick={() => handleSelectorClicked(category.displayName)} className={classes.navbutton} color="secondary">{category.displayName}</Button>
+                <Button endIcon={ <ExpandMoreOutlined fontSize="inherit" style={{fontSize: "1rem"}}/> } ref={reference} onClick={() => handleSelectorClicked(category.displayName)} className={classes.navbutton} color="inherit">{category.displayName}</Button>
              )}
            </div>
          ))}

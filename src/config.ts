@@ -14,6 +14,8 @@ export const config = {
   b2b: process.env.REACT_APP_B2B_ENABLE || false,
   b2c: process.env.REACT_APP_B2C_ENABLE || true,
   slide: process.env.REACT_APP_SLIDE_ENABLE || false,
+  three: process.env.REACT_APP_THREE_ENABLE || true,
+  two: process.env.REACT_APP_TWO_ENABLE || false,
   supportedLocales: process.env.REACT_APP_SUPPORTED_LOCALES?.split(',').map(el => JSON.parse(el)) || [
     {
       "key": "en",

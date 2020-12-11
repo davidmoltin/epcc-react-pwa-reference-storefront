@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { createCategoryUrl } from '../../routes';
 import * as moltin from '@moltin/sdk';
 import { useCategories } from '../../app-state';
@@ -39,11 +38,7 @@ export const MainHierarchy: React.FC<MainHierarchyProps> = (props) => {
        {categories?.map(category => (
            
           <li key={category.id} className="navmenu__li">
-             <Link
-                onClick={handleCloseMenu}
-                to={createCategoryUrl(category.slug)}
-              >
-              <Button size="medium" fullWidth color="secondary" className={`navmenu__link ${category.children ? '--haschildren' : ''}`}>{category.name}</Button></Link>
+              <Button href={createCategoryUrl(category.slug)} onClick={handleCloseMenu} size="medium" fullWidth color="secondary" className={`navmenu__link ${category.children ? '--haschildren' : ''}`}>{category.name}</Button>
             {category.children && renderCategories(category.children, level + 1)}
           </li>
         ))}

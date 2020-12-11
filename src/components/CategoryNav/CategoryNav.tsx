@@ -70,7 +70,7 @@ export const CategoryNav: React.FC = () => {
              {category.url ? ( 
                 <Button href={category.url} className={classes.navbutton} color="secondary">{category.displayName}</Button>
              ) : (
-                <Button endIcon={ <ExpandMoreOutlined fontSize="inherit" style={{fontSize: "1rem"}}/> } ref={reference} onClick={() => handleSelectorClicked(category.displayName)} className={classes.navbutton} color="secondary"><CategoryHierarchy categoryHistory={categoryHistory} handleCloseNavigation={handleCloseNavigation} handleCategoryClick={handleCategoryClick} /></Button>
+                <Button endIcon={ <ExpandMoreOutlined fontSize="inherit" style={{fontSize: "1rem"}}/> } ref={reference} onClick={() => handleSelectorClicked(category.displayName)} className={classes.navbutton} color="secondary">{category.displayName}</Button>
              )}
            </div>
          ))}
