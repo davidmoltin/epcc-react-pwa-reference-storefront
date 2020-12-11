@@ -157,6 +157,7 @@ function Footer(props) {
   contactus: '/contactus',
   shippingreturns: '/shippingreturns',
   termsandconditions: '/termsandconditions',
+
 };
   return (
     <footer>

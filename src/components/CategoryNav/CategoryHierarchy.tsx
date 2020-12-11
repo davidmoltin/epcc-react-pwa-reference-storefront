@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
         margin: theme.spacing(1),
         paddingRight: "25px",
         paddingLeft: "25px",
-        fontSize: "1.05em",
+        fontSize: ".9rem",
         color: theme.palette.secondary.light,
         //textTransform: "none",
     },
