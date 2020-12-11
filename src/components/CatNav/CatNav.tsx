@@ -20,9 +20,19 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const CatNav: React.FC = (props) => {
+interface MainHierarchyProps {
+  categoryHistory: string[];
+  handleCloseNavigation: () => void;
+  handleCategoryClick: (id: string, name: string) => void;
+}
+
+export const CatNav: React.FC<MainHierarchyProps> = (props) => {
+  const { handleCloseNavigation } = props;
   const { categoriesTree } = useCategories();  
   const classes = useStyles();
+  const handleCloseMenu = () => {
+    handleCloseNavigation();
+  };
 
   function renderCategories(categories: moltin.Category[], level: number = 0, isVisible: boolean = false): React.ReactElement {
     return (
@@ -31,7 +41,7 @@ export const CatNav: React.FC = (props) => {
             <ul className={`catmenu__sub --level-${level} ${isVisible ? '--show' : ''}`}>
             {categories?.map(category => (
                 <li key={category.id} className="catmenu__li">
-                    <Button href={createCategoryUrl(category.slug)} fullWidth className={classes.button}>{category.name}</Button>
+                    <Button href={createCategoryUrl(category.slug)} onClick={handleCloseMenu} fullWidth className={classes.button}>{category.name}</Button>
                     {category.children && renderCategories(category.children, level + 1)}
                 </li>
                 ))}
