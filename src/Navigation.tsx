@@ -107,7 +107,7 @@ export const Navigation: React.FC = () => {
           {topCategories?.map(category => (
             <li key={category.name} className="navigation__list">
               {category.url ? (
-                                <Button href={category.url} onClick={handleCloseNavigation} className={classes.navbutton} color="inherit">{category.displayName}</Button>
+                <Button href={category.url} onClick={handleCloseNavigation} className={classes.navbutton} color="inherit">{category.displayName}</Button>
 
               ) : (
                 <Button endIcon={ <ExpandMoreOutlined style={{fontSize: "1.2rem"}}/> } ref={reference} onClick={() => handleSelectorClicked(category.displayName)} className={classes.navbutton} color="inherit">{category.displayName}</Button>
