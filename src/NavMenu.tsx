@@ -1,8 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { createCategoryUrl } from './routes';
 import * as moltin from '@moltin/sdk';
 import { useCategories } from './app-state';
-import { Button } from '@material-ui/core';
 
 import './NavMenu.scss';
 
@@ -29,8 +29,13 @@ export const NavMenu: React.FC<NavMenuProps> = (props) => {
       <ul className={`navmenu__sub --level-${level} ${isVisible ? '--show' : ''}`}>
         {categories?.map(category => (
           <li key={category.id} className="navmenu__li">
-              <Button href={createCategoryUrl(category.slug)} onClick={handleCloseMenu} size="medium" fullWidth color="secondary" className={`navmenu__link ${category.children ? '--haschildren' : ''}`}>{category.name}</Button>
-
+              <Link
+                onClick={handleCloseMenu}
+                className={`navmenu__link ${category.children ? '--haschildren' : ''}`}
+                to={createCategoryUrl(category.slug)}
+              >
+                {category.name}
+              </Link>
               <button type="button" className={`navmenu__nextbutton ${category.children ? '--haschildren' : ''}`} onClick={() => handleShow(category)} />
             {category.children && renderCategories(category.children, level + 1, categoryHistory.includes(category.id))}
           </li>
