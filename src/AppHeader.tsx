@@ -4,7 +4,7 @@ import { HeaderTwoLevel } from './components/Headers/HeaderTwoLevel';
 import { HeaderAppBar } from './components/Headers/HeaderAppBar';
 
 export const AppHeader: React.FC = () => {
-  if (config.three ) return ( < HeaderAppBar />);
+  if (config.app ) return ( < HeaderAppBar />);
   else return (
     < HeaderTwoLevel />
   );
