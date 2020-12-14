@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
         paddingLeft: '20px',
         paddingRight: '20px',
         fontWeight: 900,
+        fontSize: '1rem',
       },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -146,6 +147,7 @@ export const HeaderThreeLevel: React.FC = () => {
                     <BulkOrderDropdown />
                     <LanguageDropdown />
                   </ButtonGroup>
+                
         </Grid>
     </div>
 
@@ -171,14 +173,11 @@ export const HeaderThreeLevel: React.FC = () => {
         <Grid justify="space-between" container className={classes.bottomhead}>
                 <Grid lg={4} item>
                 <Typography className={classes.title} noWrap>
+                    <MainNav />
                 </Typography>
                 </Grid>
-                <Grid lg={3} item>
-                  <Grid item justify="center">
-                  <MainNav />
-                  </Grid>
-                </Grid>
                 <Grid lg={2} item justify="flex-end" />
+                
         </Grid>
     </div>
     {/** Show Mobile Menu */}

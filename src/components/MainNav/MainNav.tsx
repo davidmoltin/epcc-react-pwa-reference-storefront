@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme: Theme) =>
     navbutton: {
         paddingRight: "25px",
         paddingLeft: "25px",
-        fontSize: ".9rem",
         //textTransform: "none",
     },
   }),
