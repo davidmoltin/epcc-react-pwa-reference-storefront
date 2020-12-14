@@ -227,7 +227,7 @@ function Footer(props) {
                         flexDirection="column"
                         justifyContent="center"
                       >
-                        <Typography variant="h6" className="text-white">
+                        <Typography className="text-white">
                           {info.description}
                         </Typography>
                       </Box>

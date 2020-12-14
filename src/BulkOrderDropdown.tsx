@@ -4,7 +4,7 @@ import { useTranslation } from './app-state';
 import { createBulkOrderUrl, createQuickOrderUrl } from './routes';
 import { Button, MenuItem, MenuList } from '@material-ui/core';
 import { MoreVertOutlined } from '@material-ui/icons';
-import { makeStyles, createStyles, Theme, withStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';

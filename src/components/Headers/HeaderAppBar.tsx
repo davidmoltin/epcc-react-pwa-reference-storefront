@@ -7,7 +7,6 @@ import { useCartData, useTranslation } from '../../app-state';
 import { LanguageDropdown } from '../../LanguageDropdown';
 import { SearchBar } from '../../SearchBar';
 import { AccountDropdown } from '../../AccountDropdown';
-import { Navigation } from "../../Navigation";
 import { CartModal } from "../../CartModal";
 import { BulkOrderDropdown } from '../../BulkOrderDropdown';
 import headerLogo from '../../images/site-images/Company-Logo.svg';
@@ -19,7 +18,6 @@ import { AppBar, ButtonGroup, Grid } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 //import { CategoryNav } from './components/CategoryNav/CategoryNav';
 import { MainNav } from '../MainNav/MainNav';
-import { MenuOutlined, MoreHorizOutlined, SearchOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

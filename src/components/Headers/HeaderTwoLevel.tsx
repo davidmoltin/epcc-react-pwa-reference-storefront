@@ -19,7 +19,7 @@ import Badge from '@material-ui/core/Badge';
 import { AppBar, ButtonGroup, Grid } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 //import { CategoryNav } from './components/CategoryNav/CategoryNav';
-import { MainNav } from '../MainNav/MainNav';
+//import { MainNav } from '../MainNav/MainNav';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

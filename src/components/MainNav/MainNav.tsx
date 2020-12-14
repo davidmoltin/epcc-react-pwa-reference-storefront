@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export const MainNav: React.FC = () => {
   const { t } = useTranslation();
   const classes = useStyles();
-
   const { categoriesTree } = useCategories();
   const [isOpen, setIsOpen] = useState(false);
   const [isTopMenuOpen, setIsTopMenuOpen] = useState(false);
