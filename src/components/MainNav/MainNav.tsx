@@ -6,10 +6,9 @@ import { useCategories } from '../../app-state';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import './MainNav.scss';
 import { MainHierarchy } from './MainHierarchy';
-import { Button, ButtonGroup, IconButton } from '@material-ui/core';
-import { ExpandMoreOutlined, MenuOutlined } from '@material-ui/icons';
 import { ReactComponent as CloseIcon } from '../../images/icons/ic_close.svg';
-import { ReactComponent as ArrowIcon } from '../../images/icons/arrow_left.svg';
+import { Button, ButtonGroup } from '@material-ui/core'
+import ExpandMoreOutlined from '@material-ui/icons/ExpandMoreOutlined'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,10 +68,6 @@ export const MainNav: React.FC = () => {
   const reference = useOnclickOutside(() => {
     setIsOpen(false);
   });
-
-  const handleGoBack = () => {
-    window.history.back();
-  };
   
   function renderTopCategories(categories: moltin.Category[]): React.ReactElement {
     const topCategories = [

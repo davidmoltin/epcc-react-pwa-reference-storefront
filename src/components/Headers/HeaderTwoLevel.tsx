@@ -62,8 +62,6 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.common.white,
       color: theme.palette.common.black,
       minHeight: '80px',
-      paddingLeft: '40px',
-      paddingRight: '40px;',
       border: '1px solid #efefef',
       width: '100%',
       
@@ -148,7 +146,7 @@ export const HeaderTwoLevel: React.FC = () => {
                   <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
           </Link>
           <Grid container justify="center">
-              <MainNav />
+              <Navigation />
           </Grid>
           <IconButton title="Show Cart" color="inherit" onClick={handleCartModal}>
                 <Badge badgeContent={count} color="primary">
@@ -162,23 +160,24 @@ export const HeaderTwoLevel: React.FC = () => {
       <div className={classes.sectionMobile}>
       <AppBar position="fixed" className={classes.appbar}>
          <Toolbar className={classes.mobileHeader}>
+           <Grid xs={12} container>
              <Grid xs={2}>
               <Navigation />
             </Grid>
-            <Grid xs={5} item alignItems="center" justify="center">
+            <Grid xs={3} item alignItems="center" justify="center">
                   <Link to="/" aria-label={t('logo')}>
                       <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
                   </Link>
             </Grid>
-            <Grid xs={3} item justify="flex-end">
+            <Grid xs={6} item justify="flex-end">
                 <SearchBar />
-                <AccountDropdown />
                 <IconButton title="Show Cart" color="inherit" onClick={handleCartModal}>
                     <Badge badgeContent={count} color="primary">
                       <ShoppingCartOutlinedIcon />
                     </Badge>
                 </IconButton>
             </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
         <Toolbar />
