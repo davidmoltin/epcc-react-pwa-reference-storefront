@@ -14,7 +14,6 @@ import headerLogo from '../../images/site-images/Company-Logo.svg';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 import { AppBar, ButtonGroup, Grid } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
@@ -61,6 +60,9 @@ const useStyles = makeStyles((theme: Theme) =>
     inputRoot: {
       color: 'inherit',
     },
+    search: {
+      width: '500px',
+    },
     sectionDesktop: {
       display: 'none',
       [theme.breakpoints.up('md')]: {
@@ -75,7 +77,6 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingRight: '40px;',
       border: '1px solid #efefef',
       width: '100%',
-      
       top: 0,
     },
     mobileHeader: {
@@ -112,7 +113,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const HeaderThreeLevel: React.FC = () => {
+export const HeaderAppBar: React.FC = () => {
   const { t } = useTranslation();
   const classes = useStyles();
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
@@ -130,17 +131,8 @@ export const HeaderThreeLevel: React.FC = () => {
   return (
   <div className={classes.grow}>
     <div className={classes.sectionDesktop}>
+    { /** TODO - remove this after adding menu */}
         <Grid justify="space-between" container className={classes.tophead}>
-                <Grid lg={4} item>
-                <Typography className={classes.title} noWrap>
-                  CHECK OUT OUR BLACK FRIDAY DEALS NOW!
-                </Typography>
-                </Grid>
-                <Grid lg={3} item>
-                  <Grid item justify="center">
-                  
-                  </Grid>
-                </Grid>
                 <Grid lg={2} item justify="flex-end" />
                   <ButtonGroup>
                     <AccountDropdown />
@@ -153,33 +145,28 @@ export const HeaderThreeLevel: React.FC = () => {
 
     <div className={classes.sectionDesktop}>
       <div className={classes.grow}>
+        <AppBar className={classes.appbar}>
         <Toolbar className={classes.header}>
           <Link to="/" aria-label={t('logo')}>
               { /** TODO - change to material UI spec for logo */}
                   <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
           </Link>
           <Grid container justify="center">
-            <SearchBar />
+            <MainNav />
           </Grid>
+          <div className={classes.search}>
+          <SearchBar />
+          </div>
           <IconButton title="Show Cart" color="inherit" onClick={handleCartModal}>
                 <Badge badgeContent={count} color="primary">
                   <ShoppingCartOutlinedIcon />
                 </Badge>
             </IconButton>
         </Toolbar>
+        </AppBar>
        </div>
       </div>
-      <div className={classes.sectionDesktop}>
-        <Grid justify="space-between" container className={classes.bottomhead}>
-                <Grid lg={4} item>
-                <Typography className={classes.title} noWrap>
-                    <MainNav />
-                </Typography>
-                </Grid>
-                <Grid lg={2} item justify="flex-end" />
-                
-        </Grid>
-    </div>
+
     {/** Show Mobile Menu */}
       <div className={classes.sectionMobile}>
       <AppBar position="fixed" className={classes.appbar}>

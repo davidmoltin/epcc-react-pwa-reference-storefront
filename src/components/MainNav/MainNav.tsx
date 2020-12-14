@@ -20,9 +20,9 @@ const useStyles = makeStyles((theme: Theme) =>
         paddingLeft: theme.spacing(4),
     },
     navbutton: {
-        paddingRight: "25px",
-        paddingLeft: "25px",
-        //textTransform: "none",
+      paddingRight: "25px",
+      paddingLeft: "25px",
+      fontWeight: 700,
     },
   }),
 );
@@ -69,7 +69,7 @@ export const MainNav: React.FC = () => {
              {category.url ? ( 
                 <Button href={category.url} className={classes.navbutton} color="inherit">{category.displayName}</Button>
              ) : (
-                <Button endIcon={ <ExpandMoreOutlined fontSize="inherit" style={{fontSize: "1rem"}}/> } ref={reference} onClick={() => handleSelectorClicked(category.displayName)} className={classes.navbutton} color="inherit">{category.displayName}</Button>
+                <Button endIcon={ <ExpandMoreOutlined style={{fontSize: "1.2rem"}}/> } ref={reference} onClick={() => handleSelectorClicked(category.displayName)} className={classes.navbutton} color="inherit">{category.displayName}</Button>
              )}
            </div>
          ))}

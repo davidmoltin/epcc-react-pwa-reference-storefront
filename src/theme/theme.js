@@ -1,4 +1,6 @@
 import { createMuiTheme, responsiveFontSizes } from "@material-ui/core";
+import 'fontsource-ubuntu';
+import 'fontsource-oxygen';
 
 // colors
 const primary = "#01579B";
@@ -31,6 +33,7 @@ const xs = 0;
 const spacing = 8;
 
 const theme = createMuiTheme({
+
   palette: {
     primary: { 
       main: primary,
@@ -139,10 +142,12 @@ const theme = createMuiTheme({
   },
   typography: {
     useNextVariants: true,
-    fontFamily: 'Roboto',
+    fontFamily: 'Oxygen',
   },
   Button: {
-    disableElevation: "True",
+    disableElevation: true,
+    fontFamily: 'Ubuntu',
+    fontWeight: 900,
   }
 });
 

@@ -13,9 +13,6 @@ import { APIErrorNotification } from './APIErrorNotification';
 import { MuiThemeProvider, CssBaseline, Typography} from "@material-ui/core";
 import SiteWideTheme from './theme/theme';
 import GlobalStyles from './theme/GlobalStyles';
-import 'fontsource-roboto';
-import './theme/App.scss';
-import './App.scss';
 
 const App: React.FC = () => {
   const searchClient = algoliasearch(

@@ -1,10 +1,10 @@
 import React from 'react';
 import { config } from './config';
 import { HeaderTwoLevel } from './components/Headers/HeaderTwoLevel';
-import { HeaderThreeLevel } from './components/Headers/HeaderThreeLevel';
+import { HeaderAppBar } from './components/Headers/HeaderAppBar';
 
 export const AppHeader: React.FC = () => {
-  if (config.three ) return ( < HeaderThreeLevel />);
+  if (config.three ) return ( < HeaderAppBar />);
   else return (
     < HeaderTwoLevel />
   );
