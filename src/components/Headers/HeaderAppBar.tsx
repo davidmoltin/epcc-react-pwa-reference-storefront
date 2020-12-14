@@ -19,6 +19,7 @@ import { AppBar, ButtonGroup, Grid } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 //import { CategoryNav } from './components/CategoryNav/CategoryNav';
 import { MainNav } from '../MainNav/MainNav';
+import { MenuOutlined, MoreHorizOutlined, SearchOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -130,22 +131,7 @@ export const HeaderAppBar: React.FC = () => {
 
   return (
   <div className={classes.grow}>
-    <div className={classes.sectionDesktop}>
-    { /** TODO - remove this after adding menu */}
-        <Grid justify="space-between" container className={classes.tophead}>
-                <Grid lg={2} item justify="flex-end" />
-                  <ButtonGroup>
-                    <AccountDropdown />
-                    <BulkOrderDropdown />
-                    <LanguageDropdown />
-                  </ButtonGroup>
-                
-        </Grid>
-    </div>
-
-    <div className={classes.sectionDesktop}>
-      <div className={classes.grow}>
-        <AppBar className={classes.appbar}>
+      <AppBar className={classes.appbar}>
         <Toolbar className={classes.header}>
           <Link to="/" aria-label={t('logo')}>
               { /** TODO - change to material UI spec for logo */}
@@ -157,44 +143,19 @@ export const HeaderAppBar: React.FC = () => {
           <div className={classes.search}>
           <SearchBar />
           </div>
+          <ButtonGroup>
+            <AccountDropdown />
+            <BulkOrderDropdown />
+            <LanguageDropdown />
+          </ButtonGroup>
           <IconButton title="Show Cart" color="inherit" onClick={handleCartModal}>
-                <Badge badgeContent={count} color="primary">
+            <Badge badgeContent={count} color="primary">
                   <ShoppingCartOutlinedIcon />
                 </Badge>
-            </IconButton>
+          </IconButton>
         </Toolbar>
         </AppBar>
-       </div>
-      </div>
-
-    {/** Show Mobile Menu */}
-      <div className={classes.sectionMobile}>
-      <AppBar position="fixed" className={classes.appbar}>
-         <Toolbar className={classes.mobileHeader}>
-             <Grid xs={3}>
-              <Navigation />
-            </Grid>
-            <Grid xs={6} item alignItems="center" justify="center">
-                  <Link to="/" aria-label={t('logo')}>
-                      <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
-                  </Link>
-            </Grid>
-            <Grid xs={3} item justify="flex-end">
-              <div className="searchbar">
-                <SearchBar />
-              </div>
-              <div className="showcart">
-                <IconButton title="Show Cart" color="inherit" onClick={handleCartModal}>
-                    <Badge badgeContent={count} color="primary">
-                      <ShoppingCartOutlinedIcon />
-                    </Badge>
-                </IconButton>
-              </div>
-            </Grid>
-        </Toolbar>
-      </AppBar>
         <Toolbar />
-       </div>
       <Offline>
         <div className="appheader__networkoffline">
           <strong>

@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
-import { makeStyles, createStyles, Theme, withStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 import './AccountDropdown.scss';
 import { AccountCircleOutlined } from '@material-ui/icons';
@@ -27,16 +27,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
-
-const ColorButton = withStyles((theme: Theme) => ({
-  root: {
-    color: theme.palette.primary.contrastText,
-    backgroundColor: theme.palette.primary.main,
-    '&:hover': {
-      backgroundColor: theme.palette.primary.main[700],
-    },
-  },
-}))(Button);
 
 export const AccountDropdown: React.FC = (props) => {
   const { isLoggedIn, customerEmail, customerName, clearCustomerData } = useCustomerData();
@@ -96,17 +86,17 @@ export const AccountDropdown: React.FC = (props) => {
   if (isLoggedIn) {
     return (
       <div className={classes.root}>
-        <div>
-          <ColorButton
+          <Button
             ref={anchorRef}
             aria-controls={open ? 'menu-account' : undefined}
             aria-haspopup="true"
             onClick={handleToggle}
             disableElevation
+            color="inherit"
             startIcon={< AccountCircleOutlined />}
           >
             Account
-          </ColorButton>
+          </Button>
           <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
             {({ TransitionProps, placement }) => (
               <Grow
@@ -129,7 +119,6 @@ export const AccountDropdown: React.FC = (props) => {
               </Grow>
             )}
           </Popper>
-        </div>
       </div>
 
     );
@@ -137,13 +126,14 @@ export const AccountDropdown: React.FC = (props) => {
 
   return (
     <div>
-      <ColorButton
+      <Button
         startIcon={<AccountCircleOutlined />}
         onClick={() => {setIsModalOpen(true)}}
         disableElevation
+        color="inherit"
       >
         {t('account')}
-      </ColorButton>
+      </Button>
       <LoginDialog openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} />
     </div>
   );

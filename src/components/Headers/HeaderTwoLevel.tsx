@@ -162,25 +162,22 @@ export const HeaderTwoLevel: React.FC = () => {
       <div className={classes.sectionMobile}>
       <AppBar position="fixed" className={classes.appbar}>
          <Toolbar className={classes.mobileHeader}>
-             <Grid xs={3}>
+             <Grid xs={2}>
               <Navigation />
             </Grid>
-            <Grid xs={6} item alignItems="center" justify="center">
+            <Grid xs={5} item alignItems="center" justify="center">
                   <Link to="/" aria-label={t('logo')}>
                       <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
                   </Link>
             </Grid>
             <Grid xs={3} item justify="flex-end">
-              <div className="searchbar">
                 <SearchBar />
-              </div>
-              <div className="showcart">
+                <AccountDropdown />
                 <IconButton title="Show Cart" color="inherit" onClick={handleCartModal}>
                     <Badge badgeContent={count} color="primary">
                       <ShoppingCartOutlinedIcon />
                     </Badge>
                 </IconButton>
-              </div>
             </Grid>
         </Toolbar>
       </AppBar>

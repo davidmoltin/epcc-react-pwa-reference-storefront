@@ -6,8 +6,10 @@ import { useCategories } from '../../app-state';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import './MainNav.scss';
 import { MainHierarchy } from './MainHierarchy';
-import { Button, ButtonGroup } from '@material-ui/core';
-import { ExpandMoreOutlined } from '@material-ui/icons';
+import { Button, ButtonGroup, IconButton } from '@material-ui/core';
+import { ExpandMoreOutlined, MenuOutlined } from '@material-ui/icons';
+import { ReactComponent as CloseIcon } from '../../images/icons/ic_close.svg';
+import { ReactComponent as ArrowIcon } from '../../images/icons/arrow_left.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,33 +29,51 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
 export const MainNav: React.FC = () => {
   const { t } = useTranslation();
-
   const classes = useStyles();
+
   const { categoriesTree } = useCategories();
   const [isOpen, setIsOpen] = useState(false);
   const [isTopMenuOpen, setIsTopMenuOpen] = useState(false);
   const [categoryHistory, setCategoryHistory] = useState<string[]>([]);
+  const [categoryName, setCategoryName] = useState("");
   const handleCategoryClick = (categoryId: string, categoryName: string) => {
     setCategoryHistory([...categoryHistory, categoryId]);
+    setCategoryName(categoryName);
   };
 
   const handleCloseNavigation = () => {
     setIsTopMenuOpen(!isTopMenuOpen);
     setIsOpen(false);
+    setCategoryName(t('categories'));
   };
 
   const handleSelectorClicked = (category: string) => {
     setIsOpen(!isOpen);
     setCategoryHistory([]);
+    setCategoryName(category);
+  };
+
+  const handleBack = () => {
+    if (categoryHistory.length !== 0) {
+      const updatedCategoryHistory: string[] = categoryHistory.slice(categoryHistory.length, 1);
+      setCategoryName(t('products'));
+      setCategoryHistory(updatedCategoryHistory);
+    } else {
+      setIsOpen(false);
+      setCategoryName(t('categories'));
+    }
   };
 
   const reference = useOnclickOutside(() => {
     setIsOpen(false);
   });
 
+  const handleGoBack = () => {
+    window.history.back();
+  };
+  
   function renderTopCategories(categories: moltin.Category[]): React.ReactElement {
     const topCategories = [
       { name: 'home', displayName: t('home'), url: '/' },
@@ -62,7 +82,16 @@ export const MainNav: React.FC = () => {
 
     return (
        //Start Mobile Menu
-       <div>
+      <div className="navigation__categories">
+        <div className="navigation__categories --header" ref={reference}>
+          <button onClick={handleBack} className="navigation__categories --leftarrow">
+            {t('back')}
+          </button>
+          <span className="navigation__title">
+            {categoryName}
+          </span>
+          <CloseIcon onClick={handleCloseNavigation} className="navigation__categories --close" />
+        </div>
        <ButtonGroup>
          {topCategories?.map(category => (
            <div key={category.name}>
@@ -83,8 +112,10 @@ export const MainNav: React.FC = () => {
  }
 
   return (
+
         <div>
           {categoriesTree && renderTopCategories(categoriesTree)}
         </div>
+
   );
 };

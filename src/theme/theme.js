@@ -147,7 +147,6 @@ const theme = createMuiTheme({
   Button: {
     disableElevation: true,
     fontFamily: 'Ubuntu',
-    fontWeight: 900,
   }
 });
 

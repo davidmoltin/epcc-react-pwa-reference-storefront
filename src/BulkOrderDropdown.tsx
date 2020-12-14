@@ -25,16 +25,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const ColorButton = withStyles((theme: Theme) => ({
-  root: {
-    color: theme.palette.primary.contrastText,
-    backgroundColor: theme.palette.primary.main,
-    '&:hover': {
-      backgroundColor: theme.palette.primary.main[700],
-    },
-  },
-}))(Button);
-
 export const BulkOrderDropdown: React.FC = (props) => {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -75,15 +65,16 @@ export const BulkOrderDropdown: React.FC = (props) => {
 
   return (
   <div className={classes.root}>
-        <ColorButton
+        <Button
           ref={anchorRef}
           aria-controls={open ? 'menu-list-grow' : undefined}
           aria-haspopup="true"
           onClick={handleToggle}
           variant="text"
           disableElevation
+          color="inherit"
         >< MoreVertOutlined />
-        </ColorButton>
+        </Button>
         <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
           {({ TransitionProps, placement }) => (
             <Grow
