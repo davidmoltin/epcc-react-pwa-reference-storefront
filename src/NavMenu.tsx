@@ -5,7 +5,7 @@ import * as moltin from '@moltin/sdk';
 import { useCategories } from './app-state';
 
 import './NavMenu.scss';
-import { Button } from '@material-ui/core';
+//import { Button } from '@material-ui/core';
 
 interface NavMenuProps {
   categoryHistory: string[];
@@ -35,13 +35,9 @@ export const NavMenu: React.FC<NavMenuProps> = (props) => {
                 className={`navmenu__link ${category.children ? '--haschildren' : ''}`}
                 to={createCategoryUrl(category.slug)}
               >
-                <Button
-                  size="small" 
-                  fullWidth
-                  color="secondary" 
-                >
+                
                   {category.name}
-                </Button>
+               
               </Link>
               <button type="button" className={`navmenu__nextbutton ${category.children ? '--haschildren' : ''}`} onClick={() => handleShow(category)} />
             {category.children && renderCategories(category.children, level + 1, categoryHistory.includes(category.id))}
