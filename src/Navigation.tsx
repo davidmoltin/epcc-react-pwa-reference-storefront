@@ -1,5 +1,4 @@
 import React, { useState }  from 'react';
-import { Link } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import * as moltin from '@moltin/sdk';
 import { useTranslation } from './app-state';
@@ -117,7 +116,16 @@ export const Navigation: React.FC = () => {
                   {category.displayName}
                 </Button>
               ) : (
-                <button className="navigation__link --haschildren" ref={reference} onClick={() => handleSelectorClicked(category.displayName)}>{category.displayName}</button>
+                <Button 
+                endIcon={ <ExpandMoreOutlined 
+                style={{fontSize: "1.2rem"}}/> } 
+                ref={reference} 
+                onClick={() => handleSelectorClicked(category.displayName)} 
+                className={classes.navbutton} 
+                color="inherit"
+                >
+                  {category.displayName}
+                </Button>
               )}
             </div>
           ))}
