@@ -118,7 +118,7 @@ export const Navigation: React.FC = () => {
               ) : (
                 <button 
                 className="navigation__link --haschildren" 
-                ref={reference} 
+                ref={reference}  
                 onClick={() => handleSelectorClicked(category.displayName)}
                 >
                   {category.displayName}
