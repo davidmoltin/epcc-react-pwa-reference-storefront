@@ -1,5 +1,6 @@
 import React, { useState }  from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
+import { Link } from 'react-router-dom';
 import * as moltin from '@moltin/sdk';
 import { useTranslation } from './app-state';
 import { useCategories } from './app-state';
@@ -9,7 +10,7 @@ import { ReactComponent as MenuIcon } from './images/icons/ic_menu.svg';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ReactComponent as ArrowIcon } from './images/icons/arrow_left.svg';
 import { Button, ButtonGroup } from '@material-ui/core'
-//import ExpandMoreOutlined from '@material-ui/icons/ExpandMoreOutlined'
+import ExpandMoreOutlined from '@material-ui/icons/ExpandMoreOutlined'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 import './Navigation.scss';
@@ -106,23 +107,29 @@ export const Navigation: React.FC = () => {
           {topCategories?.map(category => (
             <div key={category.name} className="navigation__list">
               {category.url ? (
+              <Link
+                to={category.url}
+                title={category.displayName}
+                onClick={handleCloseNavigation}
+              >
                 <Button 
-                  href={category.url} 
                   className={classes.navbutton} 
                   color="inherit"
                   title={category.displayName}
-                  onClick={handleCloseNavigation}
                   >
                   {category.displayName}
                 </Button>
+              </Link>
               ) : (
-                <button 
-                className="navigation__link --haschildren" 
+                <Button 
+                className={classes.navbutton} 
+                color="inherit"
                 ref={reference}  
                 onClick={() => handleSelectorClicked(category.displayName)}
+                endIcon={ <ExpandMoreOutlined style={{fontSize: "1.2rem"}}/> }
                 >
                   {category.displayName}
-                </button>
+                </Button>
               )}
             </div>
           ))}
