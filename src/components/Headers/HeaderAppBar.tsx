@@ -10,6 +10,7 @@ import { AccountDropdown } from '../../AccountDropdown';
 import { CartModal } from "../../CartModal";
 import { BulkOrderDropdown } from '../../BulkOrderDropdown';
 import headerLogo from '../../images/site-images/Company-Logo.svg';
+import { Navigation } from "../../Navigation";
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,7 +18,7 @@ import Badge from '@material-ui/core/Badge';
 import { AppBar, ButtonGroup, Grid } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 //import { CategoryNav } from './components/CategoryNav/CategoryNav';
-import { MainNav } from '../MainNav/MainNav';
+//import { MainNav } from '../MainNav/MainNav';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -136,7 +137,7 @@ export const HeaderAppBar: React.FC = () => {
                   <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
           </Link>
           <Grid container justify="center">
-            <MainNav />
+            <Navigation />
           </Grid>
           <div className={classes.search}>
           <SearchBar />

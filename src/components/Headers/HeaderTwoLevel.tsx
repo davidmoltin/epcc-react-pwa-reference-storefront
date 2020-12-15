@@ -20,6 +20,7 @@ import { AppBar, ButtonGroup, Grid } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 //import { CategoryNav } from './components/CategoryNav/CategoryNav';
 //import { MainNav } from '../MainNav/MainNav';
+import '../../AppHeader.scss';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

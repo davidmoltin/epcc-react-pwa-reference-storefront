@@ -1,20 +1,41 @@
 import React, { useState }  from 'react';
-import { Link } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
+import { Link } from 'react-router-dom';
 import * as moltin from '@moltin/sdk';
 import { useTranslation } from './app-state';
 import { useCategories } from './app-state';
 import { config } from "./config";
 import { NavMenu } from './NavMenu';
-
-import './Navigation.scss';
-
 import { ReactComponent as MenuIcon } from './images/icons/ic_menu.svg';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ReactComponent as ArrowIcon } from './images/icons/arrow_left.svg';
+import { Button } from '@material-ui/core'
+import ExpandMoreOutlined from '@material-ui/icons/ExpandMoreOutlined'
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+
+import './Navigation.scss';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+      maxWidth: 360,
+      backgroundColor: theme.palette.background.paper,
+    },
+    nested: {
+        paddingLeft: theme.spacing(4),
+    },
+    navbutton: {
+      paddingRight: "25px",
+      paddingLeft: "25px",
+      fontWeight: 700,
+    },
+  }),
+);
 
 export const Navigation: React.FC = () => {
   const { t } = useTranslation();
+  const classes = useStyles();
   const { categoriesTree } = useCategories();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -86,16 +107,29 @@ export const Navigation: React.FC = () => {
           {topCategories?.map(category => (
             <li key={category.name} className="navigation__list">
               {category.url ? (
-                <Link
-                  className="navigation__link"
-                  to={category.url}
+              <Link
+                to={category.url}
+                title={category.displayName}
+                onClick={handleCloseNavigation}
+              >
+                <Button 
+                  className={classes.navbutton} 
+                  color="inherit"
                   title={category.displayName}
-                  onClick={handleCloseNavigation}
+                  >
+                  {category.displayName}
+                </Button>
+              </Link>
+              ) : (
+                <Button 
+                className={classes.navbutton} 
+                color="inherit"
+                ref={reference}  
+                onClick={() => handleSelectorClicked(category.displayName)}
+                endIcon={ <ExpandMoreOutlined style={{fontSize: "1.2rem"}}/> }
                 >
                   {category.displayName}
-                </Link>
-              ) : (
-                <button className="navigation__link --haschildren" ref={reference} onClick={() => handleSelectorClicked(category.displayName)}>{category.displayName}</button>
+                </Button>
               )}
             </li>
           ))}
