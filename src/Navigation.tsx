@@ -116,16 +116,13 @@ export const Navigation: React.FC = () => {
                   {category.displayName}
                 </Button>
               ) : (
-                <Button 
-                endIcon={ <ExpandMoreOutlined 
-                style={{fontSize: "1.2rem"}}/> } 
+                <button 
+                className="navigation__link --haschildren" 
                 ref={reference} 
-                onClick={() => handleSelectorClicked(category.displayName)} 
-                className={classes.navbutton} 
-                color="inherit"
+                onClick={() => handleSelectorClicked(category.displayName)}
                 >
                   {category.displayName}
-                </Button>
+                </button>
               )}
             </div>
           ))}
