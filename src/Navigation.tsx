@@ -9,8 +9,6 @@ import { NavMenu } from './NavMenu';
 import { ReactComponent as MenuIcon } from './images/icons/ic_menu.svg';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ReactComponent as ArrowIcon } from './images/icons/arrow_left.svg';
-import { Button } from '@material-ui/core'
-import ExpandMoreOutlined from '@material-ui/icons/ExpandMoreOutlined'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 import './Navigation.scss';
@@ -113,24 +111,10 @@ export const Navigation: React.FC = () => {
                 title={category.displayName}
                 onClick={handleCloseNavigation}
               >
-                <Button 
-                  className={classes.navbutton} 
-                  color="inherit"
-                  title={category.displayName}
-                  >
-                  {category.displayName}
-                </Button>
+                {category.displayName}
               </Link>
               ) : (
-                <Button 
-                className={classes.navbutton} 
-                color="inherit"
-                ref={reference}  
-                onClick={() => handleSelectorClicked(category.displayName)}
-                endIcon={ <ExpandMoreOutlined style={{fontSize: "1.2rem"}}/> }
-                >
-                  {category.displayName}
-                </Button>
+                <button className="navigation__link --haschildren" ref={reference} onClick={() => handleSelectorClicked(category.displayName)}>{category.displayName}</button>
               )}
             </li>
           ))}
