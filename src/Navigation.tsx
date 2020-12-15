@@ -6,15 +6,36 @@ import { useTranslation } from './app-state';
 import { useCategories } from './app-state';
 import { config } from "./config";
 import { NavMenu } from './NavMenu';
-
-import './Navigation.scss';
-
 import { ReactComponent as MenuIcon } from './images/icons/ic_menu.svg';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ReactComponent as ArrowIcon } from './images/icons/arrow_left.svg';
+import { Button, ButtonGroup } from '@material-ui/core'
+import ExpandMoreOutlined from '@material-ui/icons/ExpandMoreOutlined'
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+
+import './Navigation.scss';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+      maxWidth: 360,
+      backgroundColor: theme.palette.background.paper,
+    },
+    nested: {
+        paddingLeft: theme.spacing(4),
+    },
+    navbutton: {
+      paddingRight: "25px",
+      paddingLeft: "25px",
+      fontWeight: 700,
+    },
+  }),
+);
 
 export const Navigation: React.FC = () => {
   const { t } = useTranslation();
+  const classes = useStyles();
   const { categoriesTree } = useCategories();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -82,24 +103,25 @@ export const Navigation: React.FC = () => {
           </span>
           <CloseIcon onClick={handleCloseNavigation} className="navigation__categories --close" />
         </div>
-        <ul className="navigation__sub">
+        <ButtonGroup>
           {topCategories?.map(category => (
-            <li key={category.name} className="navigation__list">
+            <div key={category.name} className="navigation__list">
               {category.url ? (
-                <Link
-                  className="navigation__link"
-                  to={category.url}
+                <Button 
+                  href={category.url} 
+                  className={classes.navbutton} 
+                  color="inherit"
                   title={category.displayName}
                   onClick={handleCloseNavigation}
-                >
+                  >
                   {category.displayName}
-                </Link>
+                </Button>
               ) : (
                 <button className="navigation__link --haschildren" ref={reference} onClick={() => handleSelectorClicked(category.displayName)}>{category.displayName}</button>
               )}
-            </li>
+            </div>
           ))}
-        </ul>
+        </ButtonGroup>
         <div ref={reference} className={`navigation__dropdowncontent ${isOpen ? '--show' : ''}`}>
           <NavMenu categoryHistory={categoryHistory} handleCloseNavigation={handleCloseNavigation} handleCategoryClick={handleCategoryClick} />
         </div>

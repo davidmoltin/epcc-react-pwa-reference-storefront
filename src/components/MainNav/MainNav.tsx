@@ -69,9 +69,17 @@ export const MainNav: React.FC = () => {
   });
   
   function renderTopCategories(categories: moltin.Category[]): React.ReactElement {
-    const topCategories = [
+    const topCategories = !config.b2b ? [
       { name: 'home', displayName: t('home'), url: '/' },
       { name: 'products', displayName: t('products'), children: categories },
+      { name: 'support', displayName: t('support'), url:'/contactus' },
+    ] : [
+      { name: 'home', displayName: t('home'), url: '/' },
+      { name: 'company', displayName: t('company'), url:'/company' },
+      { name: 'products', displayName: t('products'), children: categories },
+      { name: 'industries', displayName: t('industries'), url:'/industries' },
+      { name: 'services', displayName: t('services'), url:'/services' },
+      { name: 'support', displayName: t('support'), url:'/contactus' },
     ];
 
     return (
