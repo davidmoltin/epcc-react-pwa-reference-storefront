@@ -103,11 +103,12 @@ export const Navigation: React.FC = () => {
           </span>
           <CloseIcon onClick={handleCloseNavigation} className="navigation__categories --close" />
         </div>
-        <ButtonGroup>
+        <ul className="navigation__sub">
           {topCategories?.map(category => (
-            <div key={category.name} className="navigation__list">
+            <li key={category.name} className="navigation__list">
               {category.url ? (
               <Link
+                className="navigation__link"  
                 to={category.url}
                 title={category.displayName}
                 onClick={handleCloseNavigation}
@@ -131,9 +132,9 @@ export const Navigation: React.FC = () => {
                   {category.displayName}
                 </Button>
               )}
-            </div>
+            </li>
           ))}
-        </ButtonGroup>
+        </ul>
         <div ref={reference} className={`navigation__dropdowncontent ${isOpen ? '--show' : ''}`}>
           <NavMenu categoryHistory={categoryHistory} handleCloseNavigation={handleCloseNavigation} handleCategoryClick={handleCategoryClick} />
         </div>
