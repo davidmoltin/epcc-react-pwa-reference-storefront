@@ -93,6 +93,7 @@ export const AccountDropdown: React.FC = (props) => {
             onClick={handleToggle}
             disableElevation
             color="inherit"
+            variant="text"
             startIcon={< AccountCircleOutlined />}
           >
             Account

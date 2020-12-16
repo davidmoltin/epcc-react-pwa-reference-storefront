@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
       transition: '0.3s cubic-bezier(.47,1.64,.41,.8)',
       '&:hover': {
         boxShadow: '0 4px 20px 0 rgba(0,0,0,0.12)',
-        transform: 'scale(1.1)',
+        transform: 'scale(1.08)',
       },
     },
     media: {
@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(2),
       width: '100%',
     },
+    
   }),
 );
 
@@ -72,7 +73,7 @@ export const ProductThumbnail: React.FC<ProductThumbnailProps> = (props) => {
               <Typography variant="button">
                 {props.product.name}
               </Typography>
-              <Typography variant="button" component="p">
+              <Typography variant="h6">
                 {props.product.meta.display_price.without_tax.formatted}
               </Typography>
             </CardContent>

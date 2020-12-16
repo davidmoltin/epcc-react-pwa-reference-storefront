@@ -12,14 +12,10 @@ const styles = theme => ({
     ".text-white": {
       color: theme.palette.common.white
     },
-    ".MuiButton-root": {
-      fontFamily: 'Ubuntu',
-      fontWeight: '900',
-    },
     ".MuiTypography-button": {
-      fontSize: '.9rem',
+      fontSize: '.85rem',
       fontFamily: 'Oxygen',
-      fontWeight: '900',
+      fontWeight: '700',
       lineHeight: '1.75',
       textTransform: 'uppercase',
   },

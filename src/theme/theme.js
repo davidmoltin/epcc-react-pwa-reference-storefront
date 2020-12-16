@@ -3,7 +3,7 @@ import 'fontsource-ubuntu';
 import 'fontsource-oxygen';
 
 // colors
-const primary = "#01579B";
+const primary = "#4c96d7";
 const primaryLight = "#03A9F4";
 const primaryDark = "#039BE5";
 const secondary = "#263238";
@@ -144,10 +144,6 @@ const theme = createMuiTheme({
     useNextVariants: true,
     fontFamily: 'Oxygen',
   },
-  Button: {
-    disableElevation: true,
-    fontFamily: 'Ubuntu',
-  }
 });
 
 export default responsiveFontSizes(theme);

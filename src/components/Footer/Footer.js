@@ -239,11 +239,10 @@ function Footer(props) {
           </Hidden>
           <Grid item xs={12} md={6} lg={4}>
             <Typography variant="h6" paragraph className="text-white">
-              About the Company
+            {t('about-company')}
             </Typography>
             <Typography paragraph>
-              Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce
-              euismod convallis velit, eu auctor lacus vehicula sit amet.
+              {t('about-company-text')}
             </Typography>
             <Box display="flex">
               {socialIcons.map((socialIcon, index) => (

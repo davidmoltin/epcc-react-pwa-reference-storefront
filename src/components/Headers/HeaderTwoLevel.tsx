@@ -10,7 +10,7 @@ import { AccountDropdown } from '../../AccountDropdown';
 import { Navigation } from "../../Navigation";
 import { CartModal } from "../../CartModal";
 import { BulkOrderDropdown } from '../../BulkOrderDropdown';
-import headerLogo from '../../images/site-images/Company-Logo.svg';
+import headerLogo from '../../images/site-images/bellevie.png';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -37,15 +37,15 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     logo: {
-      width: 135,
       height: 43.54
     },
     title: {
       display: 'none',
       [theme.breakpoints.up('md')]: {
         display: 'block',
-        fontSize: '.9em',
+        fontSize: '.85em',
         fontWeight: 700,
+        textTransform: 'uppercase',
       },
     },
     inputRoot: {
@@ -121,7 +121,7 @@ export const HeaderTwoLevel: React.FC = () => {
         <Grid justify="space-between" container className={classes.tophead}>
                 <Grid lg={4} item>
                 <Typography className={classes.title} noWrap>
-                  CHECK OUT OUR BLACK FRIDAY DEALS NOW!
+                {t('special-message')}
                 </Typography>
                 </Grid>
                 <Grid lg={3} item>
@@ -142,7 +142,7 @@ export const HeaderTwoLevel: React.FC = () => {
       <div className={classes.grow}>
         <Toolbar className={classes.header}>
           <Link to="/" aria-label={t('logo')}>
-                  <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
+                  <ImageContainer imgUrl={headerLogo} imgClassName={classes.logo} alt="logoImage"/>
           </Link>
           <Grid container justify="center">
               <Navigation />
@@ -159,24 +159,26 @@ export const HeaderTwoLevel: React.FC = () => {
       <div className={classes.sectionMobile}>
       <AppBar position="fixed" className={classes.appbar}>
          <Toolbar className={classes.mobileHeader}>
-           <Grid xs={12} container>
-             <Grid xs={2}>
+             <Grid xs={3}>
               <Navigation />
             </Grid>
-            <Grid xs={3} item alignItems="center" justify="center">
+            <Grid container xs={6} item alignItems="center" justify="center">
                   <Link to="/" aria-label={t('logo')}>
                       <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
                   </Link>
             </Grid>
-            <Grid xs={6} item justify="flex-end">
+            <Grid xs={3} container justify="flex-end">
+              <div className="searchbar">
                 <SearchBar />
+              </div>
+              <div className="showcart">
                 <IconButton title="Show Cart" color="inherit" onClick={handleCartModal}>
                     <Badge badgeContent={count} color="primary">
                       <ShoppingCartOutlinedIcon />
                     </Badge>
                 </IconButton>
+              </div>
             </Grid>
-          </Grid>
         </Toolbar>
       </AppBar>
         <Toolbar />
