@@ -12,6 +12,17 @@ const styles = theme => ({
     ".text-white": {
       color: theme.palette.common.white
     },
+    ".MuiButton-root": {
+      fontFamily: 'Ubuntu',
+      fontWeight: '900',
+    },
+    ".MuiTypography-button": {
+      fontSize: '.9rem',
+      fontFamily: 'Oxygen',
+      fontWeight: '900',
+      lineHeight: '1.75',
+      textTransform: 'uppercase',
+  },
     ".listItemLeftPadding": {
       paddingTop: `${theme.spacing(1.75)}px !important`,
       paddingBottom: `${theme.spacing(1.75)}px !important`,

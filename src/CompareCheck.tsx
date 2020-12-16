@@ -4,6 +4,7 @@ import { useCompareProducts } from './app-state';
 import { useTranslation } from './app-state';
 
 import './CompareCheck.scss';
+import { Typography } from '@material-ui/core';
 
 
 interface CompareCheckProps {
@@ -24,7 +25,7 @@ export const CompareCheck: React.FC<CompareCheckProps> = (props) => {
 
   return (
     <div className={`comparecheck ${isCompareEnabled(props.product.id) ? '--enabled' : '--disabled'}`}>
-      <label>
+     <Typography variant="body2"> <label>
         <input
           type="checkbox"
           disabled={!isCompareEnabled(props.product.id)}
@@ -33,6 +34,7 @@ export const CompareCheck: React.FC<CompareCheckProps> = (props) => {
         />
         <span>{t('compare')}</span>
       </label>
-    </div>
+    </Typography>
+  </div>
   );
 };

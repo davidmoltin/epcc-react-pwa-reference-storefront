@@ -15,15 +15,13 @@ import './ProductThumbnail.scss';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      margin: 'auto',
-      borderRadius: 0,
-      padding: 0,
-    },
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
+    card: {
+      boxShadow: '0 0px 0px 0 rgba(0,0,0,0.12)',
+      transition: '0.3s cubic-bezier(.47,1.64,.41,.8)',
+      '&:hover': {
+        boxShadow: '0 4px 20px 0 rgba(0,0,0,0.12)',
+        transform: 'scale(1.1)',
+      },
     },
     media: {
       borderRadius: 0,
@@ -61,7 +59,7 @@ export const ProductThumbnail: React.FC<ProductThumbnailProps> = (props) => {
 
   return (
     <div>
-      <Card className={classes.root}>
+      <Card className={classes.card}>
         <Link className={classes.media} to={productUrl} aria-label={props.product.name}>
           <CardActionArea>
             <CardMedia
