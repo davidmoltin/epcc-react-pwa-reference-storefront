@@ -20,23 +20,23 @@ export const config = {
     {
       "key": "en",
       "name": "english"
+    },
+    {
+      "key": "ar",
+      "name": "arabic"
+    },
+    {
+      "key": "es",
+      "name": "spanish"
+    },
+        {
+      "key": "fr",
+      "name": "french"
+    },
+    {
+      "key": "ja",
+      "name": "japanese"
     }
-//    {
-//      "key": "ar",
-//      "name": "arabic"
-//    },
-//    {
-//      "key": "es",
-//      "name": "spanish"
-//    },
-//        {
-//      "key": "fr",
-//      "name": "french"
-//    },
-//    {
-//      "key": "ja",
-//      "name": "japanese"
-//    }
   ],
   defaultLanguage: process.env.REACT_APP_DEFAULT_LANGUAGE || "en",
   defaultCurrency: process.env.REACT_APP_DEFAULT_CURRENCY || "USD",
