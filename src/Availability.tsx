@@ -1,3 +1,4 @@
+import { Chip } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from './app-state';
 
@@ -14,8 +15,11 @@ export const Availability: React.FC<AvailabilityProps> = (props) => {
   const { t } = useTranslation();
 
   return (
-    <div className="availability">
-      {available ? t('available') : t('out-of-stock')}
-    </div>
+      <Chip 
+        variant="outlined" 
+        color="secondary" 
+        size="small"
+        label={available ? t('available') : t('out-of-stock')}
+      />
   );
 };

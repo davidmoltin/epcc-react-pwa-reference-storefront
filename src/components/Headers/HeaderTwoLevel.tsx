@@ -22,7 +22,7 @@ import '../../AppHeader.scss';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    grow: {
+    root: {
       flexGrow: 1,
     },
     tophead: {
@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingLeft: '20px',
       paddingRight: '20px',
       fontWeight: 900,
+      flexGrow: 1,
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -90,7 +91,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('md')]: {
         display: 'none',
       },
-    searchbar: {
+    searchbarmobile: {
       float: "left",
     },
     showcart: {
@@ -116,45 +117,46 @@ export const HeaderTwoLevel: React.FC = () => {
   };
 
   return (
-  <div className={classes.grow}>
+  <div className={classes.root}>
       <div className={classes.sectionDesktop}>
-        <Grid justify="space-between" container className={classes.tophead}>
-                <Grid lg={4} item>
-                <Typography className={classes.title} noWrap>
-                {t('special-message')}
-                </Typography>
-                </Grid>
-                <Grid lg={3} item>
-                  <Grid item justify="center">
-                  <SearchBar />
-                  </Grid>
-                </Grid>
-                <Grid lg={2} item justify="flex-end" />
-                  <ButtonGroup>
-                    <AccountDropdown />
-                    <BulkOrderDropdown />
-                    <LanguageDropdown />
-                  </ButtonGroup>
+        <Grid container className={classes.tophead} spacing={2}>
+          <Grid item xs={4}>
+            <Typography className={classes.title} noWrap>
+              {t('special-message')}
+            </Typography>
           </Grid>
+          <Grid item xs={4} justify="center">
+              <SearchBar />
+          </Grid>
+          <Grid container justify="flex-end" xs={4}>
+            <ButtonGroup>
+              <AccountDropdown />
+              <BulkOrderDropdown />
+              <LanguageDropdown />
+            </ButtonGroup>
+          </Grid>
+        </Grid>
     </div>
 
     <div className={classes.sectionDesktop}>
-      <div className={classes.grow}>
         <Toolbar className={classes.header}>
-          <Link to="/" aria-label={t('logo')}>
-                  <ImageContainer imgUrl={headerLogo} imgClassName={classes.logo} alt="logoImage"/>
-          </Link>
-          <Grid container justify="center">
-              <Navigation />
+          <Grid container xs={3}>
+            <Link to="/" aria-label={t('logo')}>
+              <ImageContainer imgUrl={headerLogo} imgClassName={classes.logo} alt="logoImage"/>
+            </Link>
           </Grid>
-          <IconButton title="Show Cart" color="inherit" onClick={handleCartModal}>
-                <Badge badgeContent={count} color="primary">
-                  <ShoppingCartOutlinedIcon />
-                </Badge>
+          <Grid container xs={6} justify="center">
+            <Navigation />
+          </Grid>
+          <Grid container xs={3} justify="flex-end">
+            <IconButton title="Show Cart" color="inherit" onClick={handleCartModal}>
+              <Badge badgeContent={count} color="primary">
+                <ShoppingCartOutlinedIcon />
+              </Badge>
             </IconButton>
+          </Grid>
         </Toolbar>
-       </div>
-      </div>
+    </div>
     {/** Show Mobile Menu */}
       <div className={classes.sectionMobile}>
       <AppBar position="fixed" className={classes.appbar}>
@@ -168,7 +170,7 @@ export const HeaderTwoLevel: React.FC = () => {
                   </Link>
             </Grid>
             <Grid xs={3} container justify="flex-end">
-              <div className="searchbar">
+              <div className="searchbarmobile">
                 <SearchBar />
               </div>
               <div className="showcart">
