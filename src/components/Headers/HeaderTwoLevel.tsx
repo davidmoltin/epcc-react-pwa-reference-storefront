@@ -8,6 +8,7 @@ import { LanguageDropdown } from '../../LanguageDropdown';
 import { SearchBar } from '../../SearchBar';
 import { AccountDropdown } from '../../AccountDropdown';
 import { Navigation } from "../../Navigation";
+import { Nav } from "../Nav/Nav";
 import { CartModal } from "../../CartModal";
 import { BulkOrderDropdown } from '../../BulkOrderDropdown';
 import headerLogo from '../../images/site-images/bellevie.png';
@@ -146,7 +147,7 @@ export const HeaderTwoLevel: React.FC = () => {
             </Link>
           </Grid>
           <Grid container xs={6} justify="center">
-            <Navigation />
+            <Nav/>
           </Grid>
           <Grid container xs={3} justify="flex-end">
             <IconButton title="Show Cart" color="inherit" onClick={handleCartModal}>
