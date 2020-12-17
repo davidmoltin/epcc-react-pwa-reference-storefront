@@ -119,7 +119,7 @@ export const HeaderTwoLevel: React.FC = () => {
   return (
   <div className={classes.root}>
       <div className={classes.sectionDesktop}>
-        <Grid container className={classes.tophead} spacing={2}>
+        <Grid container className={classes.tophead}>
           <Grid item xs={4}>
             <Typography className={classes.title} noWrap>
               {t('special-message')}
