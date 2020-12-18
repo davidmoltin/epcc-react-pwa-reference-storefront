@@ -11,8 +11,6 @@ import { APIErrorContext } from './APIErrorProvider';
 import { Typography, Card, CardActionArea, CardMedia, CardContent, Box } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-import './ProductThumbnail.scss';
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     card: {

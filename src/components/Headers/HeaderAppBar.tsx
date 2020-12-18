@@ -23,6 +23,18 @@ const useStyles = makeStyles((theme: Theme) =>
     grow: {
       flexGrow: 1,
     },
+    networkoffline: {
+      width: '50%',
+      padding: '15px',
+      position: 'absolute',
+      top: '100%',
+      left: '25%',
+      textAlign: 'center',
+      zIndex: 1,
+      borderRadius: '3px',
+      color: theme.palette.secondary.main,
+      backgroundColor: theme.palette.secondary.main,
+    },
     tophead: {
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.primary.contrastText,
@@ -154,7 +166,7 @@ export const HeaderAppBar: React.FC = () => {
         </AppBar>
         <Toolbar />
       <Offline>
-        <div className="appheader__networkoffline">
+        <div className={classes.networkoffline}>
           <strong>
             {t('network-offline')}
           </strong>

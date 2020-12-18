@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Availability } from './Availability';
 import { Typography, Card, CardActionArea, CardMedia, CardContent } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import './ProductHit.scss';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -53,7 +52,7 @@ export const ProductHit: React.FC<ProductThumbnailProps> = (props) => {
   const classes = useStyles();
 
   return (
-    <div className="producthit">
+    <div>
       <Card className={classes.root}>
         <Link className={classes.media} to={productUrl} aria-label={name}>
           <CardActionArea>
@@ -65,7 +64,7 @@ export const ProductHit: React.FC<ProductThumbnailProps> = (props) => {
             />
             <CardContent>
               <Typography variant="button">
-                <Link className="producthit__namelink" to={productUrl}>
+                <Link to={productUrl}>
                   {name}
                 </Link>
               </Typography>

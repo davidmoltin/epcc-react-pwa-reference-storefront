@@ -12,8 +12,6 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-
-import './AccountDropdown.scss';
 import { AccountCircleOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>

@@ -1,16 +1,20 @@
-
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useTranslation, useCartData } from './app-state';
 import { bulkAdd } from './service';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Button, } from '@material-ui/core';
+import { Button, CircularProgress, TextField } from '@material-ui/core';
 import { AddShoppingCartOutlined, CancelOutlined } from '@material-ui/icons';
-
-import './BulkOrder.scss'
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      '& .MuiTextField-root': {
+        margin: theme.spacing(1),
+        width: '50ch',
+      },
+    },
     button: {
       margin: theme.spacing(1),
     },
@@ -69,22 +73,28 @@ export const BulkOrder: React.FC = (props) => {
   };
 
   return (
-    <div className="bulkorder">
+    <div>
       {bulkError && (
-        <div className="bulkorder__feedback">{bulkError}</div>
+          <Alert severity="error" style={{whiteSpace: 'pre-line'}}><AlertTitle>{t('error-message')}</AlertTitle>
+          {bulkError}
+          </Alert>
       )}
-      <form className="bulkorder__form" onSubmit={handleSubmit}>
-        <div className="bulkorder__group">
-          <label className="bulkorder__label" htmlFor="productSKU">
-            {t('add-products-by-sku')}:
-          </label>
-          <textarea className="bulkorder__textarea" id="productSKU" rows={5} onChange={handleChange} value={values.productSKU} />
-          {values.productSKU}
+      <div className="MuiTypography-colorTextPrimary">
+        {t('bulk-order-format-line-1')}
+      </div>
+      <form className={classes.root} onSubmit={handleSubmit}>
+          <TextField 
+          id="productSKU"
+          label={t('add-products-by-sku')}
+          multiline
+          rowsMax={100}
+          value={values.productSKU}
+          onChange={handleChange}
+          variant="outlined"
+          className="bulkorder__textarea" />
+        <div className="MuiTypography-colorTextPrimary MuiTypography-paragraph">
+          {t('bulk-order-format-line-2')}
         </div>
-        <div className="bulkorder__info">
-          <p>{t('bulk-order-format')}</p>
-        </div>
-        <div className="bulkorder__btns">
 
         <Button
             variant="contained"
@@ -99,7 +109,7 @@ export const BulkOrder: React.FC = (props) => {
               (bulkOrderItems.length > 0 ? (
               bulkOrderItems.length === 1 ? t('add-item-to-cart') : t('add-items-to-cart', { quantity: bulkOrderItems.length.toString() })
             ) : t('add-to-cart'))
-              : (<div className="circularLoader" />)
+              : (<CircularProgress color="secondary" />)
             }
           </Button>
           <Button
@@ -111,7 +121,6 @@ export const BulkOrder: React.FC = (props) => {
             disabled={!values.productSKU}
           > {t('reset-form')}
             </Button>
-        </div>
       </form>
     </div>
   )

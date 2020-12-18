@@ -185,8 +185,9 @@
   "remove-item": "Remove one item",
   "bulk-order": "Bulk order",
   "quick-order": "Quick order",
-  "add-products-by-sku": "Add products by SKU",
-  "bulk-order-format": "Add each SKU on a separate line\nUse format: SKU, quantity",
+  "add-products-by-sku": "Add products by SKU, Qty",
+  "bulk-order-format-line-1": "Add each SKU on a separate line",
+  "bulk-order-format-line-2": "You may add up to 100 items to your cart at a time.",
   "add-items-to-cart": "Add {quantity} items to cart",
   "add-item-to-cart": "Add 1 item to cart",
   "quick-add-info": "Enter product SKU’s in inputs. The quick add form accepts up to 100 items at a time.",
@@ -216,5 +217,6 @@
   "b2b-home-6-content": "Award winning kitchen appliances designed to inspire people to produce perfect food and beverage results in their own homes with ease. From espresso machines to food processors, the innovation in each appliance delights. The scents, sights and sounds of cooking awaken memories and create new ones. Shared with the people in your life who matter most.  This is why we do what we do. Listen. Obsess. Innovate. Test. Refine. Design.",
   "company": "Company",
   "industries": "Industries",
-  "special-message": "Check out our end of the year sale!"
+  "special-message": "Check out our end of the year sale!",
+  "error-message": "Error"
 }

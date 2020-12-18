@@ -19,12 +19,23 @@ import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 import { AppBar, ButtonGroup, Grid } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
-import '../../AppHeader.scss';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+    },
+    networkoffline: {
+      width: '50%',
+      padding: '15px',
+      position: 'absolute',
+      top: '100%',
+      left: '25%',
+      textAlign: 'center',
+      zIndex: 1,
+      borderRadius: '3px',
+      color: theme.palette.secondary.main,
+      backgroundColor: theme.palette.secondary.main,
     },
     tophead: {
       backgroundColor: theme.palette.primary.main,
@@ -187,7 +198,7 @@ export const HeaderTwoLevel: React.FC = () => {
         <Toolbar />
        </div>
       <Offline>
-        <div className="appheader__networkoffline">
+        <div className={classes.networkoffline}>
           <strong>
             {t('network-offline')}
           </strong>

@@ -10,8 +10,6 @@ import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 
-import './BulkOrderDropdown.scss';
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {

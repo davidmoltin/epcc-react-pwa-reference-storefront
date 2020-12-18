@@ -2,9 +2,6 @@ import { Chip } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from './app-state';
 
-import './Availability.scss';
-
-
 interface AvailabilityProps {
   available: boolean,
 }

@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import { useTranslation, useCartData } from './app-state';
 import { bulkAdd } from './service';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
-import { AddOutlined, AddShoppingCartOutlined, CancelOutlined } from '@material-ui/icons';
-
-import './QuickOrder.scss'
+import { Button, Grid, IconButton, TextField, CircularProgress } from '@material-ui/core';
+import { AddOutlined, AddShoppingCartOutlined, CancelOutlined, ExpandLessOutlined, ExpandMoreOutlined } from '@material-ui/icons';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,6 +15,15 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     margin: {
       margin: theme.spacing(1),
+    },
+    textInputs: {
+      float: 'left',
+    },
+    increment: {
+      marginTop: '10px',
+    },
+    incrementButton: {
+      margin: '4px',
     },
   }),
 );
@@ -27,8 +36,8 @@ export const QuickOrder: React.FC = (props) => {
     code: '', quantity: 0, isInvalid: false, errorMsg: ''
   };
 
-  const defaultItemsCount = 10;
-  const additionalItemsCount = 2;
+  const defaultItemsCount = 12;
+  const additionalItemsCount = 3;
 
   const [items, setItems] = useState(Array(defaultItemsCount).fill(defaultItem).map((item, index) => ({ ...item, key: `quick-order-sku-${index}` })));
   const [error, setError] = useState('');
@@ -116,71 +125,91 @@ export const QuickOrder: React.FC = (props) => {
   return (
     <div className="quickorder">
       {error && (
-        <div className="quickorder__feedback">{error}</div>
+        <Alert severity="error" style={{whiteSpace: 'pre-line'}}><AlertTitle>{t('error-message')}</AlertTitle>
+          {error}
+        </Alert>
       )}
-      <p className="quickorder__info">{t('quick-add-info')}</p>
-      <div className="quickorder__formwrap">
+      <div className="MuiTypography-colorTextPrimary">
+        {t('quick-add-info')}
+      </div>
+      <Grid container justify="space-between" direction="row" xs={12}>
         {items.map((item, index) => (
-          <div className="quickorder__form" key={item.key}>
-            <div className={`epform__group ${item.isInvalid ? '--error' : ''}`}>
-              <label className="epform__label" htmlFor={item.key}>{t('sku')}</label>
-              <input
-                className="epform__input"
+          <Grid item lg={4} xs={12} md={6} alignItems="center">
+            <div className={classes.textInputs}>
+              <TextField
+                label={t('sku')}
                 id={item.key}
                 type="text"
+                fullWidth
                 value={item.code}
                 onChange={(e) => {handleChange(index, e.target.value)}}
+                InputProps={{
+                  endAdornment: (
+                  <InputAdornment
+                  position='end'
+                  >
+                    <IconButton
+                      tabIndex="-1"
+                      type="reset"
+                      onClick={() => {handleClear(index)}}
+                      color="primary"
+                      className="incrementButton"
+                    >< CancelOutlined />
+                  </IconButton>
+                  </InputAdornment>
+                  )
+                }}
               />
-              {item.code &&
-                  <Button
-                    variant="outlined"
-                    className={classes.button}
-                    type="reset"
-                    onClick={() => {handleClear(index)}}
-                    color="primary"
-                    startIcon={< CancelOutlined />}
-                  > {t('cancel')}
-                  </Button>
-              }
-            </div>
-            <div className="quickorder__quantity">
-              <button className="quickorder__arrow --top" aria-label={t('add-item')} onClick={() => {handleUpdate(index, [{'quantity': (item.quantity + 1)}])}} />
-              <p className='quickorder__count'>
+              </div>
+            <div className={classes.increment}>
+              <IconButton
+                aria-label={t('add-item')} 
+                onClick={() => {handleUpdate(index, [{'quantity': (item.quantity + 1)}])}} 
+              >
+                < ExpandLessOutlined fontSize='small' />
+              </IconButton>              
                 {item.quantity}
-              </p>
-              <button className="quickorder__arrow --bottom" aria-label={t('remove-item')} disabled={item.quantity === 0} onClick={() => {handleDecrement(index, 'quantity', item.quantity)}} />
+                <IconButton
+                  aria-label={t('remove-item')} 
+                  disabled={item.quantity === 0} 
+                  onClick={() => {handleDecrement(index, 'quantity', item.quantity)}}
+              >
+                < ExpandMoreOutlined fontSize='small' />
+              </IconButton>
             </div>
-          </div>
+          </Grid>
         ))}
-      </div>
-      <div className="quickorder__btns">
-        <Button
-          variant="contained"
-          color="primary"
-          disableElevation
-          className={classes.button}
-          startIcon={< AddOutlined />}
-          onClick={handleAddFields}
-          >{t('add-more-fields')}
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          disableElevation
-          className={classes.button}
-          startIcon={< AddShoppingCartOutlined />}
-          onClick={handleSubmit}
-          type="button"
-          disabled={items.filter(el => (el.quantity !== 0)).length === 0}
-          >
-          { !showLoader ?
-            (items.filter(el => (el.quantity !== 0)).length > 0 ? (
-            items.filter(el => (el.quantity !== 0)).length === 1 ? t('add-item-to-cart') : t('add-items-to-cart', { quantity: items.filter(el => (el.quantity !== 0)).length.toString() })
-          ) : t('add-to-cart'))
-            : (<div className="circularLoader" />)
-          }
-        </Button>
-      </div>
+      </Grid>
+      <Grid container alignItems="center" xs={12}>
+        <Grid item xs={12}>
+          <Button
+            variant="contained"
+            color="primary"
+            disableElevation
+            className={classes.button}
+            startIcon={< AddOutlined />}
+            onClick={handleAddFields}
+            >{t('add-more-fields')}
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            disableElevation
+            className={classes.button}
+            startIcon={< AddShoppingCartOutlined />}
+            onClick={handleSubmit}
+            type="button"
+            disabled={items.filter(el => (el.quantity !== 0)).length === 0}
+            >
+            { !showLoader ?
+              (items.filter(el => (el.quantity !== 0)).length > 0 ? (
+              items.filter(el => (el.quantity !== 0)).length === 1 ? t('add-item-to-cart') : t('add-items-to-cart', { quantity: items.filter(el => (el.quantity !== 0)).length.toString() })
+            ) : t('add-to-cart'))
+              : (<CircularProgress color="secondary" />)
+            }
+          </Button>
+        </Grid>
+      </Grid>
     </div>
   )
 };

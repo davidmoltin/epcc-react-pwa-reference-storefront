@@ -10,8 +10,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-import './LanguageDropdown.scss';
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {

@@ -99,7 +99,7 @@ export const Category: React.FC = () => {
             ))}
           </Grid>
 
-          <div className="category__pagination">
+          <div>
             {totalPages && (
               <Pagination
                 totalPages={totalPages}

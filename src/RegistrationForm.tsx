@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { register, login } from './service';
 import { useCustomerData, useTranslation } from './app-state';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { Button, Input, TextField, Typography } from '@material-ui/core';
 import './RegistrationForm.scss';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -93,9 +93,9 @@ export const RegistrationForm: React.FC = (props) => {
 
   return (
     <div className="registrationform container">
-      <h1 className="eppagetitle">
+      <Typography variant="h6">
         {t('register-new-account')}
-      </h1>
+      </Typography>
 
       <div className="registrationform__feedback">
         {registrationErrors}
@@ -106,52 +106,13 @@ export const RegistrationForm: React.FC = (props) => {
           {
             (isLoading) ? <div className="epminiLoader --centered" /> : ('')
           }
-          <div className={`epform__group ${errors.firstName ? '--error' : ''}`}>
-            <label htmlFor="firstName" className="epform__label">
-              {t('first-name')} *
-            </label>
-            <input id="firstName" name="firstName" className="epform__input" type="text" onChange={handleChange} value={values.firstName} />
-            <div className="epform__error">
-              {errors.firstName ? errors.firstName : null}
-            </div>
-          </div>
-          <div className={`epform__group ${errors.lastName ? '--error' : ''}`}>
-            <label htmlFor="lastName" className="epform__label">
-              {t('last-name')} *
-            </label>
-            <input id="lastName" name="lastName" className="epform__input" type="text" onChange={handleChange} value={values.lastName} />
-            <div className="epform__error">
-              {errors.lastName ? errors.lastName : null}
-            </div>
-          </div>
-          <div className={`epform__group ${errors.email ? '--error' : ''}`}>
-            <label htmlFor="email" className="epform__label">
-              {t('email-slash-username')} *
-            </label>
-            <input id="email" name="email" className="epform__input" type="email" onChange={handleChange} value={values.email} />
-            <div className="epform__error">
-              {errors.email ? errors.email : null}
-            </div>
-          </div>
-          <div className={`epform__group ${errors.password ? '--error' : ''}`}>
-            <label htmlFor="password" className="epform__label">
-              {t('password')} *
-            </label>
-            <input id="password" name="password" className="epform__input" type="password" onChange={handleChange} value={values.password} />
-            <div className="epform__error">
-              {errors.password ? errors.password : null}
-            </div>
-          </div>
-          <div className={`epform__group ${errors.passwordConfirm ? '--error' : ''}`}>
-            <label htmlFor="passwordConfirm" className="epform__label">
-              {t('password-confirmation')} *
-            </label>
-            <input id="passwordConfirm" name="passwordConfirm" className="epform__input" type="password" onChange={handleChange} value={values.passwordConfirm} />
-            <div className="epform__error">
-              {errors.passwordConfirm ? errors.passwordConfirm : null}
-            </div>
-          </div>
-          <div className="epform__group --btn-container">
+            <TextField required type="text" label={t('first-name')} id="firstName" name="firstName" fullWidth onChange={handleChange} value={values.firstName} />
+            <TextField required label={t('last-name')} id="lastName" name="lastName" type="text" fullWidth onChange={handleChange} value={values.lastName} />
+            <TextField required label={t('email-slash-username')} id="email" name="email" type="email" fullWidth onChange={handleChange} value={values.email} />
+            <TextField required label={t('password')} id="password" name="password" type="password" fullWidth onChange={handleChange} value={values.password} />
+            <TextField required label={t('password-confirmation')} id="passwordConfirm" name="passwordConfirm" type="password" fullWidth onChange={handleChange} value={values.passwordConfirm} />
+
+          <div>
             <Button
               variant="contained"
               color="primary"
