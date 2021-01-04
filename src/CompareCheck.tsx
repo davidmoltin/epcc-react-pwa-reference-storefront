@@ -2,9 +2,7 @@ import React from 'react';
 import * as moltin from '@moltin/sdk';
 import { useCompareProducts } from './app-state';
 import { useTranslation } from './app-state';
-
-import './CompareCheck.scss';
-import { Typography } from '@material-ui/core';
+import { FormControlLabel, Checkbox } from '@material-ui/core';
 
 
 interface CompareCheckProps {
@@ -24,17 +22,17 @@ export const CompareCheck: React.FC<CompareCheckProps> = (props) => {
   };
 
   return (
-    <div className={`comparecheck ${isCompareEnabled(props.product.id) ? '--enabled' : '--disabled'}`}>
-     <Typography variant="body2"> <label>
-        <input
-          type="checkbox"
-          disabled={!isCompareEnabled(props.product.id)}
-          checked={isComparing(props.product.id)}
-          onChange={handleCompareClicked}
-        />
-        <span>{t('compare')}</span>
-      </label>
-    </Typography>
+    <div>
+    <FormControlLabel
+     control={<Checkbox 
+      disabled={!isCompareEnabled(props.product.id)}
+      checked={isComparing(props.product.id)}
+      onChange={handleCompareClicked}
+      color="primary"
+      size="small"
+      />}
+      label={t('compare')}
+      />
   </div>
   );
 };

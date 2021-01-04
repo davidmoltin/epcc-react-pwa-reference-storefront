@@ -1,18 +1,50 @@
 import React, {useState} from 'react';
+import clsx from 'clsx';
 import moltin from "@moltin/sdk";
 import { useTranslation, useAddressData } from './app-state';
 import { PlacesSuggest } from './PlacesSuggest';
 import { useFormik } from 'formik';
 import { CountriesSelect } from './CountriesSelect';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { Button, FormControl, FormControlLabel, FormLabel, Radio, TextField } from '@material-ui/core';
 import { LocalShippingOutlined, PaymentOutlined } from '@material-ui/icons';
-import './AddressFields.scss';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
-      margin: theme.spacing(1),
+      width: '100%',
+      marginTop: theme.spacing(1),
+    },
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    margin: {
+      marginTop: theme.spacing(1),
+    },
+    textField: {
+      marginRight: theme.spacing(1),
+      display: 'flexbox',
+      width: '50%',
+    },
+    fullwidthTextField: {
+      width: '98%',
+    },
+    helperText: {
+      color: theme.palette.warning.main,
+    },
+    helperTextCountry: {
+      color: theme.palette.warning.main,
+      marginLeft: '12px',
+      fontSize: '.75rem',
+    },
+    fieldParent: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      flexWrap: 'nowrap',
+    },
+    formLabel: {
+      marginTop: theme.spacing(2),
     },
   }),
 );
@@ -132,7 +164,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
 
   return (
     <div className="address">
-      <div className="address__main">
+      <div className={clsx(classes.margin, classes.fullwidthTextField)}>
         <PlacesSuggest
           route={route}
           label={type}
@@ -155,47 +187,51 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
         )}
         {!editing && addressData && addressData.length > 0 && (
           <React.Fragment>
-            <div className="address__wrap">
-              {addressData.map((address: moltin.Address, index:number) => (
-                <div className="address__container" key={address.id}>
-                  <input type="radio" name="addressCheck" id={`address_${index}`} className="epradio" defaultChecked={checkedItem === index} onChange={() => {handleCheckAddress(address, index)}} />
-                  <label htmlFor={`address_${index}`}>
-                    <ul className="address__list">
-                      <li className="">
-                        {address.first_name}
-                        &nbsp;
-                        {address.last_name}
-                      </li>
-                      <li className="">
-                        {address.line_1}
-                      </li>
-                      <li className="">
-                        {address.line_2}
-                      </li>
-                      <li>
-                        <span className="">
-                          {address.county}
-                          ,&nbsp;
-                        </span>
-                        <span className="">
-                          {(address.country)
-                            ? (
-                              `${address.country}, `
-                            ) : ('')}
-                        </span>
-                        <span className="">
-                          {address.city}
+            
+              <FormControl component="fieldset" className={classes.formLabel}>
+                <FormLabel component="legend">{t('choose-address')}</FormLabel>
+                  {addressData.map((address: moltin.Address, index:number) => (
+
+                  <div>
+                    <FormControlLabel control={<Radio />} label={address.line_1} value={`address_${index}`} id={`address_${index}`} onChange={() => { handleCheckAddress(address, index); } } />
+                      <ul>
+                        <li className="">
+                          {address.first_name}
                           &nbsp;
-                        </span>
-                      </li>
-                      <li className="">
-                        {address.postcode}
-                      </li>
-                    </ul>
-                  </label>
-                </div>
+                          {address.last_name}
+                        </li>
+                        <li className="">
+                          {address.line_1}
+                        </li>
+                        <li className="">
+                          {address.line_2}
+                        </li>
+                        <li>
+                          <span className="">
+                            {address.county}
+                            ,&nbsp;
+                          </span>
+                          <span className="">
+                            {(address.country)
+                              ? (
+                                `${address.country}, `
+                              ) : ('')}
+                          </span>
+                          <span className="">
+                            {address.city}
+                            &nbsp;
+                          </span>
+                        </li>
+                        <li className="">
+                          {address.postcode}
+                        </li>
+                      </ul>
+                  </div>
+                  
+                
               ))}
-            </div>
+              </FormControl>
+            
             {type === 'shipping' && (
               <Button
               variant="contained"
@@ -215,121 +251,54 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
 
       {editing && (
         <form onSubmit={handleSubmit}>
-          <div className="address__field --addspace">
-            <div className="address --styledinput">
-              <label className="epform__label" htmlFor="first_name">
-                <span className="required-label">
-                  *
-                </span>
-                &nbsp;
-                {t('first-name')}
-              </label>
-              <input className="epform__input" id="first_name" type="text" onChange={handleChange} value={values.first_name} />
-              <div className="epform__error">
-                {errors.first_name ? errors.first_name : null}
-              </div>
+          <div className={classes.fieldParent}>
+            <TextField label={t('first-name')} helperText={errors.first_name ? errors.first_name : null} 
+            FormHelperTextProps={{
+                className: classes.helperText
+              }}
+            className={clsx(classes.margin, classes.textField)} variant="outlined" id="first_name" type="text" onChange={handleChange} value={values.first_name} />
+            <TextField label={t('last-name')} 
+                        FormHelperTextProps={{
+                          className: classes.helperText
+                        }}
+                        helperText={errors.last_name ? errors.last_name : null} className={clsx(classes.margin, classes.textField)} variant="outlined" id="last_name" type="text" onChange={handleChange} value={values.last_name} />
             </div>
-            <div className="address --styledinput">
-              <label className="epform__label" htmlFor="last_name">
-                <span className="required-label">
-                  *
-                </span>
-                &nbsp;
-                {t('last-name')}
-              </label>
-              <input className="epform__input" id="last_name" type="text" onChange={handleChange} value={values.last_name} />
-              <div className="epform__error">
-                {errors.last_name ? errors.last_name : null}
-              </div>
+            <div className={classes.fieldParent}>
+            <TextField label={t('street-address')} 
+                        FormHelperTextProps={{
+                          className: classes.helperText
+                        }}
+            helperText={errors.line_1 ? errors.line_1 : null} fullWidth className={clsx(classes.margin, classes.fullwidthTextField)} variant="outlined" id="line_1" type="text" onChange={handleChange} value={values.line_1} />
             </div>
-          </div>
-          <div className="address__field">
-            <label className="epform__label" htmlFor="line_1">
-              <span className="required-label">
-                *
-              </span>
-              &nbsp;
-              {t('street-address')}
-            </label>
-            <input className="epform__input" id="line_1" type="text" onChange={handleChange} value={values.line_1} />
-            <div className="epform__error">
-              {errors.line_1 ? errors.line_1 : null}
+            <div className={classes.fieldParent}>
+            <TextField label={t('extended-address')} className={clsx(classes.margin, classes.textField)} variant="outlined" id="line_2" type="text" onChange={handleChange} value={values.line_2} />
+            <TextField label={t('county')} 
+                        FormHelperTextProps={{
+                          className: classes.helperText
+                        }}
+            helperText={errors.county ? errors.county : null} className={clsx(classes.margin, classes.textField)} variant="outlined" id="county" type="text" onChange={handleChange} value={values.county} />
             </div>
-          </div>
-          <div className="address__field">
-            <label className="epform__label" htmlFor="line_2">
-              {t('extended-address')}
-            </label>
-            <input className="epform__input" id="line_2" type="text" onChange={handleChange} value={values.line_2} />
-          </div>
-          <div className="address__field --addspace">
-            <div className="address --styledinput">
-              <label className="epform__label" htmlFor="city">
-                <span className="required-label">
-                  *
-                </span>
-                &nbsp;
-                {t('city')}
-              </label>
-              <input className="epform__input" id="city" type="text" onChange={handleChange} value={values.city} />
-              <div className="epform__error">
-                {errors.city ? errors.city : null}
-              </div>
-            </div>
-            <div className="address --styledinput">
-              <label className="epform__label" htmlFor="county">
-                    <span className="required-label">
-                      *
-                    </span>
-                &nbsp;
-                {t('county')}
-              </label>
-              <input className="epform__input" id="county" type="text" onChange={handleChange} value={values.county} />
-              <div className="epform__error">
-                {errors.county ? errors.county : null}
-              </div>
-            </div>
-          </div>
-          <div className="address__field --addspace">
-            <div className="address --styledinput">
-              <label className="epform__label" htmlFor="postcode">
-                <span className="required-label">
-                  *
-                </span>
-                &nbsp;
-                {t('postal-сode')}
-              </label>
-              <input className="epform__input" id="postcode" type="text" onChange={handleChange} value={values.postcode} />
-              <div className="epform__error">
-                {errors.postcode ? errors.postcode : null}
-              </div>
-            </div>
-            <div className="address --styledinput">
-              <label className="epform__label" htmlFor="country">
-                <span className="required-label">
-                  *
-                </span>
-                &nbsp;
-                {t('country')}
-              </label>
-              <CountriesSelect value={values.country} onChange={handleChange} />
-              <div className="epform__error">
+            <div className={classes.fieldParent}>
+            <TextField label={t('city')} 
+                        FormHelperTextProps={{
+                          className: classes.helperText
+                        }}
+            helperText={errors.city ? errors.city : null} className={clsx(classes.margin, classes.textField)} variant="outlined" id="city" type="text" onChange={handleChange} value={values.city} />
+            <TextField label={t('postal-сode')} 
+                        FormHelperTextProps={{
+                          className: classes.helperText
+                        }}
+            helperText={errors.postcode ? errors.postcode : null} className={clsx(classes.margin, classes.textField)} variant="outlined" id="postcode" type="text" onChange={handleChange} value={values.postcode} />
+            <div className={clsx(classes.margin, classes.textField)}>
+            <CountriesSelect value={values.country} onChange={handleChange}/>
+            <div className={classes.helperTextCountry}>
                 {errors.country ? errors.country : null}
               </div>
             </div>
-          </div>
-          <div className="address__field">
-            <label className="epform__label" htmlFor="phone_number">
-              {t('phone-number')}
-            </label>
-            <input className="epform__input" id="phone_number" type="text" onChange={handleChange} value={values.phone_number} />
-          </div>
-          <div className="address__field">
-            <label className="epform__label" htmlFor="instructions">
-              {t('instructions')}
-            </label>
-            <input className="epform__input" id="instructions" type="text" onChange={handleChange} value={values.instructions} />
-          </div>
+            </div>
+            <TextField label={t('phone-number')} fullWidth className={clsx(classes.margin, classes.fullwidthTextField)} variant="outlined" id="phone_number" type="text" onChange={handleChange} value={values.phone_number} />
+            <TextField label={t('instructions')} className={clsx(classes.margin, classes.fullwidthTextField)} variant="outlined" multiline id="instructions" type="text" onChange={handleChange} value={values.instructions} />
+
           {type === 'shipping' && (
             <Button
             variant="contained"

@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useCustomerData, useTranslation } from './app-state';
+import { useCartData, useCustomerData, useTranslation, useMultiCartData } from './app-state';
 import { createAccountUrl } from './routes';
-import { LoginDialog } from './LoginDialog';
+import { LoginDialog } from './LoginDialog/LoginDialog';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -14,6 +13,9 @@ import MenuList from '@material-ui/core/MenuList';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { AccountCircleOutlined } from '@material-ui/icons';
 
+import './AccountDropdown.scss';
+import { ListItem } from '@material-ui/core';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -21,16 +23,26 @@ const useStyles = makeStyles((theme: Theme) =>
       zIndex: 2,
     },
     paper: {
-      marginRight: theme.spacing(2),
+      margin: theme.spacing(2),
+      padding: theme.spacing(2),
+      zIndex: 2,
     },
   }),
 );
 
-export const AccountDropdown: React.FC = (props) => {
-  const { isLoggedIn, customerEmail, customerName, clearCustomerData } = useCustomerData();
+interface AccountDropdownProps {
+  openCartModal?: (...args: any[]) => any,
+  handleShowNewCart?: (arg:boolean) => void,
+}
+
+export const AccountDropdown: React.FC<AccountDropdownProps> = (props) => {
+  const { openCartModal, handleShowNewCart} = props;
+  const { isLoggedIn, customerName, clearCustomerData } = useCustomerData();
+  const { count } = useCartData();
+  const { setIsCartSelected } = useMultiCartData();
   const { t } = useTranslation();
   const history = useHistory();
-  const classes = useStyles();
+
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
 
@@ -63,9 +75,7 @@ export const AccountDropdown: React.FC = (props) => {
     prevOpen.current = open;
   }, [open]);
 
-  //Required Includes
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); 
 
   const accountUrl = createAccountUrl();
 
@@ -78,12 +88,18 @@ export const AccountDropdown: React.FC = (props) => {
   const logout = () => {
     localStorage.setItem('mcart', createCartIdentifier());
     clearCustomerData();
+    setIsCartSelected(false);
+    if(handleShowNewCart)
+      handleShowNewCart(false);
     history.push('/');
   };
 
-  if (isLoggedIn) {
+  const classes = useStyles();
+
     return (
       <div className={classes.root}>
+      {isLoggedIn ? (
+            <div>
           <Button
             ref={anchorRef}
             aria-controls={open ? 'menu-account' : undefined}
@@ -92,48 +108,48 @@ export const AccountDropdown: React.FC = (props) => {
             disableElevation
             color="inherit"
             variant="text"
-            startIcon={< AccountCircleOutlined />}
+            startIcon={<AccountCircleOutlined />}
           >
-            Account
+            {t('login')}
           </Button>
-          <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-              >
-                <Paper>
-                  <ClickAwayListener onClickAway={handleClose}>
-                    <MenuList autoFocusItem={open} id="menu-account" onKeyDown={handleListKeyDown}>
-                      <MenuItem onClick={handleClose}>{customerName} | {customerEmail}</MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        <Link to={accountUrl}>
-                          {t('my-account')}
-                        </Link>
-                      </MenuItem>
-                      <MenuItem onClick={logout}>Logout</MenuItem>
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
+            <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                >
+                  <Paper>
+                    <ClickAwayListener onClickAway={handleClose}>
+                      <MenuList autoFocusItem={open} id="menu-account" onKeyDown={handleListKeyDown}>
+                        <ListItem>{t('greeting')} {customerName}</ListItem>
+                        <MenuItem onClick={handleClose}>
+                          <Link to={accountUrl}>
+                            {t('my-account')}
+                          </Link>
+                        </MenuItem>
+                        <MenuItem color="primary" onClick={logout}>{t('logout')}</MenuItem>
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper></div>
+      ) : (
+        <div>
+          <Button
+            startIcon={<AccountCircleOutlined />}
+            onClick={() => {setIsModalOpen(true)}}
+            disableElevation
+            color="inherit"
+          >
+            {t('login')}
+          </Button>
+        </div>
+      )}
+      {count > 0
+        ? <LoginDialog createCart={true} openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} openCartModal={openCartModal} handleShowNewCart={handleShowNewCart}/>
+        : <LoginDialog createCart={false} openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} />
+      }
       </div>
-
     );
-  }
-
-  return (
-    <div>
-      <Button
-        startIcon={<AccountCircleOutlined />}
-        onClick={() => {setIsModalOpen(true)}}
-        disableElevation
-        color="inherit"
-      >
-        {t('account')}
-      </Button>
-      <LoginDialog openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} />
-    </div>
-  );
 };

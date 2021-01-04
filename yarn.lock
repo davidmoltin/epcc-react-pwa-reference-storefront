@@ -2271,10 +2271,10 @@
     prop-types "^15.7.2"
     react-is "^16.8.0"
 
-"@moltin/sdk@^4.4.0":
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/@moltin/sdk/-/sdk-4.4.0.tgz#a00334aff72c11fd7157446c031cdccc2a64d1a4"
-  integrity sha512-Yj+blauwGScUNi5uJEOi0A2tztmqLztAGkr0mZnRGD1VKis8BwIM4jgs7aS6Y/a9xRtVqJ3xXWsoqyn8wi0dOg==
+"@moltin/sdk@^5.0.1":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@moltin/sdk/-/sdk-5.1.0.tgz#11f6cc67116cc6c036cf146f2ae3f478a274673a"
+  integrity sha512-cL+mFRAuGXZMBLmNKIZHLnVYoyrJYRxqJ7XZAqPek+flqO9P5j6+Ezv9/bo8/ycgsvhCXr+tzQCdu8RmEvAjGg==
   dependencies:
     es6-promise "^4.0.5"
     fetch-everywhere "^1.0.5"
@@ -4395,10 +4395,10 @@ constants-browserify@^1.0.0:
   resolved "https://registry.yarnpkg.com/constants-browserify/-/constants-browserify-1.0.0.tgz#c20b96d8c617748aaf1c16021760cd27fcb8cb75"
   integrity sha1-wguW2MYXdIqvHBYCF2DNJ/y4y3U=
 
-constate@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/constate/-/constate-2.0.0.tgz#ba9bf91217c306292c1f8a7e45e0ff5a76c38a55"
-  integrity sha512-oYpbnxDH1BSZTyBHGpSabuT0h/rLU7UDTC8p8J/TLt8G69ePIHCaNyDCz+LUl1QJpCrzrk0jO4D524rJlh4edg==
+constate@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/constate/-/constate-3.1.0.tgz#6a84da7f8051334a77a6a92860e4058b2eae96c1"
+  integrity sha512-a8hPXRJzcllP5D/9twMRI2VkAiZwgcY/fXyTHQqvv8EBZxzjEh6cAFlsHqnBQ7GtPWlNK11zD4pbIqO1jP0ReA==
 
 contains-path@^0.1.0:
   version "0.1.0"
@@ -6114,11 +6114,6 @@ fontsource-oxygen@^3.1.5:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/fontsource-oxygen/-/fontsource-oxygen-3.1.5.tgz#5b018ee78402273f759accebf06e71d8ed95bade"
   integrity sha512-0T/Mx/2XXnMO9otqGxyklrizk9JfAfyBKEUz19JCy4MDWFv+ZliB0T7b/F1aIc1D2ctGGXY/By3MlPCgWf2B3w==
-
-fontsource-roboto@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/fontsource-roboto/-/fontsource-roboto-3.0.3.tgz#99c312babeabce22b3e933b3edf2951d4508f4f7"
-  integrity sha512-kfsC9qAP6XhwnSDAhg2lhWeaUJfLGXZh7GcLxFiz/4lXdkV2pVhWv2Xp9ES3b3BHdc9UuPrWXXLOphzHIStcOw==
 
 fontsource-ubuntu@^3.1.5:
   version "3.1.5"
@@ -11753,10 +11748,10 @@ shallow-equal@^1.2.1:
   resolved "https://registry.yarnpkg.com/shallow-equal/-/shallow-equal-1.2.1.tgz#4c16abfa56043aa20d050324efa68940b0da79da"
   integrity sha512-S4vJDjHHMBaiZuT9NPb616CSmLf618jawtv3sufLl6ivK8WocjAo58cXwbRV1cgqxH0Qbv+iUt6m05eqEa2IRA==
 
-sharethis-reactjs@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/sharethis-reactjs/-/sharethis-reactjs-1.5.0.tgz#9c6a563c9f89e4cc4ea633e993016bab84fe60df"
-  integrity sha512-aYbXxbKQZzf9m8iFtNkHJGrQXy9VX/tbJ2PWOOgMWB0XNZU3vwUfKq/obMg5hFDZ/fa4rAj7G+LxN5zvLufx4w==
+sharethis-reactjs@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/sharethis-reactjs/-/sharethis-reactjs-1.6.0.tgz#5b15d3fb936490785e69c731465964c89d5951f0"
+  integrity sha512-cYrf9OgStwfOjPrHhk/0SpFuJNFQQU6OY7pWlhWtu3smuF+rYNF+vOL4aM/pwaP1QGwwrEuHTAqfpG3OWXPIag==
 
 shebang-command@^1.2.0:
   version "1.2.0"

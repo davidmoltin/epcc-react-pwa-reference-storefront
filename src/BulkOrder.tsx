@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { useTranslation, useCartData } from './app-state';
+import { useTranslation, useCartData, useMultiCartData } from './app-state';
 import { bulkAdd } from './service';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Button, CircularProgress, TextField } from '@material-ui/core';
@@ -27,7 +27,8 @@ interface FormValues {
 
 export const BulkOrder: React.FC = (props) => {
   const { t } = useTranslation();
-  const { updateCartItems } = useCartData();
+  const { updateCartItems, setCartQuantity, handleShowCartPopup } = useCartData();
+  const { updateCartData } = useMultiCartData();
   const [bulkOrderItems, setBulkOrderItems] = useState([]);
   const [bulkError, setBulkError] = useState('');
   const [showLoader, setShowLoader] = useState(false);
@@ -42,10 +43,14 @@ export const BulkOrder: React.FC = (props) => {
     onSubmit: (values) => {
       setBulkError('');
       setShowLoader(true);
+      const totalQuantity = bulkOrderItems.reduce((sum, { quantity }) => sum + quantity, 0);
       const mcart = localStorage.getItem('mcart') || '';
       bulkAdd(mcart, bulkOrderItems)
         .then(() => {
           updateCartItems();
+          updateCartData();
+          setCartQuantity(totalQuantity);
+          handleShowCartPopup();
           resetForm();
           setShowLoader(false);
         })
@@ -119,7 +124,7 @@ export const BulkOrder: React.FC = (props) => {
             className={classes.button}
             startIcon={ <CancelOutlined /> }
             disabled={!values.productSKU}
-          > {t('reset-form')}
+          > {t('reset-form')} 
             </Button>
       </form>
     </div>

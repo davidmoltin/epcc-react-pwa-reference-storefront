@@ -79,7 +79,7 @@ export const Category: React.FC = () => {
       {category && products ? (
         <>
           <Breadcrumbs aria-label="breadcrumb">
-            {categoryPath?.map((category, index) => (
+            {categoryPath?.map((category: moltin.Category, index: number) => (
               <React.Fragment key={category.id}>
                 <Link color="inherit" href={createCategoryUrl(category.slug)}>{category.name}</Link>
               </React.Fragment>

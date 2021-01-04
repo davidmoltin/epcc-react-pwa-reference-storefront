@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useTranslation, useCartData } from './app-state';
+import { useTranslation, useCartData, useMultiCartData } from './app-state';
 import { bulkAdd } from './service';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Button, Grid, IconButton, TextField, CircularProgress } from '@material-ui/core';
@@ -29,8 +29,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const QuickOrder: React.FC = (props) => {
+  const classes = useStyles();
   const { t } = useTranslation();
-  const { updateCartItems } = useCartData();
+  const { updateCartItems, setCartQuantity, handleShowCartPopup } = useCartData();
+  const { updateCartData } = useMultiCartData();
 
   const defaultItem = {
     code: '', quantity: 0, isInvalid: false, errorMsg: ''
@@ -42,7 +44,6 @@ export const QuickOrder: React.FC = (props) => {
   const [items, setItems] = useState(Array(defaultItemsCount).fill(defaultItem).map((item, index) => ({ ...item, key: `quick-order-sku-${index}` })));
   const [error, setError] = useState('');
   const [showLoader, setShowLoader] = useState(false);
-  const classes = useStyles();
 
   const handleUpdate = (index:number, arg:{[key: string]: any}[]) => {
     const itemsArr:any[] = [...items];
@@ -97,9 +98,13 @@ export const QuickOrder: React.FC = (props) => {
     });
     setError('');
     setShowLoader(true);
+    const totalQuantity = products.reduce((sum, { quantity }) => sum + quantity, 0);
     bulkAdd(mcart, products)
       .then(() => {
         updateCartItems();
+        updateCartData();
+        setCartQuantity(totalQuantity);
+        handleShowCartPopup();
         setItems(Array(defaultItemsCount).fill(defaultItem).map((item, index) => ({ ...item, key: `quick-order-sku-${index}` })));
         setShowLoader(false);
       })

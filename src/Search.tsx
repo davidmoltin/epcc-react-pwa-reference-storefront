@@ -4,43 +4,15 @@ import { ProductHit } from './ProductHit';
 import { CustomRefinementList } from './CustomRefinementList';
 import { useTranslation } from './app-state';
 import { config } from './config';
-import { Box, Grid, Typography, Container } from '@material-ui/core';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { Typography} from '@material-ui/core';
 
 import './Search.scss';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    grow: {
-      flexGrow: 1,
-    },
-    root: {
-      flexGrow: 1,
-    },
-    bottom: {
-      paddingTop: '1em',
-      paddingBottom: '1em',
-    },
-    tophead: {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText,
-      alignItems: 'center',
-      paddingLeft: '20px',
-      paddingRight: '20px',
-      fontWeight: 900,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-  }),
-);
 
 interface SearchParams {
 }
 
 export const Search: React.FC<SearchParams> = () => {
   const { t } = useTranslation();
-  const classes = useStyles();
 
   const Hit = ({ hit }: any) => (
     <div className="search__product">
@@ -51,9 +23,9 @@ export const Search: React.FC<SearchParams> = () => {
   const Facets = () => (
     <div className="search__facets">
       <div>
-        <h2 className="search__facetstitle">
+        <Typography variant="h6">
           {t('filter-by')}
-        </h2>
+        </Typography>
         <SortBy
           key="facets-SortBy"
           defaultRefinement={config.algoliaIndexName}
@@ -71,33 +43,21 @@ export const Search: React.FC<SearchParams> = () => {
   );
 
   return (
-    <div className={classes.root}>
-    <Container maxWidth="xl" className={classes.bottom}>
-      <Grid container>
-        <Grid lg={3} md={2} item>
-        <div className="search">
-          <input type="checkbox" id="checkbox" className="search__facetstoggleinput" />
-            <label htmlFor="checkbox" className="search__facetstoggle epbtn --bordered">
-              {t('filter')}
-            </label>
-          <Facets key="search-facets" />
-        </div>
-        </Grid>
-        <Grid lg={9} md={4} xs={12} item>
-          <Typography variant="h5">
-            {t('search')}
-          </Typography>
-          <Grid container>
-          <Hits hitComponent={Hit} />
-        </Grid>
-      </Grid>
-    </Grid>
-    <div className="search__pagination">
-        <Box display="flex" justifyContent="center">
-          <Pagination showFirst={false} />
-        </Box>
+<div className="search">
+      <h1 className="search__title">
+        {t('search')}
+      </h1>
+      <input type="checkbox" id="checkbox" className="search__facetstoggleinput"/>
+      <label htmlFor="checkbox" className="search__facetstoggle epbtn --bordered">
+        {t('filter')}
+      </label>
+      <Facets key="search-facets" />
+      <div className="search__productlist">
+        <Hits hitComponent={Hit} />
       </div>
-    </Container>
+      <div className="search__pagination">
+        <Pagination showFirst={false} />
+      </div>
   </div>
   );
 };

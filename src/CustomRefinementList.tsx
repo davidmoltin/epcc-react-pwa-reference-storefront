@@ -1,5 +1,6 @@
 import React from 'react'
 import { RefinementList } from 'react-instantsearch-dom'
+import { FormControlLabel, Checkbox } from '@material-ui/core';
 
 import './CustomRefinementList.scss';
 
@@ -18,10 +19,15 @@ interface CustomRefinementListProps {
 export const CustomRefinementList: React.FC<CustomRefinementListProps> = ({ title, ...props }) => {
   return (
     <div className="refinementlist">
-      <input type="checkbox" id={`checkbox-${title}`} className="refinementlist__toggleinput"/>
-      <label htmlFor={`checkbox-${title}`} className="refinementlist__title">
-        {title}
-      </label>
+      <FormControlLabel
+      control={<Checkbox 
+      id={`checkbox-${title}`}
+      color="primary"
+      size="small"
+      />}
+      label={title}
+      htmlFor={`checkbox-${title}`}
+      />
       <div className="refinementlist__list">
         <RefinementList {...props} />
       </div>

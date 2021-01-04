@@ -1,5 +1,7 @@
+import { TextField } from '@material-ui/core';
 import React from 'react';
 import countriesList from './data/countriesList.json';
+import { useTranslation } from './app-state';
 
 interface CountriesSelectParams {
   value: string,
@@ -7,6 +9,7 @@ interface CountriesSelectParams {
 }
 
 export const CountriesSelect: React.FC<CountriesSelectParams> = (props) => {
+  const { t } = useTranslation();
   const { value, onChange } = props;
   const sortedCountries = countriesList
     .sort((a, b) => {
@@ -17,13 +20,27 @@ export const CountriesSelect: React.FC<CountriesSelectParams> = (props) => {
     });
 
   return (
-    <select id="country" name="country" className="epform__input" value={value} onChange={onChange} onBlur={onChange}>
-      <option value="" />
-      {sortedCountries.map(country => (
-        <option key={country.key} value={country.key}>
-          {country['value']}
+      <TextField
+        id="country"
+        select
+        variant="outlined"
+        name="country"
+        value={value}
+        onChange={onChange}
+        onBlur={onChange}
+        defaultValue=""
+        SelectProps={{
+          native: true,
+        }}
+        label={t('country')}
+      >
+        <option value="" disabled>
         </option>
-      ))}
-    </select>
+        {sortedCountries.map(country => (
+          <option key={country.key} value={country.key}>
+            {country['value']}
+          </option>
+        ))}
+      </TextField>
   );
 };

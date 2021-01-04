@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import constate from 'constate';
 import * as moltin from '@moltin/sdk';
 import {
@@ -7,8 +7,15 @@ import {
   getAllOrders,
   loadCategoryTree,
   getCartItems,
-  loadEnabledCurrencies
+  loadEnabledCurrencies,
+  getMultiCarts,
+  createNewCart,
+  editCartInfo,
+  addCustomerAssociation,
+  loadCustomerAuthenticationSettings,
+  loadOidcProfiles
 } from './service';
+
 import { config } from './config';
 
 const languages = config.supportedLocales.map(el => {
@@ -135,13 +142,12 @@ function useCustomerDataState() {
     }
   }, [customerId, customerToken]);
 
-  const setCustomerData = (token: string, id: string) => {
+  const setCustomerData = useCallback((token: string, id: string) => {
     localStorage.setItem('mtoken', token);
-    localStorage.setItem('mcart', id);
     localStorage.setItem('mcustomer', id);
     setCustomerToken(token);
     setCustomerId(id);
-  };
+  }, []);
 
   const clearCustomerData = () => {
     localStorage.setItem('mtoken', '');
@@ -218,7 +224,7 @@ function usePurchaseHistoryState() {
       getAllOrders(token).then((res: any) => {
         setData(res.data);
         if (res && res.included)
-          setItemsData(res.included.items);
+         setItemsData(res.included.items);
       });
     }
     else {
@@ -252,7 +258,7 @@ const defaultCurrency = config.defaultCurrency;
 
 function useCurrencyState() {
   const [allCurrencies, setAllCurrencies] = useState<moltin.Currency[]>([]);
-  // Set previously saved or defautlt currency before fetching the list of supported ones
+  // Set previously saved or default currency before fetching the list of supported ones
   const [selectedCurrency, setSelectedCurrency] = useState(localStorage.getItem('selectedCurrency') ?? defaultCurrency);
 
   const setCurrency = (newCurrency: string) => {
@@ -280,6 +286,8 @@ function useCurrencyState() {
       }
 
       setAllCurrencies(currencies);
+    }).catch((err) => {
+      console.error(err)
     });
   }, [allCurrencies.length, selectedCurrency]);
 
@@ -321,7 +329,7 @@ function useCategoriesState(selectedLanguage: string) {
     loadCategoryTree(selectedLanguage).then(result => {
       setCategoriesTree(result);
       setCategoryPaths(mergeMaps(result));
-    });
+    }).catch(err=>console.error(err));
   }, [selectedLanguage]);
 
   const categoryPathBySlug = (slug: string) => {
@@ -372,11 +380,34 @@ function useCompareProductsState() {
   };
 }
 
+function useCustomerAuthenticationSettingsState() {
+  const [authenticationSettings, setAuthenticationSettings] = useState<any>()
+  const [isLoadingOidcProfiles, setIsLoadingOidcProfiles] = useState(true);
+  const [oidcProfiles, setOidcProfiles] = useState<moltin.ResourcePage<moltin.Profile>>();
+
+  useEffect(()=>{
+    loadCustomerAuthenticationSettings().then((authSettings) => {
+      setAuthenticationSettings(authSettings);
+
+      const authenticationRealmId = authSettings?.data?.relationships['authentication-realm']?.data?.id;
+
+      loadOidcProfiles(authenticationRealmId).then((profiles) => {
+        setOidcProfiles(profiles);
+        setIsLoadingOidcProfiles(false);
+      })
+    }).catch((err)=>{
+      console.log(err)
+    });
+  }, [])
+
+  return { authenticationSettings, isLoadingOidcProfiles, oidcProfiles };
+}
+
 function useCartItemsState() {
   const [cartData, setCartData] = useState<moltin.CartItem[]>([]);
   const [promotionItems, setPromotionItems] = useState<moltin.CartItem[]>([]);
   const [count, setCount] = useState(0);
-  const [quantity, setQuantity] = useState(0);
+  const [cartQuantity, setCartQuantity] = useState(0);
   const [showCartPopup, setShowCartPopup] = useState(false);
   const [totalPrice, setTotalPrice] = useState('');
   const mcart = localStorage.getItem('mcart') || '';
@@ -387,29 +418,138 @@ function useCartItemsState() {
         setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'));
         setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
         setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
-        setTotalPrice(res.meta.display_price.without_tax.formatted)
+        setTotalPrice(res.meta.display_price.without_tax.formatted);
       });
     }
   }, [mcart]);
 
   const updateCartItems = () => {
+    const mcart = localStorage.getItem('mcart') || '';
     getCartItems(mcart).then(res => {
-      setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'));
-      setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
-      const itemQuantity = res.data.reduce((sum, { quantity }) => sum + quantity, 0);
-      setQuantity(itemQuantity - count);
+      const cartData = res.data.length ? res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item') : [];
+      setCartData(cartData);
+      const promotionItems = res.data.length ? res.data.filter(({ type }) => type === 'promotion_item') : [];
+      setPromotionItems(promotionItems);
+      const itemQuantity = res.data.length ? res.data.reduce((sum, { quantity }) => sum + quantity, 0) : 0;
       setCount(itemQuantity);
-      setTotalPrice(res.meta.display_price.without_tax.formatted);
-      if (!showCartPopup && itemQuantity - count > 0) {
-        setShowCartPopup(true);
-        setTimeout(() => {
-          setShowCartPopup(false);
-        }, 3200);
+      const totalPrice = res.meta ? res.meta.display_price.without_tax.formatted : '';
+      setTotalPrice(totalPrice);
+    });
+  };
+
+  const handleShowCartPopup = () => {
+    if (!showCartPopup) {
+      setShowCartPopup(true);
+      setTimeout(() => {
+        setShowCartPopup(false);
+      }, 3200);
+    }
+  };
+
+  return { cartData, promotionItems, count, cartQuantity, setCartQuantity, showCartPopup, handleShowCartPopup, totalPrice, updateCartItems }
+}
+
+function useMultiCartDataState() {
+  const token = localStorage.getItem('mtoken') || '';
+  const mcustomer = localStorage.getItem('mcustomer') || '';
+  const [multiCartData, setMultiCartData] = useState<moltin.CartItem[]>([]);
+  const [selectedCart, setSelectedCart] = useState<moltin.CartItem>();
+  const [isCreateNewCart, setIsCreateNewCart] = useState(false);
+  const [isCartSelected, setIsCartSelected] = useState(false);
+  const [guestCartId, setGuestCartId] = useState('');
+
+  useEffect(() => {
+    if (token) {
+      getMultiCarts(token).then(res => {
+        setMultiCartData(res.data);
+        const cartId = res.data[0] ? res.data[0].id : '';
+        updateSelectedCart(res.data[0]);
+        localStorage.setItem('mcart', cartId);
+      });
+    }
+    else {
+      clearCartData();
+    }
+  }, [mcustomer, token]);
+
+  const createCart = (data: any) => (
+    createNewCart(data, token).then((cartRes: any) => {
+        const customerId = localStorage.getItem('mcustomer') || '';
+        const token = localStorage.getItem('mtoken') || '';
+        addCustomerAssociation(cartRes.data.id, customerId, token).then(() =>
+          getMultiCarts(token).then(res => {
+            setMultiCartData(res.data);
+          })
+        )
+      }
+    )
+  );
+
+  const createDefaultCart = () => {
+    const customerId = localStorage.getItem('mcustomer') || '';
+    const token = localStorage.getItem('mtoken') || '';
+    getMultiCarts(token).then(res => {
+      if (res.data.length === 0) {
+        createNewCart({name: 'Cart'}, token).then((cartRes: any) =>
+          addCustomerAssociation(cartRes.data.id, customerId, token).then(() =>
+            getMultiCarts(token).then(res => {
+              setMultiCartData(res.data);
+              const selectedCartData = res.data.filter(el => el.id === cartRes.data.id);
+              setSelectedCart(selectedCartData[0]);
+            })
+          )
+        )
+      }
+    });
+  }
+
+  const editCart = (data: any) => (
+    editCartInfo(data, token).then((updatedCart: any) =>
+      getMultiCarts(token).then(res => {
+        setMultiCartData(res.data);
+        const selectedCartData = res.data.filter(el => el.id === updatedCart.data.id);
+        setSelectedCart(selectedCartData[0]);
+      })
+    )
+  );
+
+  const updateSelectedCart = (cart: any) => {
+    setSelectedCart(cart);
+  };
+
+  const clearCartData = () => {
+    setMultiCartData([]);
+  };
+
+  const updateCartData = () => {
+    const selectedCart = localStorage.getItem('mcart');
+    getMultiCarts(token).then(res => {
+      setMultiCartData(res.data);
+      const selectedCartData = res.data.filter(el => (el.id === selectedCart));
+      if (selectedCartData.length === 0) {
+        const cartId = res.data[0] ? res.data[0].id : '';
+        updateSelectedCart(res.data[0]);
+        localStorage.setItem('mcart', cartId);
       }
     });
   };
 
-  return { cartData, promotionItems, count, quantity, showCartPopup, totalPrice, updateCartItems }
+  return {
+    multiCartData,
+    setMultiCartData,
+    createCart,
+    selectedCart,
+    updateSelectedCart,
+    isCartSelected,
+    setIsCartSelected,
+    editCart,
+    updateCartData,
+    setIsCreateNewCart,
+    isCreateNewCart,
+    guestCartId,
+    setGuestCartId,
+    createDefaultCart
+  }
 }
 
 function useGlobalState() {
@@ -418,6 +558,7 @@ function useGlobalState() {
   const addressData = useAddressDataState();
   const ordersData = usePurchaseHistoryState();
   const cartData = useCartItemsState();
+  const multiCartData = useMultiCartDataState();
 
   return {
     translation,
@@ -425,9 +566,11 @@ function useGlobalState() {
     addressData,
     ordersData,
     cartData,
+    multiCartData,
     currency,
     categories: useCategoriesState(translation.selectedLanguage),
     compareProducts: useCompareProductsState(),
+    authenticationSettings: useCustomerAuthenticationSettingsState(),
   };
 }
 
@@ -440,7 +583,9 @@ export const [
   useCurrency,
   useCategories,
   useCompareProducts,
+  useCustomerAuthenticationSettings,
   useCartData,
+  useMultiCartData,
 ] = constate(
   useGlobalState,
   value => value.translation,
@@ -450,5 +595,7 @@ export const [
   value => value.currency,
   value => value.categories,
   value => value.compareProducts,
+  value => value.authenticationSettings,
   value => value.cartData,
+  value => value.multiCartData,
 );

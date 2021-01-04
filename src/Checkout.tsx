@@ -3,12 +3,22 @@ import { CardElement, injectStripe } from 'react-stripe-elements'
 import { useCartData, useTranslation } from "./app-state";
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import './Checkout.scss';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
       margin: theme.spacing(1),
+    },
+    root: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    wrapper: {
+      margin: theme.spacing(1),
+      position: 'relative',
     },
   }),
 );
@@ -27,10 +37,12 @@ export const Checkout: React.FC<CheckoutParams> = (props) => {
   const classes = useStyles();
 
   const [isComplete, setIsComplete] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   const onPayment = async () => {
     let payment;
+    setIsLoading(true);
     try {
       payment = await stripe.createToken({
         name: `${shippingAddress.first_name} ${shippingAddress.last_name}`,
@@ -42,9 +54,11 @@ export const Checkout: React.FC<CheckoutParams> = (props) => {
         address_country: shippingAddress.country
       });
       await onPayOrder(payment.token.id)
+      setIsLoading(false);
     }
     catch (paymentError) {
       console.error({ paymentError })
+      return setIsLoading(false);
     }
   };
 
@@ -54,7 +68,7 @@ export const Checkout: React.FC<CheckoutParams> = (props) => {
   };
 
   return (
-    <div className="checkout">
+    <div className={"checkout"}>
       <div className="checkout__card">
         <label htmlFor="CardElement">
           <p className="card-title">{t('payment-card')}</p>
@@ -86,15 +100,14 @@ export const Checkout: React.FC<CheckoutParams> = (props) => {
           <div className="checkout__error">{errorMsg}</div>
         )}
       </div>
-            <Button
-              variant="contained"
-              color="primary"
-              disableElevation
-              className={classes.button}
-              onClick={onPayment}
-              disabled={!isComplete || isDisabled}
-              fullWidth
-            >{t('pay') + ' ' + totalPrice}
+            <Button 
+            variant="contained"
+            color="primary"
+            disableElevation
+            onClick={onPayment}
+            fullWidth
+            className={classes.button}
+            disabled={!isComplete || isDisabled || isLoading}>{!isLoading ? t('pay') + ' ' + totalPrice : <CircularProgress size={24} aria-label={t('loading')} /> } 
             </Button>
     </div>
   )

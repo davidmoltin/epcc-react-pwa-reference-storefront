@@ -5,8 +5,8 @@
 
   display: grid;
   grid-template-columns: 2fr 6fr;
-  grid-gap: 50px;
-  width: 1000px;
+  grid-gap: 20px;
+  width: 100%;
   grid-template-areas:
     "title      title"
     "facets     productlist"
@@ -41,7 +41,7 @@
   #{$block}__facets {
     grid-area: facets;
     .ais-SortBy {
-      padding: 20px 0;
+      padding:  x;
       display: block;
       border-bottom: 1px solid $firstComplimentColor;
       margin-bottom: 10px;
@@ -94,9 +94,9 @@
 
     .ais-Pagination-item {
       font-size: $sizeSmall;
-    color: hsl(0, 0, 30%);
-    padding: 12px;
-    text-decoration: none;
+      color: hsl(0, 0, 30%);
+      padding: 12px;
+      text-decoration: none;
 
       &--selected {
         color:  #333333;

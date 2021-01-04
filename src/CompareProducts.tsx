@@ -37,7 +37,7 @@ export const CompareProducts: React.FC = () => {
               <tbody>
                 <tr className="compareproducts__imgrow">
                   <td></td>
-                  {compareProducts.map(product => (
+                  {compareProducts.map((product: moltin.Product) => (
                     <td key={product.id}>
                       <div className="compareproducts__imgwrap">
                       <IconButton
@@ -74,7 +74,7 @@ export const CompareProducts: React.FC = () => {
 
             <h2 className="compareproducts__subtitle">{t('overview')}</h2>
             <ul className="compareproducts__tabs">
-              {compareProducts.map((product, index) => (
+              {compareProducts.map((product: any, index: number) => (
                 <li key={product.id} role="presentation" className={`compareproducts__tab ${selectedTab === index ? '--selected' : ''}`} onClick={() => {setSelectedTab(index)}}>{product.name}</li>
               ))}
             </ul>
@@ -83,7 +83,7 @@ export const CompareProducts: React.FC = () => {
                 {config.compareKeys.map(key => (
                   <tr className="compareproducts__datarow">
                     <td>{t(key[1])}</td>
-                    {compareProducts.map((product, index) => (
+                    {compareProducts.map((product: any, index: number) => (
                       // @ts-ignore
                       <td key={product.id} className={`${selectedTab === index ? '--selected' : ''}`}><div className="compareproducts__datawrap">{product[`${key[0]}`]}</div></td>
                     ))}

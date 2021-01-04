@@ -143,7 +143,49 @@ const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
     fontFamily: 'Oxygen',
+    h1: {
+      fontSize: '1.6rem',
+      fontWeight: 600,
+      paddingBottom: '10px',
+    },
+    h2: {
+      fontSize: '1.5rem',
+      fontWeight: 600,
+      paddingBottom: '10px',
+    },
+    h3: {
+      fontSize: '1.45rem',
+      fontWeight: 600,
+      paddingBottom: '10px',
+    },
+    h4: {
+      fontSize: '1.35rem',
+      fontWeight: 600,
+      paddingBottom: '10px',
+    },
+    h5: {
+      fontSize: '1.25rem',
+      fontWeight: 600,
+      paddingBottom: '10px',
+    },
+    h6: {
+      fontSize: '1.15rem',
+      fontWeight: 600,
+      letterSpacing: 1.12,
+      paddingBottom: '10px',
+    },
+    subtitle1: {
+      fontSize: 12,
+    },
+    body1: {
+      fontWeight: 500,
+    },
+    button: {
+      fontStyle: 'normal',
+      fontSize: '.85rem',
+    },
   },
+    
 });
 
 export default responsiveFontSizes(theme);

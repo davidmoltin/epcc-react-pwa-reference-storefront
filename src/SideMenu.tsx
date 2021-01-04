@@ -1,32 +1,17 @@
 
-import React, {useState} from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import useOnclickOutside from 'react-cool-onclickoutside';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from "./app-state";
 import { createAccountUrl, createAddressUrl, createPurchaseHistoryUrl } from './routes';
 
 import './SideMenu.scss'
+import { Button } from '@material-ui/core';
 
 export const SideMenu: React.FC = (props) => {
   const { t } = useTranslation();
   const accountUrl = createAccountUrl();
   const addressUrl = createAddressUrl();
   const purchaseHistoryUrl = createPurchaseHistoryUrl();
-  const location = useLocation();
-
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleSelectorClicked = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleHideMenu = () => {
-    setIsOpen(false);
-  };
-
-  const ref = useOnclickOutside(() => {
-    setIsOpen(false);
-  });
 
   const sideMenuItems = [
     { to: accountUrl, children: 'my-account' },
@@ -35,20 +20,16 @@ export const SideMenu: React.FC = (props) => {
   ];
 
   sideMenuItems.push();
-  const currentSideMenuItems = sideMenuItems.filter(el => el.to === location.pathname);
 
   return (
-    <div className="sidemenu" ref={ref}>
-      <button className="sidemenu__btn" onClick={handleSelectorClicked}>
-        {currentSideMenuItems.length > 0 && t(currentSideMenuItems[0].children)}
-      </button>
-      <div className={`sidemenu__dropdown ${!isOpen ? 'sidemenu__hidden' : ''}`}>
+      <div>
         {sideMenuItems.map(elem => (
-          <div className='sidemenu__item' key={elem.to}>
-            <Link to={elem.to} className={`sidemenu__link ${location.pathname === elem.to ? '--selected' : ''}`} onClick={handleHideMenu}>{t(elem.children)}</Link>
-          </div>
+         <Link to={elem.to}> 
+          <Button fullWidth key={elem.to} color="primary">
+            {t(elem.children)}
+          </Button>
+          </Link>
         ))}
       </div>
-    </div>
   )
 }

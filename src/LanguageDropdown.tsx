@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation, useCurrency } from './app-state';
 import { config } from './config';
+import * as moltin from '@moltin/sdk';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -106,7 +107,7 @@ export const LanguageDropdown: React.FC = () => {
                     {t(l.name)}
                   </MenuItem>
                 ))}
-                {allCurrencies.map(c => (
+                {allCurrencies.map((c: moltin.Currency) => (
                 <MenuItem
                   key={c.id}
                   className="languagedropdown__itembtn"

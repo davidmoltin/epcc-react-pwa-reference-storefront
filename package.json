@@ -1,6 +1,6 @@
 {
   "name": "epcc-ref-store",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -8,7 +8,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/styles": "^4.10.0",
     "@material-ui/system": "^4.9.14",
-    "@moltin/sdk": "^4.4.0",
+    "@moltin/sdk": "^5.0.1",
     "@types/color": "^3.0.1",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
@@ -20,11 +20,10 @@
     "aos": "^2.3.4",
     "app-localizer": "^1.2.2",
     "clsx": "^1.1.1",
-    "constate": "^2.0.0",
+    "constate": "^3.1.0",
     "css-reset-and-normalize": "^2.1.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "fontsource-oxygen": "^3.1.5",
-    "fontsource-roboto": "^3.0.3",
     "fontsource-ubuntu": "^3.1.5",
     "formik": "^2.1.4",
     "material-auto-rotating-carousel": "^3.0.2",
@@ -47,7 +46,7 @@
     "react-stripe-elements": "^6.1.2",
     "react-swipeable-views": "^0.13.9",
     "serve": "^11.3.1",
-    "sharethis-reactjs": "^1.5.0",
+    "sharethis-reactjs": "^1.6.0",
     "typescript": "^3.7.3",
     "workbox-build": "^5.1.3"
   },

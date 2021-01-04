@@ -23,14 +23,17 @@ async function build() {
 
   await workbox.injectManifest({
     globDirectory: `./${outputPath}/`,
-    globPatterns: ['**\/*.{html,js,css,png,jpg,json}'],
+    globPatterns: ['**/*.{html,js,css,png,jpg,json}'],
     globIgnores: ['sw-default.js', 'service-worker.js', 'workbox-sw.js', 'index.html'],
     swSrc: './src/sw-template.js',
     swDest: `./${outputPath}/sw-default.js`,
   }).then(_ => {
+    const swConfigString = fs.readFileSync(`./${outputPath}/sw-default.js`, 'utf8');
+    const swConfigStringMatch = configString.slice(configString.search('endpointURL'), configString.length).match(/'([^']+)'/)[1];
+    const swConfigEndpointURL = swConfigString.replace('config.endpointURL', process.env.REACT_APP_ENDPOINT_URL || swConfigStringMatch);
+    fs.writeFileSync(`./${outputPath}/sw-default.js`, swConfigEndpointURL);
     console.log('Service worker generated.')
   })
 }
 
 build();
-

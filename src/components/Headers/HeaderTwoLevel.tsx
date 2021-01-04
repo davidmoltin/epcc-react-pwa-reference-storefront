@@ -19,6 +19,7 @@ import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 import { AppBar, ButtonGroup, Grid } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
+import './AppHeader.scss';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -117,11 +118,16 @@ export const HeaderTwoLevel: React.FC = () => {
   const { t } = useTranslation();
   const classes = useStyles();
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
-  const { count, updateCartItems } = useCartData();
+  const { count, cartQuantity, showCartPopup, updateCartItems } = useCartData();
+  const [newCart, setNewCart] = useState(false);
 
   const handleCloseCartModal = () => {
     setIsCartModalOpen(false);
   };
+
+  const openCartModal = () => {
+    setIsCartModalOpen(true);
+  }
 
   const handleCartModal = () => {
     updateCartItems();
@@ -142,7 +148,7 @@ export const HeaderTwoLevel: React.FC = () => {
           </Grid>
           <Grid container justify="flex-end" xs={4}>
             <ButtonGroup>
-              <AccountDropdown />
+              <AccountDropdown openCartModal={openCartModal} handleShowNewCart={(bool:boolean) => setNewCart(bool)} />
               <BulkOrderDropdown />
               <LanguageDropdown />
             </ButtonGroup>
@@ -165,7 +171,14 @@ export const HeaderTwoLevel: React.FC = () => {
               <Badge badgeContent={count} color="primary">
                 <ShoppingCartOutlinedIcon />
               </Badge>
-            </IconButton>
+            </IconButton> 
+            {/* need to add material ui styling here */}
+            {showCartPopup && (
+            <div className="appheader__cartpopup">
+              <p>{cartQuantity === 1 ? t('cart-popup-info-1') : t('cart-popup-info', {quantity: cartQuantity.toString()})}</p>
+              <button className="epbtn" onClick={handleCartModal}>{t('view-cart')}</button>
+            </div>
+          )}
           </Grid>
         </Toolbar>
     </div>
@@ -204,7 +217,7 @@ export const HeaderTwoLevel: React.FC = () => {
           </strong>
         </div>
       </Offline>
-      <CartModal isCartModalOpen={isCartModalOpen} handleCloseModal={handleCloseCartModal} />
+      <CartModal newCart={newCart} handleNewCart={(bool:boolean) => setNewCart(bool)} isCartModalOpen={isCartModalOpen} handleCloseModal={handleCloseCartModal} />
     </div>
   );
 };

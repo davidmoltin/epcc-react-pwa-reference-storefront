@@ -127,11 +127,16 @@ export const HeaderAppBar: React.FC = () => {
   const { t } = useTranslation();
   const classes = useStyles();
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
-  const { count, updateCartItems } = useCartData();
+  const { count, cartQuantity, showCartPopup, updateCartItems } = useCartData();
+  const [newCart, setNewCart] = useState(false);
 
   const handleCloseCartModal = () => {
     setIsCartModalOpen(false);
   };
+
+  const openCartModal = () => {
+    setIsCartModalOpen(true);
+  }
 
   const handleCartModal = () => {
     updateCartItems();
@@ -153,15 +158,22 @@ export const HeaderAppBar: React.FC = () => {
           <SearchBar />
           </div>
           <ButtonGroup>
-            <AccountDropdown />
+            <AccountDropdown openCartModal={openCartModal} handleShowNewCart={(bool:boolean) => setNewCart(bool)} />
             <BulkOrderDropdown />
             <LanguageDropdown />
           </ButtonGroup>
           <IconButton title="Show Cart" color="inherit" onClick={handleCartModal}>
-            <Badge badgeContent={count} color="primary">
-                  <ShoppingCartOutlinedIcon />
-                </Badge>
+              <Badge badgeContent={count} color="primary">
+                <ShoppingCartOutlinedIcon />
+              </Badge>
           </IconButton>
+            {/* need to add material ui styling here */}
+            {showCartPopup && (
+            <div className="appheader__cartpopup">
+              <p>{cartQuantity === 1 ? t('cart-popup-info-1') : t('cart-popup-info', {quantity: cartQuantity.toString()})}</p>
+              <button className="epbtn" onClick={handleCartModal}>{t('view-cart')}</button>
+            </div>
+          )}
         </Toolbar>
         </AppBar>
         <Toolbar />
@@ -172,7 +184,7 @@ export const HeaderAppBar: React.FC = () => {
           </strong>
         </div>
       </Offline>
-      <CartModal isCartModalOpen={isCartModalOpen} handleCloseModal={handleCloseCartModal} />
+      <CartModal newCart={newCart} handleNewCart={(bool:boolean) => setNewCart(bool)} isCartModalOpen={isCartModalOpen} handleCloseModal={handleCloseCartModal} />
     </div>
   );
 };
