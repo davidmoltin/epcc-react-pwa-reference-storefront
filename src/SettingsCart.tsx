@@ -5,6 +5,7 @@ import {ReactComponent as ClearIcon} from "./images/icons/ic_clear.svg";
 import { ReactComponent as BackArrowIcon } from './images/icons/arrow_back-black-24dp.svg';
 
 import './SettingsCart.scss';
+import { Button, ButtonGroup } from "@material-ui/core";
 
 interface SettingsCartParams {
   name?: string,
@@ -84,9 +85,9 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
     <div className={`settingscart${showSettings ? ' --show' : ''}`}>
       <div className="settingscart__addcartform">
         {isEditCart &&
-          <button className="settingscart__closebutton" type="button" aria-label="close" onClick={handleHideSettings}>
+          <Button className="settingscart__closebutton" type="button" aria-label="close" onClick={handleHideSettings}>
             <BackArrowIcon/>
-          </button>
+          </Button>
         }
         {title ?? (
           <h2 className="settingscart__title">
@@ -120,17 +121,21 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
             </div>
           </div>
           <div className="settingscart__btns">
-            <button className="epbtn --bordered" type="button" onClick={handleHideSettings}>{t('cancel')}</button>
-            <button
-              className={`epbtn --primary ${
-                isLoading ? "--loading" : ""
-                }`}
-              type="submit"
-              onClick={() => {handleSubmit()}}
-              disabled={isLoading || !values.name }
-            >
-              {!isLoading? t("save") : <span className="circularLoader" aria-label={t('loading')} />}
-            </button>
+            <ButtonGroup disableElevation size="large">
+              <Button variant="outlined" color="primary" type="button" onClick={handleHideSettings}>{t('cancel')}</Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className={`${
+                  isLoading ? "--loading" : ""
+                  }`}
+                type="submit"
+                onClick={() => {handleSubmit()}}
+                disabled={isLoading || !values.name }
+              >
+                {!isLoading? t("save") : <span className="circularLoader" aria-label={t('loading')} />}
+              </Button>
+            </ButtonGroup>
           </div>
         </form>
       </div>

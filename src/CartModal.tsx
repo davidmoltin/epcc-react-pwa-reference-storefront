@@ -22,10 +22,10 @@ import { ArrowBackIosOutlined, ClearOutlined } from '@material-ui/icons';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
-      margin: theme.spacing(1),
+      margin: theme.spacing(0),
     },
     margin: {
-      margin: theme.spacing(1),
+      margin: theme.spacing(0),
     },
   }),
 );

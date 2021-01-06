@@ -9,6 +9,7 @@ import { ReactComponent as DeleteIcon } from "./images/icons/delete-black-24dp.s
 import { ReactComponent as CloseIcon } from "./images/icons/ic_close.svg";
 
 import './CartsList.scss';
+import { Button, ButtonGroup } from '@material-ui/core';
 
 interface CartsListParams {
   onHandlePage: (route: string) => any,
@@ -112,7 +113,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
         {multiCartData.length && (
           <button className="cartslist__editbutton" onClick={handleCartEdit}>
             {t(isEdit ? 'done' : 'edit')}
-          </button>
+          </button> 
         )}
         <h2 className="cartslist__title">
           {t('my-carts')}
@@ -130,9 +131,9 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                       ${t('selected')}` }
                     </label>
                   </span>
-                  <button className="cartslist__deletebutton" disabled={selectedCarts.length === 0 || multiCartData.length === 1} onClick={() => setIsShowModal(true)}>
+                  <Button variant="contained" color="primary" disabled={selectedCarts.length === 0 || multiCartData.length === 1} onClick={() => setIsShowModal(true)}>
                     {!isShowModal ? <DeleteIcon /> : <span className="circularLoader" aria-label={t('loading')} />}
-                  </button>
+                  </Button>
                 </div>
               </div>
               <div className={`cartslist__cartlist${isEdit ? ' --editmode' : ''}`}>
@@ -150,9 +151,9 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                           <span className="cartslist__date">
                             {t('created')} - {(cart.meta.timestamps.created_at).substring(0, 10)}
                           </span>
-                          <button className="cartslist__selectcart">
+                          <Button className="cartslist__selectcart">
                             <ArrowRightIcon />
-                          </button>
+                          </Button>
                           <br />
                           <span className="cartslist__date">
                             {t('edited')} - {(cart.meta.timestamps.updated_at).substring(0, 10)}
@@ -181,9 +182,9 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                       ${t('selected')}` }
                     </label>
                   </span>
-                  <button className="cartslist__deletebutton" disabled={selectedCarts.length === 0 || multiCartData.length === 1} onClick={() => setIsShowModal(true)}>
+                  <Button className="cartslist__deletebutton" disabled={selectedCarts.length === 0 || multiCartData.length === 1} onClick={() => setIsShowModal(true)}>
                     {!isShowModal ? <DeleteIcon /> : <span className="circularLoader" aria-label={t('loading')} />}
-                  </button>
+                  </Button>
                 </div>
               </div>
               <div className={`cartslist__cartlist${isEdit ? ' --editmode' : ''}`}>
@@ -200,9 +201,9 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                             <span className="cartslist__date">
                               {t('created')} - {(cart.meta.timestamps.created_at).substring(0, 10)}
                             </span>
-                            <button className="cartslist__selectcart">
+                            <Button className="cartslist__selectcart">
                               <ArrowRightIcon />
-                            </button>
+                            </Button>
                             <br />
                             <span className="cartslist__date">
                               {t('edited')} - {(cart.meta.timestamps.updated_at).substring(0, 10)}
@@ -227,7 +228,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
             {t('you-have-no-carts')}
           </div>
         )}
-        <button className="epbtn --primary --fullwidth --large" onClick={() => setShowSettings(true)} >{t('create-cart')}</button>
+        <Button className="epbtn --primary --fullwidth --large" onClick={() => setShowSettings(true)} >{t('create-cart')}</Button>
       </div>
       {isShowModal && (
         <React.Fragment>
@@ -240,10 +241,10 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                 selectedCarts.length === 1 ? t('are-you-sure-you-want-to-delete-your-cart') : t('are-you-sure-you-want-to-delete-your-carts')
               ) : t('warning-msg')}
             </div>
-            <div className="cartslist__confirmationbtns">
-              <button className="epbtn --primary" onClick={() => onDeleteCart()} disabled={selectedCarts.length === multiCartData.length}>{!showLoader ? t('delete') : <span className="circularLoader" aria-label={t('loading')} />}</button>
-              <button className="epbtn --ghost" onClick={() => setIsShowModal(false)}>{t("cancel")}</button>
-            </div>
+            <ButtonGroup>
+              <Button variant="contained" size="large" color="primary" disableElevation onClick={() => onDeleteCart()} disabled={selectedCarts.length === multiCartData.length}>{!showLoader ? t('delete') : <span className="circularLoader" aria-label={t('loading')} />}</Button>
+              <Button variant="outlined" size="large" onClick={() => setIsShowModal(false)}>{t("cancel")}</Button>
+            </ButtonGroup>
           </div>
           <div className="cartslist__confirmationoverlay" />
         </React.Fragment>

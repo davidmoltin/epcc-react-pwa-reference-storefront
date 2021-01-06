@@ -10,14 +10,14 @@ import './Checkout.scss';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
-      margin: theme.spacing(1),
+      margin: theme.spacing(0),
     },
     root: {
       display: 'flex',
       alignItems: 'center',
     },
     wrapper: {
-      margin: theme.spacing(1),
+      margin: theme.spacing(0),
       position: 'relative',
     },
   }),

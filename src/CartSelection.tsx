@@ -40,7 +40,7 @@ export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
   };
 
   return (
-    <div className={`cartselection`}>
+    <div className={`cartselection`}> 
       <div>
         <Typography variant="h2">
           {t('my-carts')}

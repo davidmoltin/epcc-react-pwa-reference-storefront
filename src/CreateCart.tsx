@@ -6,6 +6,7 @@ import { ReactComponent as ClearIcon } from "./images/icons/ic_clear.svg";
 
 
 import './CreateCart.scss';
+import { Button } from "@material-ui/core";
 
 interface CreateCartParams {
   showCreateCart?: boolean
@@ -80,16 +81,16 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
             <label className="epform__label" htmlFor="name">{t('cart-name')}</label>
             <input className="epform__input" id="cartName" placeholder={t('new-cart')} onChange={handleChange} value={values.cartName}/>
             {(values.cartName && values.cartName.length > 0) && (
-              <button type="button" className="createcart__clearbtn" onClick={() => setFieldValue('cartName', '')}>
+              <Button variant="contained" color="primary" onClick={() => setFieldValue('cartName', '')}>
                 <ClearIcon/>
-              </button>
+              </Button>
             )}
             <div className="epform__error">
               {errors.cartName ? errors.cartName : null}
             </div>
           </div>
           <div className="createcart__btns">
-            <button
+            <Button
               className={`epbtn --primary ${
                 isLoading ? "--loading" : ""
               }`}
@@ -97,7 +98,7 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
               disabled={isLoading || !values.cartName}
             >
               {!isLoading ? t("next") : <span className="circularLoader" aria-label={t('loading')}/>}
-            </button>
+            </Button>
           </div>
         </form>
       </div>
