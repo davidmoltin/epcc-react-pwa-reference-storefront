@@ -38,9 +38,9 @@ export const Product: React.FC = () => {
     },
     [productSlug, selectedLanguage, selectedCurrency, addError]
   );
-/* eslint-disable no-unused-vars */
+  
+// eslint-disable-next-line
   const [productId, setProductId] = useState('');
-/* eslint-enable no-unused-vars */
 
   useEffect(() => {
     product && setProductId(product.id);
@@ -63,7 +63,7 @@ export const Product: React.FC = () => {
   const handleVariationChange = (childID: string) => {
     setProductId(childID);
   };
-
+  
   return (
     <div className="product">
       {product ? (
