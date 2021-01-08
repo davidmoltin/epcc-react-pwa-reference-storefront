@@ -117,6 +117,7 @@ export const Nav: React.FC = () => {
                   color="inherit"
                   title={category.displayName}
                   size="large"
+                  variant="text"
                   >
                   {category.displayName}
                 </Button>
@@ -126,6 +127,7 @@ export const Nav: React.FC = () => {
                 className={classes.navbutton} 
                 color="inherit"
                 size="large"
+                variant="text"
                 ref={reference}  
                 onClick={() => handleSelectorClicked(category.displayName)}
                 endIcon={ <ExpandMoreOutlined style={{fontSize: "1.2rem"}}/> }
