@@ -21,7 +21,6 @@ import { OrderDetails } from './OrderDetails';
 import { Orders } from './Orders';
 import { BulkOrder } from './BulkOrder';
 import { QuickOrder } from './QuickOrder';
-import { CheckOut } from './pages/CheckOut';
 
 interface RouteConfig {
   path: string;
@@ -43,7 +42,6 @@ export const routes: RouteConfig[] = [
   { exact: true, path: '/compare-products', component: CompareProducts, },
   { exact: true, path: '/registration', component: RegistrationForm, },
   { exact: true, path: '/oidc', component: OidcHandler, },
-  { exact: true, path: '/check', component: CheckOut, },
   { exact: false, path: '/account', component: MyAccount, },
   { exact: false, path: '/search', component: Search, },
   { exact: true, path: '/orderdetails/:orderId', component: OrderDetails, },

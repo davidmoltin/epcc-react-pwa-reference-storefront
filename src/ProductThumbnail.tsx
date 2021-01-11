@@ -8,6 +8,7 @@ import { CompareCheck } from './CompareCheck';
 //import { isProductAvailable } from './helper';
 //import { Availability } from './Availability';
 import { APIErrorContext } from './APIErrorProvider';
+
 import { Typography, Card, CardActionArea, CardMedia, CardContent, Box } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
