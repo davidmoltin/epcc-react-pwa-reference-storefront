@@ -17,3 +17,5 @@ declare module 'react-swipeable-views'
 declare module 'material-ui-banner'
 
 declare module 'material-auto-rotating-carousel'
+
+declare module 'react-infinite-scroller'

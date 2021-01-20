@@ -75,6 +75,7 @@ export const Category: React.FC = () => {
 
   return (
   <div className={classes.root}>
+    {/* Set central container width for category page */}
     <Container maxWidth="xl" className={classes.bottom}>
       {category && products ? (
         <>
@@ -92,7 +93,7 @@ export const Category: React.FC = () => {
 
           <Grid container spacing={3} className={classes.productrow}>
             {products && products.data.map(product => (
-              /*Set Grid size and number of products per line*/
+              /*Set Grid size and number of products per line lg=3 with maxWidth=lg(xl) will render 4 items per line. lg=3 container xl will render 6 per line */
               <Grid item xs={6} sm={4} lg={2} xl={2} className={classes.paper} alignItems="stretch">
                 <ProductThumbnail product={product} />
               </Grid>
